@@ -9,14 +9,14 @@ let KrakenClient = require('kraken-api')
 const kraken = new KrakenClient()
 let web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545', null, {})
 
-let schellingBuild = require('../build/contracts/Schelling.json')
-let keys = require('keys.json')
+let schellingBuild = require('../contracts/build/contracts/Schelling2.json')
+let keys = require('./keys.json')
 let schellingAbi = schellingBuild['abi']
 let schelling = new web3.eth.Contract(schellingAbi, schellingBuild['networks']['420'].address,
   {transactionConfirmationBlocks: 1,
     defaultGas: 6000000})
 
-let simpleTokenBuild = require('../build/contracts/SimpleToken.json')
+let simpleTokenBuild = require('../contracts/build/contracts/SimpleToken.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks']['420'].address,
   {transactionConfirmationBlocks: 1,
@@ -59,6 +59,7 @@ console.log('web3 version', web3.version)
 program
   .version('0.0.1')
   .description('Schelling network')
+
 
 program
   .command('stake <accountId> <amount>')
@@ -104,7 +105,7 @@ program
     .command('transfer <to> <amount> <from>')
     .alias('t')
     .description('transfer schells')
-    .action(async function (from, to, amount) {
+    .action(async function (to, amount, from) {
       let accountFrom = (await web3.eth.personal.getAccounts())[Number(from)]
       let accountTo = (await web3.eth.personal.getAccounts())[Number(to)]
 
@@ -144,7 +145,7 @@ async function stake (amount, account) {
   let state = Number(await schelling.methods.getState.call())
   console.log('epoch', epoch)
   console.log('state', state)
-  if (state === 1) throw new Error('Cannot stake during reveal period. Please try after some time')
+  if (state !== 0) throw new Error('Can only stake during state 0 (commit). Please try after some time')
   console.log('account', account)
   let balance = Number(await simpleToken.methods.balanceOf(account).call())
   console.log('balance', balance)
@@ -276,10 +277,10 @@ async function makeBlock () {
   console.log('totalStakeRevealed', totalStakeRevealed)
   let medianWeight = Math.floor(totalStakeRevealed / 2)
   console.log('medianWeight', medianWeight)
-  let twoFiveWeight = Math.floor(totalStakeRevealed / 4)
-  console.log('twoFiveWeight', twoFiveWeight)
-  let sevenFiveWeight = Math.floor(totalStakeRevealed * 3 / 4)
-  console.log('sevenFiveWeight', sevenFiveWeight)
+  // let twoFiveWeight = Math.floor(totalStakeRevealed / 4)
+  // console.log('twoFiveWeight', twoFiveWeight)
+  // let sevenFiveWeight = Math.floor(totalStakeRevealed * 3 / 4)
+  // console.log('sevenFiveWeight', sevenFiveWeight)
 
   let i = 0
   let twoFive = 0
@@ -291,16 +292,16 @@ async function makeBlock () {
   for (i = 0; i < sortedVotes.length; i++) {
     weight += sortedVotes[i][1]
     console.log('weight', weight)
-    if (weight > twoFiveWeight && twoFive === 0) twoFive = sortedVotes[i][0]
+    // if (weight > twoFiveWeight && twoFive === 0) twoFive = sortedVotes[i][0]
     if (weight > medianWeight && median === 0) median = sortedVotes[i][0]
-    if (weight >= sevenFiveWeight && sevenFive === 0) sevenFive = sortedVotes[i][0]
-    if (twoFive === 0 || sevenFive < sortedVotes[i][0]) {
-      stakeGettingPenalty += sortedVotes[i][1]
-    } else {
-      stakeGettingReward += sortedVotes[i][1]
-    }
+    // if (weight >= sevenFiveWeight && sevenFive === 0) sevenFive = sortedVotes[i][0]
+    // if (twoFive === 0 || sevenFive < sortedVotes[i][0]) {
+    //   stakeGettingPenalty += sortedVotes[i][1]
+    // } else {
+    //   stakeGettingReward += sortedVotes[i][1]
+    // }
   }
-  return ([median, twoFive, sevenFive, stakeGettingPenalty, stakeGettingReward])
+  return (median)
 }
 
 async function propose (account) {
@@ -320,17 +321,17 @@ async function propose (account) {
   console.log('electedProposer, iteration', electedProposer, iteration)
   let block = await makeBlock()
   console.log('block', block)
-  let median = block[0]
-  let twoFive = block[1]
-  let sevenFive = block[2]
-  let stakeGettingPenalty = block[3]
-  let stakeGettingReward = block[4]
+  let median = block
+  // let twoFive = block[1]
+  // let sevenFive = block[2]
+  // let stakeGettingPenalty = block[3]
+  // let stakeGettingReward = block[4]
 
     // ////console.log('i', i)
-  console.log('epoch, median, twoFive, sevenFive, stakeGettingPenalty, stakeGettingReward, iteration, biggestStakerId', epoch, median, twoFive, sevenFive, stakeGettingPenalty, stakeGettingReward, iteration, biggestStakerId)
+  console.log('epoch, median, iteration, biggestStakerId', epoch, median, iteration, biggestStakerId)
     // let tx = await schelling.reveal(1, 160, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9ddd', accounts[1], { 'from': accounts[1]})
   // let commitment = web3.utils.soliditySha3((Number(await schelling.getEpoch())), amount, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9111')
-  let tx = await schelling.methods.propose(epoch, median, twoFive, sevenFive, stakeGettingPenalty, stakeGettingReward, iteration, biggestStakerId).send({'from': account})
+  let tx = await schelling.methods.propose(epoch, median, iteration, biggestStakerId).send({'from': account})
   return tx
 }
 
@@ -419,20 +420,22 @@ async function main (account, api) {
     console.log('gotcha')
     console.log(data)
     let median = Number(data.returnValues.median)
-    let twoFive = Number(data.returnValues.twoFive)
-    let sevenFive = Number(data.returnValues.sevenFive)
-    let stakeGettingPenalty = Number(data.returnValues.stakeGettingPenalty)
-    let stakeGettingReward = Number(data.returnValues.stakeGettingReward)
+    // let twoFive = Number(data.returnValues.twoFive)
+    // let sevenFive = Number(data.returnValues.sevenFive)
+    // let stakeGettingPenalty = Number(data.returnValues.stakeGettingPenalty)
+    // let stakeGettingReward = Number(data.returnValues.stakeGettingReward)
 
     let block = await makeBlock()
     console.log('block', block)
     // return ([median, twoFive, sevenFive, stakeGettingPenalty, stakeGettingReward])
-    if (median !== block[0] ||
-        twoFive !== block[1] ||
-        sevenFive !== block[2] ||
-        stakeGettingPenalty != block[3] ||
-        stakeGettingReward != block[4]) {
-      console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS')
+    if (median !== block
+      // ||
+        // twoFive !== block[1] ||
+        // sevenFive !== block[2] ||
+        // stakeGettingPenalty != block[3] ||
+        // stakeGettingReward != block[4]
+      ) {
+      console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:'+block+'block median:',median)
     }
   })
   web3.eth.subscribe('newBlockHeaders', async function (error, result) {
