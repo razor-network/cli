@@ -2,9 +2,10 @@ npm i \
 move keys_sample.json to keys.json\
 add api keys in keys.json
 
-make sure contracts repo is also cloned in parent dir.
-launch e.g. node index.js s 0 1 to stake 1 schell using account id 0
-
+make sure contracts repo is also cloned in parent dir, and contracts are compiled with truffle compile.\
+e.g. contracts are in ~/contracts and this dir is ~/cli\
+launch e.g. `node index.js s 0 1` to stake 1 schell using account id 0
+`node index.js t 1 1000 0`
 .command('stake <accountId> <amount>')
 .alias('s')
 .description('Stake some schells')
@@ -20,7 +21,6 @@ launch e.g. node index.js s 0 1 to stake 1 schell using account id 0
 .command('vote <accountId> <api>')
 .alias('v')
 .description('Start monitoring contract, commit, vote and propose automatically')
-
 
 .command('transfer <to> <amount> <from>')
 .alias('t')

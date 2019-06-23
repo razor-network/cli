@@ -8,7 +8,7 @@ let program = require('commander')
 let KrakenClient = require('kraken-api')
 const kraken = new KrakenClient()
 let web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545', null, {})
-
+const sleep = require('util').promisify(setTimeout)
 let schellingBuild = require('../contracts/build/contracts/Schelling2.json')
 let keys = require('./keys.json')
 let schellingAbi = schellingBuild['abi']
@@ -68,8 +68,12 @@ program
   .action(async function (accountId, amount) {
     let account = (await web3.eth.personal.getAccounts())[Number(accountId)]
     let res = await stake(amount, account).catch(console.log)
-    if (res) console.log('succesfully staked ', amount, ' schells')
-    process.exit(0)
+    if (res)
+    {
+      console.log('succesfully staked ', amount, ' schells')
+      process.exit(0)
+    }
+
   })
 program
     .command('unstake <accountId>')
@@ -143,9 +147,20 @@ async function approve (to, amount, from) {
 async function stake (amount, account) {
   let epoch = Number(await schelling.methods.getEpoch.call())
   let state = Number(await schelling.methods.getState.call())
-  console.log('epoch', epoch)
-  console.log('state', state)
-  if (state !== 0) throw new Error('Can only stake during state 0 (commit). Please try after some time')
+
+  while(true) {
+    epoch = Number(await schelling.methods.getEpoch.call())
+    state = Number(await schelling.methods.getState.call())
+    console.log('epoch', epoch)
+    console.log('state', state)
+    if (state!==0)
+    {
+      console.log('Can only stake during state 0 (commit). Retrying in 5 seconds...')
+      await sleep(5000)
+    }
+    else break
+  }
+
   console.log('account', account)
   let balance = Number(await simpleToken.methods.balanceOf(account).call())
   console.log('balance', balance)
@@ -416,6 +431,7 @@ async function getPrice (api) {
 // }
 
 async function main (account, api) {
+
   schelling.events.Proposed().on('data', async function (data) {
     console.log('gotcha')
     console.log(data)
@@ -447,13 +463,15 @@ async function main (account, api) {
   })
 .on('data', async function (blockHeader) {
   // commit
+
   let state = Number(await schelling.methods.getState().call())
   let epoch = Number(await schelling.methods.getEpoch().call())
   let yourId = Number(await schelling.methods.nodeIds(account).call())
 
   let balance = Number((await schelling.methods.nodes(yourId).call()).stake)
-  console.log('#', blockHeader.number, 'epoch', epoch, 'state', state, 'account', account, 'nodeId', yourId, 'stakedBalance', balance)
-  if (balance < Number((await schelling.methods.c().call()).MIN_STAKE)) throw new Error('Balance is below minimum balance required. Cannot vote.')
+  console.log('You have staked ', balance,' schells')
+  console.log('block #', blockHeader.number, 'epoch', epoch, 'state', state, 'account', account, 'nodeId', yourId, 'stakedBalance', balance)
+  if (balance < Number((await schelling.methods.c().call()).MIN_STAKE)) throw new Error('Stake is below minimum required. Cannot vote.')
   // console.log('staked', staked)
   // console.log('account0', account0)
   // console.log('account1', account1)
@@ -486,7 +504,9 @@ async function main (account, api) {
       console.log('lets commit', price)
       console.log('last commit', epoch)
 
-      let tx = await commit(price, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9111', account)
+      let secret = web3.utils.keccak256(await web3.eth.sign(web3.utils.keccak256(account,epoch), account))
+
+      let tx = await commit(price, secret, account)
       console.log(tx.events)
     }
   } else if (state === 1) {
@@ -498,7 +518,9 @@ async function main (account, api) {
       let staker = await schelling.methods.nodes(yourId).call()
       console.log('stakerepochLastCommitted', Number(staker.epochLastCommitted))
       console.log('stakerepochLastRevealed', Number(staker.epochLastRevealed))
-      let tx = await reveal(price, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9111', account, account)
+      let secret = await web3.utils.keccak256(await web3.eth.sign(web3.utils.keccak256(account,epoch), account))
+
+      let tx = await reveal(price, secret, account, account)
       console.log(tx.events)
     }
   } else if (state === 2) {
