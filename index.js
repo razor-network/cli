@@ -213,17 +213,6 @@ async function stake (amount, account) {
   let epoch
   let state
 
-  while (true) {
-    epoch = Number(await schelling.methods.getEpoch.call())
-    state = Number(await schelling.methods.getState.call())
-    console.log('epoch', epoch)
-    console.log('state', state)
-    if (state !== 0) {
-      console.log('Can only stake during state 0 (commit). Retrying in 1 second...')
-      await sleep(1000)
-    } else break
-  }
-
   console.log('account', account)
   let balance = Number(await simpleToken.methods.balanceOf(account).call())
   console.log('balance', balance)
@@ -240,6 +229,16 @@ async function stake (amount, account) {
   // gas = Math.round(gas * 1.1)
 
   // console.log(gas)
+  while (true) {
+    epoch = Number(await schelling.methods.getEpoch.call())
+    state = Number(await schelling.methods.getState.call())
+    console.log('epoch', epoch)
+    console.log('state', state)
+    if (state !== 0) {
+      console.log('Can only stake during state 0 (commit). Retrying in 1 second...')
+      await sleep(1000)
+    } else break
+  }
 
   let tx2 = await schelling.methods.stake(epoch, amount).send({
     from: account,
