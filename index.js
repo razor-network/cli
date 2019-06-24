@@ -1,25 +1,22 @@
 /* global: console */
-// arguments 2accountNumber, 3amountToStake, 4apiID
 // apiid 0 = CMC
 // apiid 1 = kraken
+// apiid 2 = gemini
+// todo dont reveal if not committed
+
 let Web3 = require('web3')
-// let {Accounts} = require('web3-eth-accounts')
 let rp = require('request-promise')
 let program = require('commander')
 let KrakenClient = require('kraken-api')
-const kraken = new KrakenClient()
-let provider = 'ws://localhost:8546/'
-provider2 = 'wss://rinkeby.infura.io/ws'
-let networkid = '421'
-let web3 = new Web3(Web3.givenProvider || provider, null, {})
-const fs = require('fs').promises
-const { randomHex } = require('web3-utils')
+let kraken = new KrakenClient()
+let fs = require('fs').promises
+let { randomHex } = require('web3-utils')
+// let provider = 'ws://localhost:8546/'
+let provider2 = 'wss://rinkeby.infura.io/ws'
+let networkid = '4' // rinkeby
+let web3 = new Web3(Web3.givenProvider || provider2, null, {})
 
-// let account = new Accounts(Web3.givenProvider || provider, null, {})
-
-// wss://rinkeby.infura.io/ws
-
-const sleep = require('util').promisify(setTimeout)
+let sleep = require('util').promisify(setTimeout)
 
 let schellingBuild = require('../contracts/build/contracts/Schelling2.json')
 let keys = require('./keys.json')
@@ -34,15 +31,10 @@ let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networ
   {transactionConfirmationBlocks: 1,
     defaultGas: 6000000})
 
-// let account0
-// let account00
-// let account1
 let price
 let lastCommit = -1
 let lastReveal = -1
 let lastProposal = -1
-// let staked = false
-// let staking = false
 
 let requestOptions = {
   method: 'GET',
@@ -65,9 +57,6 @@ let geminiRequestOptions = {
 }
 
 console.log('web3 version', web3.version)
-
-// Require logic.js file and extract controller functions using JS destructuring assignment
-// const { addContact, getContact } = require('./logic')
 
 async function login (address, password) {
   await web3.eth.accounts.wallet.create(0, randomHex(32))
@@ -152,8 +141,7 @@ program
       process.exit(0)
     })
 
-program
-        .command('create <password>')
+program.command('create <password>')
         .alias('c')
         .description('create wallet with given password')
         .action(async function (password) {
@@ -173,6 +161,7 @@ program
         })
 
 program.parse(process.argv)
+
 async function getBiggestStakerId () {
   let numStakers = Number(await schelling.methods.numNodes().call())
   console.log('numStakers', numStakers)
@@ -281,8 +270,8 @@ async function commit (price, secret, account) {
   }
   let epoch = Number(await schelling.methods.getEpoch.call())
   let commitment = web3.utils.soliditySha3(epoch, price, secret)
-
-  let tx = await schelling.methods.commit(epoch, commitment).send({'from': account})
+  let nonce = await web3.eth.getTransactionCount(account, 'pending')
+  let tx = await schelling.methods.commit(epoch, commitment).send({'from': account, 'nonce': nonce})
   return tx
 }
 
@@ -303,7 +292,8 @@ async function reveal (price, secret, commitAccount, account) {
   console.log('recalc', recalc)
   console.log('revealing Number(await schelling.methods.getEpoch().call()), price, secret, commitAccount', Number(await schelling.methods.getEpoch().call()), price, secret, commitAccount)
   // let commitment = web3.utils.soliditySha3((Number(await schelling.getEpoch())), amount, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9111')
-  let tx = await schelling.methods.reveal(epoch, price, secret, commitAccount).send({'from': account})
+  let nonce = await web3.eth.getTransactionCount(account, 'pending')
+  let tx = await schelling.methods.reveal(epoch, price, secret, commitAccount).send({'from': account, 'nonce': nonce})
   return tx
 }
 async function getElectedProposer () {
@@ -373,12 +363,12 @@ async function makeBlock () {
   // console.log('sevenFiveWeight', sevenFiveWeight)
 
   let i = 0
-  let twoFive = 0
-  let sevenFive = 0
+  // let twoFive = 0
+  // let sevenFive = 0
   let median = 0
   let weight = 0
-  let stakeGettingReward = 0
-  let stakeGettingPenalty = 0
+  // let stakeGettingReward = 0
+  // let stakeGettingPenalty = 0
   for (i = 0; i < sortedVotes.length; i++) {
     weight += sortedVotes[i][1]
     console.log('weight', weight)
@@ -421,7 +411,8 @@ async function propose (account) {
   console.log('epoch, median, iteration, biggestStakerId', epoch, median, iteration, biggestStakerId)
     // let tx = await schelling.reveal(1, 160, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9ddd', accounts[1], { 'from': accounts[1]})
   // let commitment = web3.utils.soliditySha3((Number(await schelling.getEpoch())), amount, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9111')
-  let tx = await schelling.methods.propose(epoch, median, iteration, biggestStakerId).send({'from': account})
+  const nonce = await web3.eth.getTransactionCount(account, 'pending')
+  let tx = await schelling.methods.propose(epoch, median, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
   return tx
 }
 
@@ -472,39 +463,6 @@ async function getPrice (api) {
   }
 }
 
-// async function main2 () {
-  // account0 = (await web3.eth.personal.getAccounts())[0]
-  // account1 = (await web3.eth.personal.getAccounts())[1]
-  // let price = await getPrice()
-  // console.log(price)
-  // console.log('account0', account0)
-  // console.log('schelling.address', schelling.address)
-  // let tx = await simpleToken.methods.approve(schelling.address, 420000).send({'from': account0})
-  // console.log(tx)
-  // await schelling.methods.setEpoch(1).send({'from': account0})
-  // await schelling.methods.setState(0).send({'from': account0})
-  //
-  // tx = await stake(420000, account0)
-  // console.log(tx)
-  // tx = await commit(160, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9111', account0)
-  // console.log(tx)
-  // await schelling.methods.setState(1).send({'from': account0})
-  // // async function reveal (price, secret, commitAccount, account) {
-  //
-  // tx = await reveal(160, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9111', account0, account0)
-  // console.log(tx)
-  // await schelling.methods.setState(2).send({'from': account0})
-  // // tx = await propose(account0)
-  // console.log(await getBiggestStakerId())
-  // console.log(await getElectedProposer())
-  // tx = await schelling.methods.propose(1, 1, 1, 1, 0, 1, 0, 1).send({'from': account0})
-  //
-  // console.log(tx)
-  // await schelling.methods.setState(3).send({'from': account0})
-  // tx = await dispute(account1)
-  // console.log(tx)
-// }
-
 async function main (account, api) {
   schelling.events.Proposed().on('data', async function (data) {
     console.log('gotcha')
@@ -546,31 +504,7 @@ async function main (account, api) {
   console.log('You have staked ', balance, ' schells')
   console.log('block #', blockHeader.number, 'epoch', epoch, 'state', state, 'account', account, 'nodeId', yourId, 'stakedBalance', balance)
   if (balance < Number((await schelling.methods.c().call()).MIN_STAKE)) throw new Error('Stake is below minimum required. Cannot vote.')
-  // console.log('staked', staked)
-  // console.log('account0', account0)
-  // console.log('account1', account1)
 
-  // if (!staking) {
-  //   if (state !== 1) {
-  //     staking = true
-  //     account00 = (await web3.eth.personal.getAccounts())[0]
-  //     account0 = (await web3.eth.personal.getAccounts())[Number(process.argv[2])]
-  //     console.log(account0, 'account0')
-  //   // account1 = (await web3.eth.personal.getAccounts())[1]
-  //     let amount = Number(process.argv[3])
-  //     console.log('amount', amount)
-  //     let tx = await simpleToken.methods.transfer(account0, amount).send({'from': account00})
-  //     console.log(tx.events)
-  //
-  //     tx = await stake(amount, account0)
-  //     console.log(tx.events)
-  //     staked = true
-  //   }
-  // } else if (staked) {
-    // let yourId = Number(await schelling.methods.nodeIds(account0).call())
-
-    // let balance = Number((await schelling.methods.nodes(yourId).call()).stake)
-    // console.log('your balance', balance)
   if (state === 0) {
     if (lastCommit < epoch) {
       lastCommit = epoch
@@ -610,8 +544,6 @@ async function main (account, api) {
   } else if (state === 2) {
     let res = await getElectedProposer()
     let electedProposer = res[0]
-    // let iteration = res[1]
-    // let biggestStakerId = res[2]
 
     let yourId = Number(await schelling.methods.nodeIds(account).call())
 
@@ -626,7 +558,6 @@ async function main (account, api) {
       console.log(tx.events)
     }
   }
-  // }
 })
 .on('error', console.error)
 }
