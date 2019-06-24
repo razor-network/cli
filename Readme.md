@@ -4,7 +4,7 @@ add api keys in keys.json
 
 make sure contracts repo is also cloned in parent dir, and contracts are compiled with truffle compile.\
 e.g. contracts are in ~/contracts and this dir is ~/cli\
-launch e.g. `node index.js s 0 1` to stake 1 schell using account id 0
+launch e.g. `node index.js s 0 1000` to stake 1000 schell using account id 0
 `node index.js t 1 1000 0`
 .command('stake <accountId> <amount>')
 .alias('s')

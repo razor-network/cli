@@ -3,22 +3,34 @@
 // apiid 0 = CMC
 // apiid 1 = kraken
 let Web3 = require('web3')
+// let {Accounts} = require('web3-eth-accounts')
 let rp = require('request-promise')
 let program = require('commander')
 let KrakenClient = require('kraken-api')
 const kraken = new KrakenClient()
-let web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545', null, {})
+let provider = 'ws://localhost:8545'
+provider2 = 'wss://rinkeby.infura.io/ws'
+let networkid = '4'
+let web3 = new Web3(Web3.givenProvider || provider2, null, {})
+const fs = require('fs').promises
+const { randomHex } = require('web3-utils')
+
+// let account = new Accounts(Web3.givenProvider || provider, null, {})
+
+// wss://rinkeby.infura.io/ws
+
 const sleep = require('util').promisify(setTimeout)
+
 let schellingBuild = require('../contracts/build/contracts/Schelling2.json')
 let keys = require('./keys.json')
 let schellingAbi = schellingBuild['abi']
-let schelling = new web3.eth.Contract(schellingAbi, schellingBuild['networks']['420'].address,
+let schelling = new web3.eth.Contract(schellingAbi, schellingBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     defaultGas: 6000000})
 
 let simpleTokenBuild = require('../contracts/build/contracts/SimpleToken.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
-let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks']['420'].address,
+let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     defaultGas: 6000000})
 
@@ -44,6 +56,7 @@ let requestOptions = {
   json: true,
   gzip: true
 }
+
 let geminiRequestOptions = {
   method: 'GET',
   uri: 'https://api.gemini.com/v1/pubticker/ethusd',
@@ -60,20 +73,31 @@ program
   .version('0.0.1')
   .description('Schelling network')
 
-
 program
-  .command('stake <accountId> <amount>')
+  .command('stake <amount> <address> <password>')
   .alias('s')
   .description('Stake some schells')
-  .action(async function (accountId, amount) {
-    let account = (await web3.eth.personal.getAccounts())[Number(accountId)]
-    let res = await stake(amount, account).catch(console.log)
-    if (res)
-    {
+  .action(async function (amount, address, password) {
+    await web3.eth.accounts.wallet.create(0, randomHex(32))
+    let rawdata = await fs.readFile('keys/' + address + '.json')
+    // console.log(rawdata)
+
+    let keystoreArray = JSON.parse(rawdata)
+    // console.log(keystoreArray)
+    let wall = await web3.eth.accounts.wallet.decrypt([keystoreArray], password)
+    console.log(wall.accounts[0].privateKey)
+
+    const pk = wall.accounts[0].privateKey
+    const account = await web3.eth.accounts.privateKeyToAccount(pk)
+    await web3.eth.accounts.wallet.add(account)
+    const from = await web3.eth.accounts.wallet.accounts[0].address
+
+    // let account = (await web3.eth.personal.getAccounts())[Number(accountId)]
+    let res = await stake(amount, from).catch(console.log)
+    if (res) {
       console.log('succesfully staked ', amount, ' schells')
       process.exit(0)
     }
-
   })
 program
     .command('unstake <accountId>')
@@ -85,6 +109,7 @@ program
       if (res) console.log('succesfully unstaked all schells')
       process.exit(0)
     })
+
 program
         .command('withdraw <accountId>')
         .alias('w')
@@ -95,6 +120,7 @@ program
           if (res) console.log('succesfully withdrew all schells')
           process.exit(0)
         })
+
 program
   .command('vote <accountId> <api>')
   .alias('v')
@@ -117,6 +143,26 @@ program
       if (res) console.log('succesfully transferred')
       process.exit(0)
     })
+
+program
+        .command('create <password>')
+        .alias('c')
+        .description('create wallet with given password')
+        .action(async function (password) {
+          let wallet = await web3.eth.accounts.create()
+        // console.log(wallet.accounts)
+        // console.log(wallet.privateKey)
+        // console.log(await web3.eth.getAccounts())
+          let walletEnc = await web3.eth.accounts.encrypt(wallet.privateKey, password)
+        // console.log(walletEnc)
+        //
+          let json = JSON.stringify(walletEnc)
+        // console.log(json)
+        //
+          await fs.writeFile(wallet.address + '.json', json, 'utf8', function () {})
+          console.log(wallet.address, 'created succesfully. fund this account with eth and sch before staking')
+          process.exit(0)
+        })
 
 program.parse(process.argv)
 async function getBiggestStakerId () {
@@ -141,24 +187,34 @@ async function transfer (to, amount, from) {
 }
 
 async function approve (to, amount, from) {
-  return simpleToken.methods.approve(to, amount).send({'from': from})
+  const nonce = await web3.eth.getTransactionCount(from, 'pending')
+  console.log(nonce)
+  let gas = await simpleToken.methods
+    .approve(to, amount)
+    .estimateGas({ from, gas: '6000000'})
+  gas = Math.round(gas * 1.5)
+
+  console.log(gas)
+
+  return simpleToken.methods.approve(to, amount).send({
+    gas,
+    from,
+    nonce})
 }
 
 async function stake (amount, account) {
   let epoch = Number(await schelling.methods.getEpoch.call())
   let state = Number(await schelling.methods.getState.call())
 
-  while(true) {
+  while (true) {
     epoch = Number(await schelling.methods.getEpoch.call())
     state = Number(await schelling.methods.getState.call())
     console.log('epoch', epoch)
     console.log('state', state)
-    if (state!==0)
-    {
+    if (state !== 0) {
       console.log('Can only stake during state 0 (commit). Retrying in 5 seconds...')
       await sleep(5000)
-    }
-    else break
+    } else break
   }
 
   console.log('account', account)
@@ -168,7 +224,20 @@ async function stake (amount, account) {
   let tx = await approve(schelling.address, amount, account)
   console.log(tx.events)
   if (tx.events.Approval.event !== 'Approval') throw new Error('Approval failed')
-  let tx2 = await schelling.methods.stake(epoch, amount).send({'from': account})
+
+  let nonce = await web3.eth.getTransactionCount(account, 'pending')
+  console.log(nonce)
+  let gas = await schelling.methods
+    .stake(epoch, amount)
+    .estimateGas({ account, gas: '6000000'})
+  gas = Math.round(gas * 1.5)
+
+  console.log(gas)
+
+  let tx2 = await schelling.methods.stake(epoch, amount).send({
+    gas,
+    account,
+    nonce})
   console.log(tx.events)
   // console.log(tx2.events.Staked.event === 'Staked')
   return (tx2.events.Staked.event === 'Staked')
@@ -431,7 +500,6 @@ async function getPrice (api) {
 // }
 
 async function main (account, api) {
-
   schelling.events.Proposed().on('data', async function (data) {
     console.log('gotcha')
     console.log(data)
@@ -451,7 +519,7 @@ async function main (account, api) {
         // stakeGettingPenalty != block[3] ||
         // stakeGettingReward != block[4]
       ) {
-      console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:'+block+'block median:',median)
+      console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:' + block + 'block median:', median)
     }
   })
   web3.eth.subscribe('newBlockHeaders', async function (error, result) {
@@ -469,7 +537,7 @@ async function main (account, api) {
   let yourId = Number(await schelling.methods.nodeIds(account).call())
 
   let balance = Number((await schelling.methods.nodes(yourId).call()).stake)
-  console.log('You have staked ', balance,' schells')
+  console.log('You have staked ', balance, ' schells')
   console.log('block #', blockHeader.number, 'epoch', epoch, 'state', state, 'account', account, 'nodeId', yourId, 'stakedBalance', balance)
   if (balance < Number((await schelling.methods.c().call()).MIN_STAKE)) throw new Error('Stake is below minimum required. Cannot vote.')
   // console.log('staked', staked)
@@ -504,7 +572,7 @@ async function main (account, api) {
       console.log('lets commit', price)
       console.log('last commit', epoch)
 
-      let secret = web3.utils.keccak256(await web3.eth.sign(web3.utils.keccak256(account,epoch), account))
+      let secret = web3.utils.keccak256(await web3.eth.sign(web3.utils.keccak256(account, epoch), account))
 
       let tx = await commit(price, secret, account)
       console.log(tx.events)
@@ -518,7 +586,7 @@ async function main (account, api) {
       let staker = await schelling.methods.nodes(yourId).call()
       console.log('stakerepochLastCommitted', Number(staker.epochLastCommitted))
       console.log('stakerepochLastRevealed', Number(staker.epochLastRevealed))
-      let secret = await web3.utils.keccak256(await web3.eth.sign(web3.utils.keccak256(account,epoch), account))
+      let secret = await web3.utils.keccak256(await web3.eth.sign(web3.utils.keccak256(account, epoch), account))
 
       let tx = await reveal(price, secret, account, account)
       console.log(tx.events)
