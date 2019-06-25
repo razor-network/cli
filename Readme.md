@@ -1,27 +1,33 @@
-npm i \
-move keys_sample.json to keys.json\
-add api keys in keys.json
+## Razor network Client
+End user client for Razor network.
+## Installation
+1.`npm i` \
+2.`mv keys_sample.json keys.json`\
+3. add api keys in keys.json
 
-make sure contracts repo is also cloned in parent dir, and contracts are compiled with truffle compile.\
+Please make sure that contracts repo is also cloned in parent directory and contracts are compiled with `truffle compile`.
 e.g. contracts are in ~/contracts and this dir is ~/cli\
-launch e.g. `node index.js s 0 1000` to stake 1000 schell using account id 0
-`node index.js t 1 1000 0`
-.command('stake <accountId> <amount>')
-.alias('s')
-.description('Stake some schells')
 
-.command('unstake <accountId>')
-.alias('u')
-.description('Unstake all schells')
+## Commands
+Run the commands in following way:
+    node index.js <commands>
+You can run following commands in CLI:
 
-.command('withdraw <accountId>')
-.alias('w')
-.description('Withdraw all schells. Make sure schells are unstaked and unlocked')
+`create <password>`  Creates a new wallet with given password. The wallets are stored in `keys/` directory.
+Fund this account with ether and schells to start participating in the network.
 
-.command('vote <accountId> <api>')
-.alias('v')
-.description('Start monitoring contract, commit, vote and propose automatically')
+    stake <amount> <address> <password>
+    vote <apiId> <address> <password>
+    unstake <address> <password>    
+    withdraw <address> <password>
+    transfer <toAddress> <fromAddress> <password>
 
-.command('transfer <to> <amount> <from>')
-.alias('t')
-.description('transfer schells')
+`<address>` is the address of the wallet generated using create command.
+
+`<apiId>`is the api to use to get ETHUSD price. 1 for Kraken, 2 for Gemini.
+
+## Example
+
+    node index.js create deadbeef
+    node index.js stake 1000 0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c deadbeef
+    node index.js vote 1 0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c deadbeef

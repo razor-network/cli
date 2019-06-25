@@ -2,7 +2,7 @@
 // apiid 0 = CMC
 // apiid 1 = kraken
 // apiid 2 = gemini
-// todo dont reveal if not committed
+// validate block in dispute state, not propose state
 
 let Web3 = require('web3')
 let rp = require('request-promise')
@@ -35,6 +35,8 @@ let price
 let lastCommit = -1
 let lastReveal = -1
 let lastProposal = -1
+let lastElection = -1
+let lastVerification = -1
 
 let requestOptions = {
   method: 'GET',
@@ -66,13 +68,13 @@ async function login (address, password) {
   let keystoreArray = JSON.parse(rawdata)
   // console.log(keystoreArray)
   let wall = await web3.eth.accounts.wallet.decrypt([keystoreArray], password)
-  console.log(wall.accounts[0].privateKey)
+  // console.log(wall.accounts[0].privateKey)
 
   let pk = wall.accounts[0].privateKey
   let account = await web3.eth.accounts.privateKeyToAccount(pk)
   await web3.eth.accounts.wallet.add(account)
   let from = await web3.eth.accounts.wallet.accounts[0].address
-  console.log('from', from)
+  console.log(from, ' unlocked')
   return (from)
 }
 
@@ -105,15 +107,15 @@ program
     })
 
 program
-        .command('withdraw <accountId>')
-        .alias('w')
-        .description('Withdraw all schells. Make sure schells are unstaked and unlocked')
-        .action(async function (accountId) {
-          let account = (await web3.eth.personal.getAccounts())[Number(accountId)]
-          let res = await withdraw(account).catch(console.log)
-          if (res) console.log('succesfully withdrew all schells')
-          process.exit(0)
-        })
+    .command('withdraw <accountId>')
+    .alias('w')
+    .description('Withdraw all schells. Make sure schells are unstaked and unlocked')
+    .action(async function (accountId) {
+      let account = (await web3.eth.personal.getAccounts())[Number(accountId)]
+      let res = await withdraw(account).catch(console.log)
+      if (res) console.log('succesfully withdrew all schells')
+      process.exit(0)
+    })
 
 program
   .command('vote <api> <account> <password>')
@@ -146,15 +148,8 @@ program.command('create <password>')
         .description('create wallet with given password')
         .action(async function (password) {
           let wallet = await web3.eth.accounts.create()
-        // console.log(wallet.accounts)
-        // console.log(wallet.privateKey)
-        // console.log(await web3.eth.getAccounts())
           let walletEnc = await web3.eth.accounts.encrypt(wallet.privateKey, password)
-        // console.log(walletEnc)
-        //
           let json = JSON.stringify(walletEnc)
-        // console.log(json)
-        //
           await fs.writeFile('keys/' + wallet.address + '.json', json, 'utf8', function () {})
           console.log(wallet.address, 'created succesfully. fund this account with eth and sch before staking')
           process.exit(0)
@@ -206,6 +201,7 @@ async function stake (amount, account) {
   let balance = Number(await simpleToken.methods.balanceOf(account).call())
   console.log('balance', balance)
   if (balance < amount) throw new Error('Not enough schells to stake')
+  console.log('Sending approve transaction...')
   let tx = await approve(schelling.address, amount, account)
   console.log(tx.events)
   if (tx.events.Approval.event !== 'Approval') throw new Error('Approval failed')
@@ -228,6 +224,7 @@ async function stake (amount, account) {
       await sleep(1000)
     } else break
   }
+  console.log('Sending stake transaction...')
 
   let tx2 = await schelling.methods.stake(epoch, amount).send({
     from: account,
@@ -276,7 +273,6 @@ async function commit (price, secret, account) {
 }
 
 async function reveal (price, secret, commitAccount, account) {
-    // let tx = await schelling.reveal(1, 160, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9ddd', accounts[1], { 'from': accounts[1]})
   if (Number(await schelling.methods.getState().call()) != 1) {
     throw ('Not reveal state')
   }
@@ -284,18 +280,19 @@ async function reveal (price, secret, commitAccount, account) {
   console.log('node', node)
   let epoch = Number(await schelling.methods.getEpoch().call())
   console.log('epoch', epoch)
-  let commitment = await schelling.methods.commitments(epoch, node).call()
+  // let commitment = await schelling.methods.commitments(epoch, node).call()
   // commitments[epoch][thisNodeId]
-  console.log('commitment', commitment)
-  console.log('price', price)
-  let recalc = web3.utils.soliditySha3(epoch, price, secret)
-  console.log('recalc', recalc)
-  console.log('revealing Number(await schelling.methods.getEpoch().call()), price, secret, commitAccount', Number(await schelling.methods.getEpoch().call()), price, secret, commitAccount)
+  // console.log('commitment', commitment)
+  // console.log('price', price)
+  // let recalc = web3.utils.soliditySha3(epoch, price, secret)
+  // console.log('recalc', recalc)
+  console.log('revealing vote', Number(await schelling.methods.getEpoch().call()), 'price', price, 'secret', secret, 'commitAccount', commitAccount)
   // let commitment = web3.utils.soliditySha3((Number(await schelling.getEpoch())), amount, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9111')
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
   let tx = await schelling.methods.reveal(epoch, price, secret, commitAccount).send({'from': account, 'nonce': nonce})
   return tx
 }
+
 async function getElectedProposer () {
   let electedProposer
   let iteration
@@ -309,12 +306,12 @@ async function getElectedProposer () {
 
     for (let k = 1; k <= numNodes; k++) { // node
       isElectedProposer = await schelling.methods.isElectedProposer(j, biggestStakerId, k).call()
-      console.log('isElectedProposer', isElectedProposer)
+      // console.log('isElectedProposer', isElectedProposer)
       if (isElectedProposer) {
         let node = await schelling.methods.nodes(k).call()
         iteration = j
         electedProposer = k
-        console.log('j,electedProposer,nodeId, stake', j, electedProposer, Number(node.id), Number(node.stake))
+        console.log('iteration', iteration, 'electedProposer', electedProposer, 'nodeId', Number(node.id), 'stake', Number(node.stake))
         break
       }
     }
@@ -345,6 +342,12 @@ async function getSortedVotes () {
     voteWeights.push([val, weight])
   }
   return [values, voteWeights]
+}
+
+async function getBlock (epoch) {
+  let block = await schelling.methods.blocks(epoch).call()
+  // console.log('block', block)
+  return (block)
 }
 
 async function makeBlock () {
@@ -464,28 +467,28 @@ async function getPrice (api) {
 }
 
 async function main (account, api) {
-  schelling.events.Proposed().on('data', async function (data) {
-    console.log('gotcha')
-    console.log(data)
-    let median = Number(data.returnValues.median)
-    // let twoFive = Number(data.returnValues.twoFive)
-    // let sevenFive = Number(data.returnValues.sevenFive)
-    // let stakeGettingPenalty = Number(data.returnValues.stakeGettingPenalty)
-    // let stakeGettingReward = Number(data.returnValues.stakeGettingReward)
-
-    let block = await makeBlock()
-    console.log('block', block)
-    // return ([median, twoFive, sevenFive, stakeGettingPenalty, stakeGettingReward])
-    if (median !== block
-      // ||
-        // twoFive !== block[1] ||
-        // sevenFive !== block[2] ||
-        // stakeGettingPenalty != block[3] ||
-        // stakeGettingReward != block[4]
-      ) {
-      console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:' + block + 'block median:', median)
-    }
-  })
+  // schelling.events.Proposed().on('data', async function (data) {
+  //   console.log('gotcha')
+  //   console.log(data)
+  //   let median = Number(data.returnValues.median)
+  //   // let twoFive = Number(data.returnValues.twoFive)
+  //   // let sevenFive = Number(data.returnValues.sevenFive)
+  //   // let stakeGettingPenalty = Number(data.returnValues.stakeGettingPenalty)
+  //   // let stakeGettingReward = Number(data.returnValues.stakeGettingReward)
+  //
+  //   let block = await makeBlock()
+  //   console.log('block', block)
+  //   // return ([median, twoFive, sevenFive, stakeGettingPenalty, stakeGettingReward])
+  //   if (median !== block
+  //     // ||
+  //       // twoFive !== block[1] ||
+  //       // sevenFive !== block[2] ||
+  //       // stakeGettingPenalty != block[3] ||
+  //       // stakeGettingReward != block[4]
+  //     ) {
+  //     console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:' + block + 'block median:', median)
+  //   }
+  // })
   web3.eth.subscribe('newBlockHeaders', async function (error, result) {
     if (!error) {
       console.log(result)
@@ -501,61 +504,94 @@ async function main (account, api) {
   let yourId = Number(await schelling.methods.nodeIds(account).call())
 
   let balance = Number((await schelling.methods.nodes(yourId).call()).stake)
-  console.log('You have staked ', balance, ' schells')
-  console.log('block #', blockHeader.number, 'epoch', epoch, 'state', state, 'account', account, 'nodeId', yourId, 'stakedBalance', balance)
+  // console.log('You have staked ', balance, ' schells')
+  console.log('Ethereum block #', blockHeader.number, 'epoch', epoch, 'state', state, 'account', account, 'nodeId', yourId, 'stakedBalance', balance)
   if (balance < Number((await schelling.methods.c().call()).MIN_STAKE)) throw new Error('Stake is below minimum required. Cannot vote.')
 
   if (state === 0) {
     if (lastCommit < epoch) {
       lastCommit = epoch
       price = await getPrice(api)
-      console.log('lets commit', price)
-      console.log('last commit', epoch)
+      // console.log('lets commit', price)
+      // console.log('last commit', epoch)
       let input = await web3.utils.soliditySha3(account, epoch)
-      console.log('input', input)
+      // console.log('input', input)
       let sig = await web3.eth.sign(input, account)
-      console.log('sig', sig.signature)
+      // console.log('sig', sig.signature)
 
       let secret = await web3.utils.soliditySha3(sig.signature)
-      console.log('secret', secret)
+      // console.log('secret', secret)
 
       let tx = await commit(price, secret, account)
       console.log(tx.events)
     }
   } else if (state === 1) {
     if (lastReveal < epoch && lastCommit === epoch) {
-      console.log('last reveal', epoch)
-      console.log('lets reveal')
+      console.log('last revealed in epoch', lastReveal)
+      // console.log('lets reveal')
       lastReveal = epoch
       let yourId = Number(await schelling.methods.nodeIds(account).call())
       let staker = await schelling.methods.nodes(yourId).call()
       console.log('stakerepochLastCommitted', Number(staker.epochLastCommitted))
-      console.log('stakerepochLastRevealed', Number(staker.epochLastRevealed))
-      let input = await web3.utils.soliditySha3(account, epoch)
-      console.log('input', input)
-      let sig = await web3.eth.sign(input, account)
-      console.log('sig', sig.signature)
+      if (Number(staker.epochLastCommitted) !== epoch) {
+        console.log('Commitment for this epoch not found on mainnet. Aborting reveal')
+      } else {
+        console.log('stakerepochLastRevealed', Number(staker.epochLastRevealed))
+        let input = await web3.utils.soliditySha3(account, epoch)
+        // console.log('input', input)
+        let sig = await web3.eth.sign(input, account)
+        // console.log('sig', sig.signature)
 
-      let secret = await web3.utils.soliditySha3(sig.signature)
-      console.log('secret', secret)
-      let tx = await reveal(price, secret, account, account)
-      console.log(tx.events)
+        let secret = await web3.utils.soliditySha3(sig.signature)
+        // console.log('secret', secret)
+        let tx = await reveal(price, secret, account, account)
+        console.log(tx.events)
+      }
     }
   } else if (state === 2) {
-    let res = await getElectedProposer()
-    let electedProposer = res[0]
+    if (lastElection < epoch) {
+      lastElection = epoch
+      let res = await getElectedProposer()
+      let electedProposer = res[0]
 
-    let yourId = Number(await schelling.methods.nodeIds(account).call())
+      let yourId = Number(await schelling.methods.nodeIds(account).call())
 
-    if (electedProposer === yourId && lastProposal < epoch) {
-      console.log('lets propose', epoch)
-      console.log('electedProposer', electedProposer)
-      console.log('yourId', yourId)
-      console.log('last propose', lastProposal)
-      lastProposal = epoch
+      if (electedProposer === yourId && lastProposal < epoch) {
+        console.log('lets propose', epoch)
+      // console.log('electedProposer', electedProposer)
+      // console.log('yourId', yourId)
+      // console.log('last propose', lastProposal)
+        lastProposal = epoch
 
-      let tx = await propose(account)
-      console.log(tx.events)
+        let tx = await propose(account)
+        console.log(tx.events)
+      }
+    }
+  } else if (state === 3) {
+    if (lastVerification < epoch) {
+      lastVerification = epoch
+      let proposedBlock = await getBlock(epoch)
+      let median = Number(proposedBlock.median)
+      console.log('median', median)
+    // let twoFive = Number(data.returnValues.twoFive)
+    // let sevenFive = Number(data.returnValues.sevenFive)
+    // let stakeGettingPenalty = Number(data.returnValues.stakeGettingPenalty)
+    // let stakeGettingReward = Number(data.returnValues.stakeGettingReward)
+
+      let block = await makeBlock()
+      console.log('block', block)
+    // return ([median, twoFive, sevenFive, stakeGettingPenalty, stakeGettingReward])
+      if (median !== block
+      // ||
+        // twoFive !== block[1] ||
+        // sevenFive !== block[2] ||
+        // stakeGettingPenalty != block[3] ||
+        // stakeGettingReward != block[4]
+      ) {
+        console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:' + block + 'block median:', median)
+      } else {
+        console.log('updated block mathes with local calculations. Will not open dispute.')
+      }
     }
   }
 })
