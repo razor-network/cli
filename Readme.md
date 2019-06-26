@@ -31,3 +31,8 @@ Fund this account with ether and schells to start participating in the network.
     node index.js create deadbeef
     node index.js stake 1000 0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c deadbeef
     node index.js vote 1 0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c deadbeef
+
+todo. add instructions to mv keys.json
+create keys dir
+set node version in packge.json
+approve only if required

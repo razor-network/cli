@@ -23,13 +23,15 @@ let keys = require('./keys.json')
 let schellingAbi = schellingBuild['abi']
 let schelling = new web3.eth.Contract(schellingAbi, schellingBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    defaultGas: 6000000})
+    defaultGas: 500000,
+    defaultGasPrice: 2000000000})
 
 let simpleTokenBuild = require('../contracts/build/contracts/SimpleToken.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    defaultGas: 6000000})
+    defaultGas: 500000,
+    defaultGasPrice: 2000000000})
 
 let price
 let lastCommit = -1
@@ -173,9 +175,18 @@ async function getBiggestStakerId () {
 }
 
 async function transfer (to, amount, from) {
-  let res = await simpleToken.methods.transfer(to, amount).send({'from': from})
+  const nonce = await web3.eth.getTransactionCount(from, 'pending')
+  console.log(nonce)
+  // let gas = await simpleToken.methods
+  //   .approve(to, amount)
+  //   .estimateGas({ from, gas: '6000000'})
+  // gas = Math.round(gas * 1.5)
+
+  // console.log(gas)
+
+  let res = await simpleToken.methods.transfer(to, amount).send({ from: from,
+    nonce: nonce})
   console.log(res)
-  return (res.events.Transfer.event === 'Transfer')
 }
 
 async function approve (to, amount, from) {
@@ -220,8 +231,8 @@ async function stake (amount, account) {
     console.log('epoch', epoch)
     console.log('state', state)
     if (state !== 0) {
-      console.log('Can only stake during state 0 (commit). Retrying in 1 second...')
-      await sleep(1000)
+      console.log('Can only stake during state 0 (commit). Retrying in 10 seconds...')
+      await sleep(10000)
     } else break
   }
   console.log('Sending stake transaction...')
@@ -286,7 +297,7 @@ async function reveal (price, secret, commitAccount, account) {
   // console.log('price', price)
   // let recalc = web3.utils.soliditySha3(epoch, price, secret)
   // console.log('recalc', recalc)
-  console.log('revealing vote', Number(await schelling.methods.getEpoch().call()), 'price', price, 'secret', secret, 'commitAccount', commitAccount)
+  console.log('revealing vote for epoch', Number(await schelling.methods.getEpoch().call()), 'price', price, 'secret', secret, 'commitAccount', commitAccount)
   // let commitment = web3.utils.soliditySha3((Number(await schelling.getEpoch())), amount, '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9111')
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
   let tx = await schelling.methods.reveal(epoch, price, secret, commitAccount).send({'from': account, 'nonce': nonce})
