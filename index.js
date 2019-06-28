@@ -210,7 +210,7 @@ async function stake (amount, account) {
 
   console.log('account', account)
   let balance = Number(await simpleToken.methods.balanceOf(account).call())
-  console.log('balance', balance)
+  console.log('balance', balance / 1e18, 'schells')
   if (balance < amount) throw new Error('Not enough schells to stake')
   console.log('Sending approve transaction...')
   let tx = await approve(schelling.address, amount, account)
@@ -340,8 +340,8 @@ async function getSortedVotes () {
 
 // get all values that stakers voted.
   for (let i = 1; i <= numNodes; i++) {
-    // console.log(await schelling.methods.votes(i).call())
     let vote = Number((await schelling.methods.votes(epoch, i).call()).value)
+    console.log(i, 'voted', vote)
     if (vote === 0) continue // didnt vote
     if (values.indexOf(vote) === -1) values.push(vote)
   }
@@ -371,29 +371,14 @@ async function makeBlock () {
   console.log('totalStakeRevealed', totalStakeRevealed)
   let medianWeight = Math.floor(totalStakeRevealed / 2)
   console.log('medianWeight', medianWeight)
-  // let twoFiveWeight = Math.floor(totalStakeRevealed / 4)
-  // console.log('twoFiveWeight', twoFiveWeight)
-  // let sevenFiveWeight = Math.floor(totalStakeRevealed * 3 / 4)
-  // console.log('sevenFiveWeight', sevenFiveWeight)
 
   let i = 0
-  // let twoFive = 0
-  // let sevenFive = 0
   let median = 0
   let weight = 0
-  // let stakeGettingReward = 0
-  // let stakeGettingPenalty = 0
   for (i = 0; i < sortedVotes.length; i++) {
     weight += sortedVotes[i][1]
     console.log('weight', weight)
-    // if (weight > twoFiveWeight && twoFive === 0) twoFive = sortedVotes[i][0]
     if (weight > medianWeight && median === 0) median = sortedVotes[i][0]
-    // if (weight >= sevenFiveWeight && sevenFive === 0) sevenFive = sortedVotes[i][0]
-    // if (twoFive === 0 || sevenFive < sortedVotes[i][0]) {
-    //   stakeGettingPenalty += sortedVotes[i][1]
-    // } else {
-    //   stakeGettingReward += sortedVotes[i][1]
-    // }
   }
   return (median)
 }
@@ -582,6 +567,8 @@ async function main (account, api) {
     if (lastVerification < epoch) {
       lastVerification = epoch
       let proposedBlock = await getBlock(epoch)
+      console.log('proposedBlock', proposedBlock)
+
       let median = Number(proposedBlock.median)
       console.log('median', median)
     // let twoFive = Number(data.returnValues.twoFive)

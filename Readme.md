@@ -3,7 +3,8 @@ End user client for Razor network.
 ## Installation
 1.`npm i` \
 2.`mv keys_sample.json keys.json`\
-3. add api keys in keys.json
+3. add api keys in keys.json\
+4. create directory 'keys'
 
 Please make sure that contracts repo is also cloned in parent directory and contracts are compiled with `truffle compile`.
 e.g. contracts are in ~/contracts and this dir is ~/cli\
@@ -32,7 +33,6 @@ Fund this account with ether and schells to start participating in the network.
     node index.js stake 1000 0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c deadbeef
     node index.js vote 1 0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c deadbeef
 
-todo. add instructions to mv keys.json
-create keys dir
 set node version in packge.json
 approve only if required
+need expiry for actions... by the the time actions are complete, it might be too late
