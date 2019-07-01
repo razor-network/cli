@@ -14,7 +14,9 @@ Run the commands in following way:
     node index.js <commands>
 You can run following commands in CLI:
 
+`-help` See a list of available commands
 `create <password>`  Creates a new wallet with given password. The wallets are stored in `keys/` directory.
+WARNING: this is not a secure method of key generation, DO NOT use it for assets on mainnet.
 Fund this account with ether and schells to start participating in the network.
 
     stake <amount> <address> <password>
@@ -33,6 +35,11 @@ Fund this account with ether and schells to start participating in the network.
     node index.js stake 1000 0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c deadbeef
     node index.js vote 1 0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c deadbeef
 
-set node version in packge.json
+    // apiid 0 = CMC
+    // apiid 1 = kraken
+    // apiid 2 = gemini
+
 approve only if required
+test unstake, withdraw, dispute
+
 need expiry for actions... by the the time actions are complete, it might be too late
