@@ -14,8 +14,8 @@ let provider2 = 'wss://rinkeby.infura.io/ws'
 let networkid = '4' // rinkeby
 let web3 = new Web3(Web3.givenProvider || provider2, null, {})
 
-let schellingBuild = require('./build/contracts/Schelling2.json')
 let keys = require('./keys.json')
+let schellingBuild = require('./build/contracts/Schelling2.json')
 let schellingAbi = schellingBuild['abi']
 let schelling = new web3.eth.Contract(schellingAbi, schellingBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
@@ -154,21 +154,21 @@ program
       })
 
 program
-        .command('create <password>')
-        .alias('c')
-        .description('create wallet with given password')
-        .action(async function (password) {
-          try {
-            let wallet = await web3.eth.accounts.create()
-            let walletEnc = await web3.eth.accounts.encrypt(wallet.privateKey, password)
-            let json = JSON.stringify(walletEnc)
-            await fs.writeFile('keys/' + wallet.address + '.json', json, 'utf8', function () {})
-            console.log(wallet.address, 'created succesfully. fund this account with ETH and SCH before staking')
-          } catch (e) {
-            console.error(e)
-          }
-          process.exit(0)
-        })
+      .command('create <password>')
+      .alias('c')
+      .description('create wallet with given password')
+      .action(async function (password) {
+        try {
+          let wallet = await web3.eth.accounts.create()
+          let walletEnc = await web3.eth.accounts.encrypt(wallet.privateKey, password)
+          let json = JSON.stringify(walletEnc)
+          await fs.writeFile('keys/' + wallet.address + '.json', json, 'utf8', function () {})
+          console.log(wallet.address, 'created succesfully. fund this account with ETH and SCH before staking')
+        } catch (e) {
+          console.error(e)
+        }
+        process.exit(0)
+      })
 
 program.parse(process.argv)
 
@@ -189,7 +189,7 @@ async function getBiggestStakerId () {
 
 async function transfer (to, amount, from) {
   const nonce = await web3.eth.getTransactionCount(from, 'pending')
-  console.log(nonce)
+  // console.log(nonce)
   // let gas = await simpleToken.methods
   //   .approve(to, amount)
   //   .estimateGas({ from, gas: '6000000'})
@@ -212,9 +212,9 @@ async function approve (to, amount, from) {
 
   // console.log(gas)
   console.log('checking allowance...')
-  let allowance = await simpleToken.methods.approve(from, to).call()
-  console.log('allowance', allowance)
-  if (allowance >= amount) {
+  let allowance = await simpleToken.methods.allowance(from, to).call()
+  console.log('allowance', Number(allowance))
+  if (Number(allowance) >= amount) {
     console.log('sufficient allowance. No need to increase')
     return
   } else {
@@ -231,10 +231,10 @@ async function stake (amount, account) {
 
   console.log('account', account)
   let balance = Number(await simpleToken.methods.balanceOf(account).call())
-  console.log('schell balance', balance / 1e18, 'schells')
+  console.log('schell balance', balance, 'schells')
   if (balance < amount) throw new Error('Not enough schells to stake')
   let ethBalance = Number(await web3.eth.getBalance(account)) / 1e18
-  console.log('ether balance', ethBalance / 1e18, 'eth')
+  console.log('ether balance', ethBalance, 'eth')
 
   if (balance < 0.01) throw new Error('Please fund this account with more ether to pay for tx fees')
 
@@ -243,7 +243,6 @@ async function stake (amount, account) {
     console.log(tx.events)
     if (tx.events.Approval.event !== 'Approval') throw new Error('Approval failed')
   }
-  let nonce = await web3.eth.getTransactionCount(account, 'pending')
   // console.log(nonce)
   // let gas = await schelling.methods
   //   .stake(epoch, amount)
@@ -262,6 +261,7 @@ async function stake (amount, account) {
     } else break
   }
   console.log('Sending stake transaction...')
+  let nonce = await web3.eth.getTransactionCount(account, 'pending')
 
   let tx2 = await schelling.methods.stake(epoch, amount).send({
     from: account,
@@ -481,6 +481,8 @@ async function getPrice (api) {
       return prr
     }).catch((err) => {
       console.log('API call error:', err.message)
+      console.log('Trying API 1')
+      return getPrice(1)
     })
   } else if (api === 1) {
     return rp(geminiRequestOptions).then(response => {
@@ -491,14 +493,21 @@ async function getPrice (api) {
       return prr
     }).catch((err) => {
       console.log('API call error:', err.message)
+      console.log('Trying API 2')
+      return getPrice(2)
     })
   } else {
-    let prr = await kraken.api('Ticker', { pair: 'XETHZUSD' })
-    prr = prr.result.XETHZUSD.c
-    if (!prr) return getPrice(0)
-    prr = Math.floor(Number(prr[0]) * 100)
-    console.log('Kraken Price', prr)
-    return prr
+    try {
+      let prr = await kraken.api('Ticker', { pair: 'XETHZUSD' })
+      prr = prr.result.XETHZUSD.c
+      if (!prr) return getPrice(0)
+      prr = Math.floor(Number(prr[0]) * 100)
+      console.log('Kraken Price', prr)
+      return prr
+    } catch (e) {
+      console.log('Trying API 1')
+      return getPrice(1)
+    }
   }
 }
 
@@ -584,7 +593,7 @@ async function main (account, api) {
           console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:' + block + 'block median:', median)
           dispute(account)
         } else {
-          console.log('Proposed median mathes with local calculations. Will not open dispute.')
+          console.log('Proposed median matches with local calculations. Will not open dispute.')
         }
       }
     }
