@@ -1,10 +1,13 @@
 let Web3 = require('web3')
+let { randomHex } = require('web3-utils')
+let fs = require('fs').promises
+let sleep = require('util').promisify(setTimeout)
 
 let provider = 'ws://localhost:8545/'
 // let provider2 = 'wss://rinkeby.infura.io/ws'
 let networkid = '420' // rinkeby
 // let networkid = '4' // rinkeby
-let web3 = new Web3(Web3.givenProvider || provider, null, {})
+let web3 = new Web3(provider, null, {})
 
 let merkle = require('@razor-network/merkle')
 let stakeManagerBuild = require('./build/contracts/StakeManager.json')
@@ -12,6 +15,8 @@ let stateManagerBuild = require('./build/contracts/StateManager.json')
 let blockManagerBuild = require('./build/contracts/BlockManager.json')
 let voteManagerBuild = require('./build/contracts/VoteManager.json')
 let constantsBuild = require('./build/contracts/Constants.json')
+let randomBuild = require('./build/contracts/Random.json')
+let numBlocks = 10
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     defaultGas: 500000,
@@ -32,6 +37,10 @@ let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['net
   {transactionConfirmationBlocks: 1,
     defaultGas: 500000,
     defaultGasPrice: 2000000000})
+let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
+  {transactionConfirmationBlocks: 1,
+    defaultGas: 500000,
+    defaultGasPrice: 2000000000})
 
 let simpleTokenBuild = require('./build/contracts/SimpleToken.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
@@ -39,7 +48,20 @@ let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networ
   {transactionConfirmationBlocks: 1,
     defaultGas: 500000,
     defaultGasPrice: 2000000000})
-    
+
+async function login (address, password) {
+  await web3.eth.accounts.wallet.create(0, randomHex(32))
+  let rawdata = await fs.readFile('keys/' + address + '.json')
+  let keystoreArray = JSON.parse(rawdata)
+  let wall = await web3.eth.accounts.wallet.decrypt([keystoreArray], password)
+  let pk = wall.accounts[0].privateKey
+  let account = await web3.eth.accounts.privateKeyToAccount(pk)
+  await web3.eth.accounts.wallet.add(account)
+  let from = await web3.eth.accounts.wallet.accounts[0].address
+  console.log(from, ' unlocked')
+  return (from)
+}
+
 async function transfer (to, amount, from) {
   const nonce = await web3.eth.getTransactionCount(from, 'pending')
   // console.log(nonce)
@@ -57,6 +79,7 @@ async function transfer (to, amount, from) {
 
 async function approve (to, amount, from) {
   const nonce = await web3.eth.getTransactionCount(from, 'pending')
+  console.log('web3.eth.version', web3.version)
   // console.log(nonce)
   // let gas = await simpleToken.methods
   //   .approve(to, amount)
@@ -64,7 +87,7 @@ async function approve (to, amount, from) {
   // gas = Math.round(gas * 1.5)
 
   // console.log(gas)
-  console.log('checking allowance...')
+  console.log('checking allowance... from, to', from, to)
   let allowance = await simpleToken.methods.allowance(from, to).call()
   console.log('allowance', Number(allowance))
   if (Number(allowance) >= amount) {
@@ -89,7 +112,7 @@ async function stake (amount, account) {
   let ethBalance = Number(await web3.eth.getBalance(account)) / 1e18
   console.log('ether balance', ethBalance, 'eth')
 
-  if (balance < 0.01) throw new Error('Please fund this account with more ether to pay for tx fees')
+  if (ethBalance < 0.01) throw new Error('Please fund this account with more ether to pay for tx fees')
 
   let tx = await approve(stakeManager.address, amount, account)
   if (tx) {
@@ -151,6 +174,7 @@ async function commit (votes, secret, account) {
     throw ('Not commit state')
   }
   // let votes = [100, 200, 300, 400, 500, 600, 700, 800, 900]
+  console.log(votes)
   let tree = merkle('keccak256').sync(votes)
      // console.log(tree.root())
   let root = tree.root()
@@ -177,7 +201,7 @@ async function reveal (votes, secret, commitAccount, account) {
   if ((await voteManager.methods.commitments(epoch, stakerId).call()) === 0) {
     throw new Error('Did not commit')
   }
-  let revealed = await voteManager.methods.votes(epoch, stakerId).call()
+  let revealed = await voteManager.methods.votes(epoch, stakerId, 0).call()
   // console.log('revealed', revealed)
   let voted = revealed.vote
   // console.log('voted', voted)
@@ -192,18 +216,20 @@ async function reveal (votes, secret, commitAccount, account) {
     proof.push(tree.getProofPath(i, true, true))
   }
   // console.log('epoch', epoch)
-  console.log('revealing vote for epoch', Number(await stateManager.methods.getEpoch().call()), 'votes', votes, 'secret', secret, 'commitAccount', commitAccount)
+  console.log('revealing vote for epoch', Number(await stateManager.methods.getEpoch().call()), 'votes', votes, 'root', root, 'proof', proof, 'secret', secret, 'commitAccount', commitAccount)
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
   let tx = await voteManager.methods.reveal(epoch, root, votes, proof, secret, commitAccount).send({'from': account, 'nonce': nonce})
+  // await voteManager.reveal(1, tree.root(), votes, proof,
+  //         '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9ddd',
+  //         accounts[1], { 'from': accounts[1] })
+
   return tx
 }
-
 
 async function getBlock (epoch) {
   let block = await blockManager.methods.blocks(epoch).call()
   return (block)
 }
-
 
 async function propose (account) {
   if (Number(await stateManager.methods.getState().call()) != 2) {
@@ -220,45 +246,42 @@ async function propose (account) {
   //     throw new Error('Already proposed')
   //   }
   // }
-  if (Number(await stateManager.methods.getState().call()) != 2) {
-    throw ('Not propose state')
-  }
   // let numStakers = Number(await blockManager.methods.numStakers().call())
   // console.log('numStakers', numStakers)
 
-        let staker = await stakeManager.methods.getStaker(1).call()
-        let numStakers = await stakeManager.methods.getNumStakers().call()
-        let stake = Number(staker.stake)
-        let stakerId = Number(staker.id)
-        // console.log('stake', stake)
+  let staker = await stakeManager.methods.getStaker(stakerId).call()
+  let numStakers = await stakeManager.methods.getNumStakers().call()
+  let stake = Number(staker.stake)
+  console.log('stake', stake)
 
-        let biggestStake = (await functions.getBiggestStakeAndId(stakeManager))[0]
-        // console.log('biggestStake', biggestStake)
-        let biggestStakerId = (await functions.getBiggestStakeAndId(stakeManager))[1]
-        // console.log('biggestStakerId', biggestStakerId)
-        let blockHashes = await random.methods.blockHashes(numBlocks).call()
-        // console.log(' biggestStake, stake, stakerId, numStakers, blockHashes', biggestStake, stake, stakerId, numStakers, blockHashes)
-        let iteration = await functions.getIteration(random, biggestStake, stake, stakerId, numStakers, blockHashes)
-        // console.log('iteration1b', iteration)
-        let nonce = await web3.eth.getTransactionCount(account, 'pending')
-
-        let tx= await blockManager.methods.propose(1, [100, 201, 300, 400, 500, 600, 700, 800, 900], iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
-
-
-
-  let res = await getIteration()
-  let electedProposer = res[0]
-  let iteration = res[1]
-  let biggestStakerId = res[2]
-  // console.log('biggestStakerId', biggestStakerId)
-  // console.log('electedProposer, iteration', electedProposer, iteration)
+  let biggestStake = (await getBiggestStakeAndId(stakeManager))[0]
+  console.log('biggestStake', biggestStake)
+  let biggestStakerId = (await getBiggestStakeAndId(stakeManager))[1]
+  console.log('biggestStakerId', biggestStakerId)
+  let blockHashes = await random.methods.blockHashes(numBlocks).call()
+  console.log(' biggestStake, stake, stakerId, numStakers, blockHashes', biggestStake, stake, stakerId, numStakers, blockHashes)
+  let iteration = await getIteration(random, biggestStake, stake, stakerId, numStakers, blockHashes)
+  console.log('iteration1', iteration)
+  let nonce = await web3.eth.getTransactionCount(account, 'pending')
   let block = await makeBlock()
-  // console.log('block', block)
-  let median = block
-  console.log('epoch, median, electedProposer, iteration, biggestStakerId', epoch, median, electedProposer, iteration, biggestStakerId)
-  const nonce = await web3.eth.getTransactionCount(account, 'pending')
-  let tx = await blockManager.methods.propose(epoch, median, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
+  console.log('epoch, block, iteration, biggestStakerId', epoch, block, iteration, biggestStakerId)
+  let tx = await blockManager.methods.propose(epoch, block, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
   return tx
+  //
+  //
+  // let res = await getIteration()
+  // let electedProposer = res[0]
+  // let iteration = res[1]
+  // let biggestStakerId = res[2]
+  // // console.log('biggestStakerId', biggestStakerId)
+  // // console.log('electedProposer, iteration', electedProposer, iteration)
+  // let block = await makeBlock()
+  // // console.log('block', block)
+  // let median = block
+  // console.log('epoch, median, electedProposer, iteration, biggestStakerId', epoch, median, electedProposer, iteration, biggestStakerId)
+  // const nonce = await web3.eth.getTransactionCount(account, 'pending')
+  // let tx = await blockManager.methods.propose(epoch, medians, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
+  // return tx
 }
 
 // automatically calculate alternative block and submit
@@ -278,24 +301,23 @@ async function dispute (account) {
     nonce: String(nonce)})
 }
 
-async function getState() {
-    return Number(await stateManager.methods.getState().call())
+async function getState () {
+  return Number(await stateManager.methods.getState().call())
 }
-async function getEpoch() {
-    return Number(await stateManager.methods.getEpoch().call())
-}
-
-async function getStakerId(address) {
-    return Number(await stakeManager.methods.stakerIds(address).call())
+async function getEpoch () {
+  return Number(await stateManager.methods.getEpoch().call())
 }
 
-async function getMinStake() {
-    return  Number((await constants.methods.minStake().call()))
+async function getStakerId (address) {
+  return Number(await stakeManager.methods.stakerIds(address).call())
 }
 
-async function getStaker(stakerId) {
-    return (await stakeManager.methods.stakers(stakerId).call())
+async function getMinStake () {
+  return Number((await constants.methods.minStake().call()))
+}
 
+async function getStaker (stakerId) {
+  return (await stakeManager.methods.stakers(stakerId).call())
 }
 
 async function getBiggestStakeAndId (stakeManager) {
@@ -354,7 +376,7 @@ async function isElectedProposer (random, iteration, biggestStake, stake, staker
   return (true)
 }
 
-async function makeBlock (stateManager, voteManager) {
+async function makeBlock () {
   let medians = []
   for (assetId = 0; assetId < 5; assetId++) {
     let res = await getSortedVotes(assetId)
@@ -363,16 +385,16 @@ async function makeBlock (stateManager, voteManager) {
     let epoch = Number(await stateManager.methods.getEpoch().call())
 
     let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
-  // console.log('totalStakeRevealed', totalStakeRevealed)
+    console.log('totalStakeRevealed', totalStakeRevealed)
     let medianWeight = Math.floor(totalStakeRevealed / 2)
-  // console.log('medianWeight', medianWeight)
+    console.log('medianWeight', medianWeight)
 
     let i = 0
     let median = 0
     let weight = 0
     for (i = 0; i < sortedVotes.length; i++) {
       weight += sortedVotes[i][1]
-    // console.log('weight', weight)
+      console.log('weight', weight)
       if (weight > medianWeight && median === 0) median = sortedVotes[i][0]
     }
     medians.push(median)
@@ -380,7 +402,7 @@ async function makeBlock (stateManager, voteManager) {
   return (medians)
 }
 
-async function getSortedVotes (stateManager, voteManager, assetId) {
+async function getSortedVotes (assetId) {
   let epoch = Number(await stateManager.methods.getEpoch().call())
 
   let numStakers = Number(await stakeManager.methods.numStakers().call())
@@ -398,7 +420,7 @@ async function getSortedVotes (stateManager, voteManager, assetId) {
 
   // get weights of those values
   for (let val of values) {
-    let weight = Number(await voteManager.methods.voteWeights(epoch, val).call())
+    let weight = Number(await voteManager.methods.voteWeights(epoch, assetId, val).call())
     voteWeights.push([val, weight])
   }
   return [values, voteWeights]
@@ -423,26 +445,31 @@ async function getStake (stakerId) {
   return Number((await stakeManager.methods.stakers(stakerId).call()).stake)
 }
 
-
-module.exports = {
-    transfer: transfer,
-    approve: approve,
-    stake:stake,
-    commit:commit,
-    reveal:reveal,
-    propose: propose,
-    dispute: dispute,
-    getState:getState,
-    getEpoch:getEpoch,
-    getStakerId: getStakerId,
-    getMinStake: getMinStake,
-    getStaker: getStaker,
-    getStake: getStake,
-    getBiggestStakerId: getBiggestStakerId,
-    getBiggestStakeAndId: getBiggestStakeAndId,
-    prng: prng,
-    prngHash: prngHash,
-    getIteration: getIteration,
-    isElectedProposer: isElectedProposer
+async function sign (input, account) {
+  return await web3.eth.sign(input, account)
 }
-
+module.exports = {
+  login: login,
+  sign: sign,
+  transfer: transfer,
+  approve: approve,
+  stake: stake,
+  commit: commit,
+  reveal: reveal,
+  propose: propose,
+  dispute: dispute,
+  getState: getState,
+  getEpoch: getEpoch,
+  getStakerId: getStakerId,
+  getMinStake: getMinStake,
+  getStaker: getStaker,
+  getStake: getStake,
+  getBiggestStakerId: getBiggestStakerId,
+  getBiggestStakeAndId: getBiggestStakeAndId,
+  getBlock: getBlock,
+  prng: prng,
+  prngHash: prngHash,
+  getIteration: getIteration,
+  isElectedProposer: isElectedProposer,
+  makeBlock: makeBlock
+}
