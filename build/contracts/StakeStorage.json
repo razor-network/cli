@@ -1,0 +1,673 @@
+{
+  "contractName": "StakeStorage",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "stakeGettingReward",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "rewardPool",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "numStakers",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "stakerIds",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "stakers",
+      "outputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "name": "stake",
+          "type": "uint256"
+        },
+        {
+          "name": "epochStaked",
+          "type": "uint256"
+        },
+        {
+          "name": "epochLastCommitted",
+          "type": "uint256"
+        },
+        {
+          "name": "epochLastRevealed",
+          "type": "uint256"
+        },
+        {
+          "name": "unstakeAfter",
+          "type": "uint256"
+        },
+        {
+          "name": "withdrawAfter",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"stakeGettingReward\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"rewardPool\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"numStakers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"stakerIds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"stakers\",\"outputs\":[{\"name\":\"id\",\"type\":\"uint256\"},{\"name\":\"stake\",\"type\":\"uint256\"},{\"name\":\"epochStaked\",\"type\":\"uint256\"},{\"name\":\"epochLastCommitted\",\"type\":\"uint256\"},{\"name\":\"epochLastRevealed\",\"type\":\"uint256\"},{\"name\":\"unstakeAfter\",\"type\":\"uint256\"},{\"name\":\"withdrawAfter\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol\":\"StakeStorage\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol\":{\"keccak256\":\"0xc744cd706f6f16a69c09237f962111301327b721e884edac69c5661085d48022\",\"urls\":[\"bzzr://bc51b3f253fe060ac9c68b055f94838219fc7688ba966002cb1fea89a24fb117\",\"dweb:/ipfs/Qmaq5gRx98R3t9ufegAfHihp8Mh3xV44VmNCbGMKythmAd\"]},\"/Users/hrishi/contracts/contracts/lib/Structs.sol\":{\"keccak256\":\"0xb561da250e2f63c963bde1efac15863c3abf1d668e33e2a4a80c047b5128d704\",\"urls\":[\"bzzr://4d23274d3472bb466177653ee2e1db267d7ac2bb31d3702cdff7a797f35289eb\",\"dweb:/ipfs/QmXCkyfNe1xuDSgiYSvv6TVH37yUVjGqHd6U9dgn1AD8j1\"]}},\"version\":1}",
+  "bytecode": "0x608060405260006002556000600355600060045534801561001f57600080fd5b5061021b8061002f6000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80630ec88d3f1461005c57806366666aa91461007a5780636c8b052a14610098578063c8ae0d7d146100b6578063fd5e6dd11461010e575b600080fd5b61006461017a565b6040518082815260200191505060405180910390f35b610082610180565b6040518082815260200191505060405180910390f35b6100a0610186565b6040518082815260200191505060405180910390f35b6100f8600480360360208110156100cc57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061018c565b6040518082815260200191505060405180910390f35b61013a6004803603602081101561012457600080fd5b81019080803590602001909291905050506101a4565b6040518088815260200187815260200186815260200185815260200184815260200183815260200182815260200197505050505050505060405180910390f35b60045481565b60035481565b60025481565b60006020528060005260406000206000915090505481565b6001602052806000526040600020600091509050806000015490806001015490806002015490806003015490806004015490806005015490806006015490508756fea265627a7a7230582011a2025b6a8fd1fd80dfc49dbf5619a0d6b2196c5cb95d8613bb14968866aaf164736f6c634300050a0032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c80630ec88d3f1461005c57806366666aa91461007a5780636c8b052a14610098578063c8ae0d7d146100b6578063fd5e6dd11461010e575b600080fd5b61006461017a565b6040518082815260200191505060405180910390f35b610082610180565b6040518082815260200191505060405180910390f35b6100a0610186565b6040518082815260200191505060405180910390f35b6100f8600480360360208110156100cc57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061018c565b6040518082815260200191505060405180910390f35b61013a6004803603602081101561012457600080fd5b81019080803590602001909291905050506101a4565b6040518088815260200187815260200186815260200185815260200184815260200183815260200182815260200197505050505050505060405180910390f35b60045481565b60035481565b60025481565b60006020528060005260406000206000915090505481565b6001602052806000526040600020600091509050806000015490806001015490806002015490806003015490806004015490806005015490806006015490508756fea265627a7a7230582011a2025b6a8fd1fd80dfc49dbf5619a0d6b2196c5cb95d8613bb14968866aaf164736f6c634300050a0032",
+  "sourceMap": "55:354:7:-;;;254:1;226:29;;320:1;292:29;;363:1;327:37;;55:354;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:354:7;;;;;;;",
+  "deployedSourceMap": "55:354:7:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:354:7;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;327:37;;;:::i;:::-;;;;;;;;;;;;;;;;;;;292:29;;;:::i;:::-;;;;;;;;;;;;;;;;;;;226;;;:::i;:::-;;;;;;;;;;;;;;;;;;;119:45;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;119:45:7;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;170:50;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;170:50:7;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;327:37;;;;:::o;292:29::-;;;;:::o;226:::-;;;;:::o;119:45::-;;;;;;;;;;;;;;;;;:::o;170:50::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity 0.5.10;\nimport \"../lib/Structs.sol\";\n\n\ncontract StakeStorage {\n\n    // Constants public constants;\n    mapping (address => uint256) public stakerIds;\n    mapping (uint256 => Structs.Staker) public stakers;\n    uint256 public numStakers = 0;\n    // SimpleToken public sch;\n    uint256 public rewardPool = 0;\n    uint256 public stakeGettingReward = 0;\n\n       // uint256 public totalStake = 0;\n}\n",
+  "sourcePath": "/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol",
+  "ast": {
+    "absolutePath": "/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol",
+    "exportedSymbols": {
+      "StakeStorage": [
+        2122
+      ]
+    },
+    "id": 2123,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2103,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:7"
+      },
+      {
+        "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
+        "file": "../lib/Structs.sol",
+        "id": 2104,
+        "nodeType": "ImportDirective",
+        "scope": 2123,
+        "sourceUnit": 3154,
+        "src": "24:28:7",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2122,
+        "linearizedBaseContracts": [
+          2122
+        ],
+        "name": "StakeStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 2108,
+            "name": "stakerIds",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "119:45:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+              "typeString": "mapping(address => uint256)"
+            },
+            "typeName": {
+              "id": 2107,
+              "keyType": {
+                "id": 2105,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "128:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "119:28:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                "typeString": "mapping(address => uint256)"
+              },
+              "valueType": {
+                "id": 2106,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "139:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 2112,
+            "name": "stakers",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "170:50:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$3131_storage_$",
+              "typeString": "mapping(uint256 => struct Structs.Staker)"
+            },
+            "typeName": {
+              "id": 2111,
+              "keyType": {
+                "id": 2109,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "179:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "170:35:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$3131_storage_$",
+                "typeString": "mapping(uint256 => struct Structs.Staker)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 2110,
+                "name": "Structs.Staker",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 3131,
+                "src": "190:14:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Staker_$3131_storage_ptr",
+                  "typeString": "struct Structs.Staker"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 2115,
+            "name": "numStakers",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "226:29:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 2113,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "226:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 2114,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "254:1:7",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 2118,
+            "name": "rewardPool",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "292:29:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 2116,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "292:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 2117,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "320:1:7",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 2121,
+            "name": "stakeGettingReward",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "327:37:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 2119,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "327:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 2120,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "363:1:7",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          }
+        ],
+        "scope": 2123,
+        "src": "55:354:7"
+      }
+    ],
+    "src": "0:410:7"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol",
+    "exportedSymbols": {
+      "StakeStorage": [
+        2122
+      ]
+    },
+    "id": 2123,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2103,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:7"
+      },
+      {
+        "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
+        "file": "../lib/Structs.sol",
+        "id": 2104,
+        "nodeType": "ImportDirective",
+        "scope": 2123,
+        "sourceUnit": 3154,
+        "src": "24:28:7",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2122,
+        "linearizedBaseContracts": [
+          2122
+        ],
+        "name": "StakeStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 2108,
+            "name": "stakerIds",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "119:45:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+              "typeString": "mapping(address => uint256)"
+            },
+            "typeName": {
+              "id": 2107,
+              "keyType": {
+                "id": 2105,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "128:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "119:28:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                "typeString": "mapping(address => uint256)"
+              },
+              "valueType": {
+                "id": 2106,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "139:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 2112,
+            "name": "stakers",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "170:50:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$3131_storage_$",
+              "typeString": "mapping(uint256 => struct Structs.Staker)"
+            },
+            "typeName": {
+              "id": 2111,
+              "keyType": {
+                "id": 2109,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "179:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "170:35:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$3131_storage_$",
+                "typeString": "mapping(uint256 => struct Structs.Staker)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 2110,
+                "name": "Structs.Staker",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 3131,
+                "src": "190:14:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Staker_$3131_storage_ptr",
+                  "typeString": "struct Structs.Staker"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 2115,
+            "name": "numStakers",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "226:29:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 2113,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "226:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 2114,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "254:1:7",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 2118,
+            "name": "rewardPool",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "292:29:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 2116,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "292:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 2117,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "320:1:7",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 2121,
+            "name": "stakeGettingReward",
+            "nodeType": "VariableDeclaration",
+            "scope": 2122,
+            "src": "327:37:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 2119,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "327:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 2120,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "363:1:7",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          }
+        ],
+        "scope": 2123,
+        "src": "55:354:7"
+      }
+    ],
+    "src": "0:410:7"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2019-08-10T06:21:05.243Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
