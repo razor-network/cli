@@ -3,10 +3,10 @@ let { randomHex } = require('web3-utils')
 let fs = require('fs').promises
 let sleep = require('util').promisify(setTimeout)
 
-let provider = 'ws://localhost:8545/'
-// let provider2 = 'wss://rinkeby.infura.io/ws'
-let networkid = '420' // rinkeby
-// let networkid = '4' // rinkeby
+// let provider = 'ws://localhost:8545/'
+let provider = 'wss://rinkeby.infura.io/ws'
+// let networkid = '420' // rinkeby
+let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 let merkle = require('@razor-network/merkle')
@@ -381,20 +381,20 @@ async function makeBlock () {
   for (assetId = 0; assetId < 5; assetId++) {
     let res = await getSortedVotes(assetId)
     let sortedVotes = res[1]
-    console.log('sortedVotes', sortedVotes)
+    // console.log('sortedVotes', sortedVotes)
     let epoch = Number(await stateManager.methods.getEpoch().call())
 
     let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
-    console.log('totalStakeRevealed', totalStakeRevealed)
+    // console.log('totalStakeRevealed', totalStakeRevealed)
     let medianWeight = Math.floor(totalStakeRevealed / 2)
-    console.log('medianWeight', medianWeight)
+    // console.log('medianWeight', medianWeight)
 
     let i = 0
     let median = 0
     let weight = 0
     for (i = 0; i < sortedVotes.length; i++) {
       weight += sortedVotes[i][1]
-      console.log('weight', weight)
+      // console.log('weight', weight)
       if (weight > medianWeight && median === 0) median = sortedVotes[i][0]
     }
     medians.push(median)
@@ -445,6 +445,16 @@ async function getStake (stakerId) {
   return Number((await stakeManager.methods.stakers(stakerId).call()).stake)
 }
 
+async function getProposedBlockMedians (epoch, proposedBlock) {
+  return (await blockManager.methods.getProposedBlockMedians(epoch, proposedBlock).call())
+}
+async function getProposedBlock (epoch, proposedBlock) {
+  return (await blockManager.methods.getProposedBlock(epoch, proposedBlock).call())
+}
+async function getNumProposedBlocks (epoch) {
+  return (await blockManager.methods.getNumProposedBlocks(epoch).call())
+}
+
 async function sign (input, account) {
   return await web3.eth.sign(input, account)
 }
@@ -471,5 +481,8 @@ module.exports = {
   prngHash: prngHash,
   getIteration: getIteration,
   isElectedProposer: isElectedProposer,
-  makeBlock: makeBlock
+  makeBlock: makeBlock,
+  getProposedBlockMedians: getProposedBlockMedians,
+  getProposedBlock: getProposedBlock,
+  getNumProposedBlocks: getNumProposedBlocks
 }

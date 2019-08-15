@@ -114,14 +114,14 @@
     "absolutePath": "/Users/hrishi/contracts/contracts/Schelling4/BlockStorage.sol",
     "exportedSymbols": {
       "BlockStorage": [
-        877
+        992
       ]
     },
-    "id": 878,
+    "id": 993,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 859,
+        "id": 974,
         "literals": [
           "solidity",
           "0.5",
@@ -131,7 +131,7 @@
         "src": "0:23:2"
       },
       {
-        "id": 860,
+        "id": 975,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -142,10 +142,10 @@
       {
         "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
         "file": "../lib/Structs.sol",
-        "id": 861,
+        "id": 976,
         "nodeType": "ImportDirective",
-        "scope": 878,
-        "sourceUnit": 3154,
+        "scope": 993,
+        "sourceUnit": 3517,
         "src": "59:28:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -156,30 +156,30 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 877,
+        "id": 992,
         "linearizedBaseContracts": [
-          877
+          992
         ],
         "name": "BlockStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 867,
+            "id": 982,
             "name": "disputes",
             "nodeType": "VariableDeclaration",
-            "scope": 877,
+            "scope": 992,
             "src": "157:73:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$3152_storage_$_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$3515_storage_$_$",
               "typeString": "mapping(uint256 => mapping(address => struct Structs.Dispute))"
             },
             "typeName": {
-              "id": 866,
+              "id": 981,
               "keyType": {
-                "id": 862,
+                "id": 977,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "166:7:2",
@@ -191,13 +191,13 @@
               "nodeType": "Mapping",
               "src": "157:57:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$3152_storage_$_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$3515_storage_$_$",
                 "typeString": "mapping(uint256 => mapping(address => struct Structs.Dispute))"
               },
               "valueType": {
-                "id": 865,
+                "id": 980,
                 "keyType": {
-                  "id": 863,
+                  "id": 978,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "186:7:2",
@@ -209,18 +209,18 @@
                 "nodeType": "Mapping",
                 "src": "177:36:2",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Dispute_$3152_storage_$",
+                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Dispute_$3515_storage_$",
                   "typeString": "mapping(address => struct Structs.Dispute)"
                 },
                 "valueType": {
                   "contractScope": null,
-                  "id": 864,
+                  "id": 979,
                   "name": "Structs.Dispute",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 3152,
+                  "referencedDeclaration": 3515,
                   "src": "197:15:2",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Dispute_$3152_storage_ptr",
+                    "typeIdentifier": "t_struct$_Dispute_$3515_storage_ptr",
                     "typeString": "struct Structs.Dispute"
                   }
                 }
@@ -231,21 +231,21 @@
           },
           {
             "constant": false,
-            "id": 872,
+            "id": 987,
             "name": "proposedBlocks",
             "nodeType": "VariableDeclaration",
-            "scope": 877,
+            "scope": 992,
             "src": "370:58:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$3143_storage_$dyn_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$3506_storage_$dyn_storage_$",
               "typeString": "mapping(uint256 => struct Structs.Block[])"
             },
             "typeName": {
-              "id": 871,
+              "id": 986,
               "keyType": {
-                "id": 868,
+                "id": 983,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "379:7:2",
@@ -257,28 +257,28 @@
               "nodeType": "Mapping",
               "src": "370:36:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$3143_storage_$dyn_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$3506_storage_$dyn_storage_$",
                 "typeString": "mapping(uint256 => struct Structs.Block[])"
               },
               "valueType": {
                 "baseType": {
                   "contractScope": null,
-                  "id": 869,
+                  "id": 984,
                   "name": "Structs.Block",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 3143,
+                  "referencedDeclaration": 3506,
                   "src": "390:13:2",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Block_$3143_storage_ptr",
+                    "typeIdentifier": "t_struct$_Block_$3506_storage_ptr",
                     "typeString": "struct Structs.Block"
                   }
                 },
-                "id": 870,
+                "id": 985,
                 "length": null,
                 "nodeType": "ArrayTypeName",
                 "src": "390:15:2",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_Block_$3143_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_Block_$3506_storage_$dyn_storage_ptr",
                   "typeString": "struct Structs.Block[]"
                 }
               }
@@ -288,21 +288,21 @@
           },
           {
             "constant": false,
-            "id": 876,
+            "id": 991,
             "name": "blocks",
             "nodeType": "VariableDeclaration",
-            "scope": 877,
+            "scope": 992,
             "src": "434:48:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$3143_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$3506_storage_$",
               "typeString": "mapping(uint256 => struct Structs.Block)"
             },
             "typeName": {
-              "id": 875,
+              "id": 990,
               "keyType": {
-                "id": 873,
+                "id": 988,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "443:7:2",
@@ -314,18 +314,18 @@
               "nodeType": "Mapping",
               "src": "434:34:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$3143_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$3506_storage_$",
                 "typeString": "mapping(uint256 => struct Structs.Block)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 874,
+                "id": 989,
                 "name": "Structs.Block",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 3143,
+                "referencedDeclaration": 3506,
                 "src": "454:13:2",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Block_$3143_storage_ptr",
+                  "typeIdentifier": "t_struct$_Block_$3506_storage_ptr",
                   "typeString": "struct Structs.Block"
                 }
               }
@@ -334,7 +334,7 @@
             "visibility": "public"
           }
         ],
-        "scope": 878,
+        "scope": 993,
         "src": "90:530:2"
       }
     ],
@@ -344,14 +344,14 @@
     "absolutePath": "/Users/hrishi/contracts/contracts/Schelling4/BlockStorage.sol",
     "exportedSymbols": {
       "BlockStorage": [
-        877
+        992
       ]
     },
-    "id": 878,
+    "id": 993,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 859,
+        "id": 974,
         "literals": [
           "solidity",
           "0.5",
@@ -361,7 +361,7 @@
         "src": "0:23:2"
       },
       {
-        "id": 860,
+        "id": 975,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -372,10 +372,10 @@
       {
         "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
         "file": "../lib/Structs.sol",
-        "id": 861,
+        "id": 976,
         "nodeType": "ImportDirective",
-        "scope": 878,
-        "sourceUnit": 3154,
+        "scope": 993,
+        "sourceUnit": 3517,
         "src": "59:28:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -386,30 +386,30 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 877,
+        "id": 992,
         "linearizedBaseContracts": [
-          877
+          992
         ],
         "name": "BlockStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 867,
+            "id": 982,
             "name": "disputes",
             "nodeType": "VariableDeclaration",
-            "scope": 877,
+            "scope": 992,
             "src": "157:73:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$3152_storage_$_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$3515_storage_$_$",
               "typeString": "mapping(uint256 => mapping(address => struct Structs.Dispute))"
             },
             "typeName": {
-              "id": 866,
+              "id": 981,
               "keyType": {
-                "id": 862,
+                "id": 977,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "166:7:2",
@@ -421,13 +421,13 @@
               "nodeType": "Mapping",
               "src": "157:57:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$3152_storage_$_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$3515_storage_$_$",
                 "typeString": "mapping(uint256 => mapping(address => struct Structs.Dispute))"
               },
               "valueType": {
-                "id": 865,
+                "id": 980,
                 "keyType": {
-                  "id": 863,
+                  "id": 978,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "186:7:2",
@@ -439,18 +439,18 @@
                 "nodeType": "Mapping",
                 "src": "177:36:2",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Dispute_$3152_storage_$",
+                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Dispute_$3515_storage_$",
                   "typeString": "mapping(address => struct Structs.Dispute)"
                 },
                 "valueType": {
                   "contractScope": null,
-                  "id": 864,
+                  "id": 979,
                   "name": "Structs.Dispute",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 3152,
+                  "referencedDeclaration": 3515,
                   "src": "197:15:2",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Dispute_$3152_storage_ptr",
+                    "typeIdentifier": "t_struct$_Dispute_$3515_storage_ptr",
                     "typeString": "struct Structs.Dispute"
                   }
                 }
@@ -461,21 +461,21 @@
           },
           {
             "constant": false,
-            "id": 872,
+            "id": 987,
             "name": "proposedBlocks",
             "nodeType": "VariableDeclaration",
-            "scope": 877,
+            "scope": 992,
             "src": "370:58:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$3143_storage_$dyn_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$3506_storage_$dyn_storage_$",
               "typeString": "mapping(uint256 => struct Structs.Block[])"
             },
             "typeName": {
-              "id": 871,
+              "id": 986,
               "keyType": {
-                "id": 868,
+                "id": 983,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "379:7:2",
@@ -487,28 +487,28 @@
               "nodeType": "Mapping",
               "src": "370:36:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$3143_storage_$dyn_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$3506_storage_$dyn_storage_$",
                 "typeString": "mapping(uint256 => struct Structs.Block[])"
               },
               "valueType": {
                 "baseType": {
                   "contractScope": null,
-                  "id": 869,
+                  "id": 984,
                   "name": "Structs.Block",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 3143,
+                  "referencedDeclaration": 3506,
                   "src": "390:13:2",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Block_$3143_storage_ptr",
+                    "typeIdentifier": "t_struct$_Block_$3506_storage_ptr",
                     "typeString": "struct Structs.Block"
                   }
                 },
-                "id": 870,
+                "id": 985,
                 "length": null,
                 "nodeType": "ArrayTypeName",
                 "src": "390:15:2",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_Block_$3143_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_Block_$3506_storage_$dyn_storage_ptr",
                   "typeString": "struct Structs.Block[]"
                 }
               }
@@ -518,21 +518,21 @@
           },
           {
             "constant": false,
-            "id": 876,
+            "id": 991,
             "name": "blocks",
             "nodeType": "VariableDeclaration",
-            "scope": 877,
+            "scope": 992,
             "src": "434:48:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$3143_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$3506_storage_$",
               "typeString": "mapping(uint256 => struct Structs.Block)"
             },
             "typeName": {
-              "id": 875,
+              "id": 990,
               "keyType": {
-                "id": 873,
+                "id": 988,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "443:7:2",
@@ -544,18 +544,18 @@
               "nodeType": "Mapping",
               "src": "434:34:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$3143_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$3506_storage_$",
                 "typeString": "mapping(uint256 => struct Structs.Block)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 874,
+                "id": 989,
                 "name": "Structs.Block",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 3143,
+                "referencedDeclaration": 3506,
                 "src": "454:13:2",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Block_$3143_storage_ptr",
+                  "typeIdentifier": "t_struct$_Block_$3506_storage_ptr",
                   "typeString": "struct Structs.Block"
                 }
               }
@@ -564,7 +564,7 @@
             "visibility": "public"
           }
         ],
-        "scope": 878,
+        "scope": 993,
         "src": "90:530:2"
       }
     ],
@@ -576,7 +576,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-08-10T06:21:05.225Z",
+  "updatedAt": "2019-08-14T16:33:49.606Z",
   "devdoc": {
     "methods": {}
   },

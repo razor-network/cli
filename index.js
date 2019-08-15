@@ -9,10 +9,10 @@ let fs = require('fs').promises
 let sleep = require('util').promisify(setTimeout)
 let api = require('./api')
 
-let provider = 'ws://localhost:8545/'
-// let provider2 = 'wss://rinkeby.infura.io/ws'
-let networkid = '420' // rinkeby
-// let networkid = '4' // rinkeby
+// let provider = 'ws://localhost:8545/'
+let provider = 'wss://rinkeby.infura.io/ws'
+// let networkid = '420' // rinkeby
+let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 let keys = require('./keys.json')
@@ -188,8 +188,8 @@ async function getEthPrice (priceApi) {
       console.log('Kraken Price', prr)
       return prr
     } catch (e) {
-      console.log('Trying API 1')
-      return getEthPrice(1)
+      console.log('Trying API 0')
+      return getEthPrice(0)
     }
   }
 }
@@ -228,8 +228,8 @@ async function getBtcPrice (priceApi) {
       console.log('Kraken btc Price', prr)
       return prr
     } catch (e) {
-      console.log('Trying API 1')
-      return getBtcPrice(1)
+      console.log('Trying API 0')
+      return getBtcPrice(0)
     }
   }
 }
@@ -256,8 +256,8 @@ async function main (account, priceApi) {
     if (state === 0) {
       if (lastCommit < epoch) {
         lastCommit = epoch
-        priceEth = await getEthPrice(api)
-        priceBtc = await getBtcPrice(api)
+        priceEth = await getEthPrice(priceApi)
+        priceBtc = await getBtcPrice(priceApi)
         let input = await web3.utils.soliditySha3(account, epoch)
         let sig = await api.sign(input, account)
 
@@ -298,23 +298,27 @@ async function main (account, priceApi) {
         }
       }
     } else if (state === 3) {
-      // if (lastVerification < epoch) {
-      //   lastVerification = epoch
-      //   let blockMedians = await api.getBlockMedians(epoch)
-      // // console.log('proposedBlock', proposedBlock)
-      //
-      //   let median = Number(proposedBlock.median)
-      //   console.log('Median proposed in block', median)
-      //
-      //   let block = await api.makeBlock()
-      //   console.log('Locally calculated median', block)
-      //   if (medians !== block) {
-      //     console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:' + block + 'block medians:', medians)
-      //     await api.dispute(account)
-      //   } else {
-      //     console.log('Proposed median matches with local calculations. Will not open dispute.')
-      //   }
-      // }
+      if (lastVerification < epoch) {
+        lastVerification = epoch
+        let numProposedBlocks = await api.getNumProposedBlocks(epoch)
+        for (let i = 0; i < numProposedBlocks; i++) {
+          let blockMedians = await api.getProposedBlockMedians(epoch, i)
+
+      // console.log('proposedBlock', proposedBlock)
+
+          let medians = blockMedians.map(Number)
+          console.log('Medians proposed in block', medians)
+
+          let block = await api.makeBlock()
+          console.log('Locally calculated medians', block)
+          if (JSON.stringify(medians) !== JSON.stringify(block)) {
+            console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:' + block + 'block medians:', medians)
+            await api.dispute(account)
+          } else {
+            console.log('Proposed median matches with local calculations. Will not open dispute.')
+          }
+        }
+      }
     }
   } catch (e) {
     console.error(e)

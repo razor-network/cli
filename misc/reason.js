@@ -2,8 +2,8 @@
 
 const ethers = require('ethers')
 // const provider = ethers.getDefaultProvider('rinkeby')
-// const provider = new ethers.providers.JsonRpcProvider(process.env.WEB3_URL)
-const provider = new ethers.providers.InfuraProvider(network = 'rinkeby')
+const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545')
+// const provider = new ethers.providers.InfuraProvider(network = 'rinkeby')
 
 function hex_to_ascii (str1) {
   var hex = str1.toString()
@@ -21,10 +21,12 @@ async function reason () {
   // console.log('provider:', process.env.WEB3_URL)
 
   let tx = await provider.getTransaction(hash)
+  console.log('tx', tx)
   if (!tx) {
     console.log('tx not found')
   } else {
     let code = await provider.call(tx, tx.blockNumber)
+    console.log('code', code)
     let reason = hex_to_ascii(code.substr(138))
     console.log('revert reason:', reason)
   }
