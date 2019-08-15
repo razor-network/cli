@@ -5,12 +5,15 @@ let rp = require('request-promise')
 let program = require('commander')
 let KrakenClient = require('kraken-api')
 let kraken = new KrakenClient()
-let fs = require('fs').promises
+let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 let api = require('./api')
 
 // let provider = 'ws://localhost:8545/'
-let provider = 'wss://rinkeby.infura.io/ws'
+
+const infuraKey = fs.readFileSync('.infura').toString().trim()
+let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+console.log('provider',provider)
 // let networkid = '420' // rinkeby
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})

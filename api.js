@@ -1,10 +1,10 @@
 let Web3 = require('web3')
 let { randomHex } = require('web3-utils')
-let fs = require('fs').promises
+let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
-// let provider = 'ws://localhost:8545/'
-let provider = 'wss://rinkeby.infura.io/ws'
+const infuraKey = fs.readFileSync('.infura').toString().trim()
+let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
 // let networkid = '420' // rinkeby
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
@@ -51,7 +51,7 @@ let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networ
 
 async function login (address, password) {
   await web3.eth.accounts.wallet.create(0, randomHex(32))
-  let rawdata = await fs.readFile('keys/' + address + '.json')
+  let rawdata = await fs.readFileSync('keys/' + address + '.json')
   let keystoreArray = JSON.parse(rawdata)
   let wall = await web3.eth.accounts.wallet.decrypt([keystoreArray], password)
   let pk = wall.accounts[0].privateKey
