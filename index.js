@@ -130,7 +130,7 @@ program
         try {
           await api.login(from, password)
 
-          let res = await api.ransfer(to, amount, from).catch(console.log)
+          let res = await api.transfer(to, amount, from).catch(console.log)
           if (res) console.log('succesfully transferred')
         } catch (e) {
           console.error(e)
@@ -147,7 +147,7 @@ program
           let wallet = await web3.eth.accounts.create()
           let walletEnc = await web3.eth.accounts.encrypt(wallet.privateKey, password)
           let json = JSON.stringify(walletEnc)
-          await fs.writeFile('keys/' + wallet.address + '.json', json, 'utf8', function () {})
+          fs.writeFileSync('keys/' + wallet.address + '.json', json, 'utf8', function () {})
           console.log(wallet.address, 'created succesfully. fund this account with ETH and SCH before staking')
         } catch (e) {
           console.error(e)
