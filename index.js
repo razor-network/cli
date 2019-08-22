@@ -5,12 +5,15 @@ let rp = require('request-promise')
 let program = require('commander')
 let KrakenClient = require('kraken-api')
 let kraken = new KrakenClient()
-let fs = require('fs').promises
+let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 let api = require('./api')
 
 // let provider = 'ws://localhost:8545/'
-let provider = 'wss://rinkeby.infura.io/ws'
+
+const infuraKey = fs.readFileSync('.infura').toString().trim()
+let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+console.log('provider',provider)
 // let networkid = '420' // rinkeby
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
@@ -127,7 +130,7 @@ program
         try {
           await api.login(from, password)
 
-          let res = await api.ransfer(to, amount, from).catch(console.log)
+          let res = await api.transfer(to, amount, from).catch(console.log)
           if (res) console.log('succesfully transferred')
         } catch (e) {
           console.error(e)
@@ -144,7 +147,7 @@ program
           let wallet = await web3.eth.accounts.create()
           let walletEnc = await web3.eth.accounts.encrypt(wallet.privateKey, password)
           let json = JSON.stringify(walletEnc)
-          await fs.writeFile('keys/' + wallet.address + '.json', json, 'utf8', function () {})
+          fs.writeFileSync('keys/' + wallet.address + '.json', json, 'utf8', function () {})
           console.log(wallet.address, 'created succesfully. fund this account with ETH and SCH before staking')
         } catch (e) {
           console.error(e)
