@@ -13,7 +13,7 @@ let api = require('./api')
 
 const infuraKey = fs.readFileSync('.infura').toString().trim()
 let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-console.log('provider',provider)
+console.log('provider', provider)
 // let networkid = '420' // rinkeby
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
@@ -236,16 +236,60 @@ async function getBtcPrice (priceApi) {
     }
   }
 }
-async function main (account, priceApi) {
+
+let isWatchingEvents = false
+
+function main (account, priceApi) {
   web3.eth.subscribe('newBlockHeaders', async function (error, result) {
     if (!error) {
       console.log(result)
       return
     }
-    throw (error)
+    console.error(error)
   })
-.on('data', async function (blockHeader) {
-  // commit
+     .on('data', function (blockHeader) {
+       // console.log('block', blockHeader)
+       handleBlock(blockHeader, account, priceApi)
+     })
+     .on('error', console.error)
+  console.log('subscribed')
+  isWatchingEvents = true
+}
+
+web3.currentProvider.on('error', () => {
+  console.log('error')
+
+  isWatchingEvents = false
+  restartWatchEvents()
+})
+web3.currentProvider.on('end', () => {
+  console.log('ended')
+
+  isWatchingEvents = false
+  restartWatchEvents()
+})
+web3.currentProvider.on('close', () => {
+  console.log('closed')
+
+  isWatchingEvents = false
+  restartWatchEvents()
+})
+web3.currentProvider.on('connect', () => {
+  console.log('connected')
+})
+
+function restartWatchEvents () {
+  if (isWatchingEvents) return
+
+  if (web3.currentProvider.connected) {
+    watchEvents()
+  } else {
+    console.log('Delay restartWatchEvents')
+    setTimeout(restartWatchEvents.bind(this), 60 * 1000)
+  }
+}
+
+async function handleBlock (blockHeader, account, priceApi) {
   try {
     let state = await api.getState()
     let epoch = await api.getEpoch()
@@ -307,7 +351,7 @@ async function main (account, priceApi) {
         for (let i = 0; i < numProposedBlocks; i++) {
           let blockMedians = await api.getProposedBlockMedians(epoch, i)
 
-      // console.log('proposedBlock', proposedBlock)
+        // console.log('proposedBlock', proposedBlock)
 
           let medians = blockMedians.map(Number)
           console.log('Medians proposed in block', medians)
@@ -326,6 +370,4 @@ async function main (account, priceApi) {
   } catch (e) {
     console.error(e)
   }
-})
-.on('error', console.error)
 }
