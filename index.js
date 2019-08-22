@@ -242,7 +242,7 @@ let isWatchingEvents = false
 function main (account, priceApi) {
   web3.eth.subscribe('newBlockHeaders', async function (error, result) {
     if (!error) {
-      console.log(result)
+      // console.log(result)
       return
     }
     console.error(error)
@@ -307,8 +307,9 @@ async function handleBlock (blockHeader, account, priceApi) {
         priceBtc = await getBtcPrice(priceApi)
         let input = await web3.utils.soliditySha3(account, epoch)
         let sig = await api.sign(input, account)
-
-        let secret = await web3.utils.soliditySha3(sig.signature)
+        // console.log('sig', sig)
+        // console.log('sig.signature', sig.signature)
+        let secret = await web3.utils.soliditySha3(sig)
 
         let tx = await api.commit([priceEth, priceBtc], secret, account)
         console.log(tx.events)
@@ -327,7 +328,7 @@ async function handleBlock (blockHeader, account, priceApi) {
           let input = await web3.utils.soliditySha3(account, epoch)
           let sig = await api.sign(input, account)
 
-          let secret = await web3.utils.soliditySha3(sig.signature)
+          let secret = await web3.utils.soliditySha3(sig)
           let tx = await api.reveal([priceEth, priceBtc], secret, account, account)
           console.log(tx)
         }

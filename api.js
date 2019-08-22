@@ -19,45 +19,45 @@ let randomBuild = require('./build/contracts/Random.json')
 let numBlocks = 10
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    defaultGas: 500000,
-    defaultGasPrice: 2000000000})
+    gas: 500000,
+    gasPrice: 2000000000})
 let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    defaultGas: 500000,
-    defaultGasPrice: 2000000000})
+    gas: 500000,
+    gasPrice: 2000000000})
 let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    defaultGas: 500000,
-    defaultGasPrice: 2000000000})
+    gas: 500000,
+    gasPrice: 2000000000})
 let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    defaultGas: 500000,
-    defaultGasPrice: 2000000000})
+    gas: 500000,
+    gasPrice: 2000000000})
 let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    defaultGas: 500000,
-    defaultGasPrice: 2000000000})
+    gas: 500000,
+    gasPrice: 2000000000})
 let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    defaultGas: 500000,
-    defaultGasPrice: 2000000000})
+    gas: 500000,
+    gasPrice: 2000000000})
 
 let simpleTokenBuild = require('./build/contracts/SimpleToken.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    defaultGas: 500000,
-    defaultGasPrice: 2000000000})
+    gas: 500000,
+    gasPrice: 2000000000})
 
 async function login (address, password) {
   await web3.eth.accounts.wallet.create(0, randomHex(32))
   let rawdata = await fs.readFileSync('keys/' + address + '.json')
   let keystoreArray = JSON.parse(rawdata)
   let wall = await web3.eth.accounts.wallet.decrypt([keystoreArray], password)
-  let pk = wall.accounts[0].privateKey
+  let pk = wall[0].privateKey
   let account = await web3.eth.accounts.privateKeyToAccount(pk)
   await web3.eth.accounts.wallet.add(account)
-  let from = await web3.eth.accounts.wallet.accounts[0].address
+  let from = await wall[0].address
   console.log(from, ' unlocked')
   return (from)
 }
@@ -114,14 +114,14 @@ async function stake (amount, account) {
 
   if (ethBalance < 0.01) throw new Error('Please fund this account with more ether to pay for tx fees')
 
-  let tx = await approve(stakeManager.address, amount, account)
+  let tx = await approve(stakeManager.options.address, amount, account)
   if (tx) {
     console.log(tx.events)
     if (tx.events.Approval.event !== 'Approval') throw new Error('Approval failed')
   }
   while (true) {
-    epoch = Number(await stateManager.methods.getEpoch.call())
-    state = Number(await stateManager.methods.getState.call())
+    epoch = Number(await stateManager.methods.getEpoch().call())
+    state = Number(await stateManager.methods.getState().call())
     console.log('epoch', epoch)
     console.log('state', state)
     if (state !== 0) {
@@ -140,7 +140,7 @@ async function stake (amount, account) {
 }
 
 async function unstake (account) {
-  let epoch = Number(await stateManager.methods.getEpoch.call())
+  let epoch = Number(await stateManager.methods.getEpoch().call())
   console.log('epoch', epoch)
   console.log('account', account)
   let balance = Number(await simpleToken.methods.balanceOf(account).call())
@@ -155,7 +155,7 @@ async function unstake (account) {
 }
 
 async function withdraw (account) {
-  let epoch = Number(await stateManager.methods.getEpoch.call())
+  let epoch = Number(await stateManager.methods.getEpoch().call())
   console.log('epoch', epoch)
   console.log('account', account)
   let balance = Number(await simpleToken.methods.balanceOf(account).call())
@@ -180,8 +180,7 @@ async function commit (votes, secret, account) {
   let root = tree.root()
 
   let stakerId = Number(await stakeManager.methods.stakerIds(account).call())
-  let epoch = Number(await stateManager.methods.getEpoch.call())
-
+  let epoch = Number(await stateManager.methods.getEpoch().call())
   if ((await voteManager.methods.commitments(epoch, stakerId).call()) != 0) {
     throw ('Already Committed')
   }
