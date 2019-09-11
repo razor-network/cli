@@ -4,9 +4,10 @@ let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
 const infuraKey = fs.readFileSync('.infura').toString().trim()
-let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-// let networkid = '420' // rinkeby
-let networkid = '4' // rinkeby
+let provider = 'ws://localhost:8545'
+// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+let networkid = '420' // testnet
+// let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 let merkle = require('@razor-network/merkle')
@@ -14,6 +15,7 @@ let stakeManagerBuild = require('./build/contracts/StakeManager.json')
 let stateManagerBuild = require('./build/contracts/StateManager.json')
 let blockManagerBuild = require('./build/contracts/BlockManager.json')
 let voteManagerBuild = require('./build/contracts/VoteManager.json')
+let jobManagerBuild = require('./build/contracts/JobManager.json')
 let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
 let numBlocks = 10
@@ -30,6 +32,10 @@ let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerB
     gas: 500000,
     gasPrice: 2000000000})
 let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
+  {transactionConfirmationBlocks: 1,
+    gas: 500000,
+    gasPrice: 2000000000})
+let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 500000,
     gasPrice: 2000000000})
@@ -169,6 +175,26 @@ async function withdraw (account) {
   return (tx.events.Unstaked.event === 'Unstaked')
 }
 
+async function createJob (url, selector, repeat, eth, account) {
+  let nonce = await web3.eth.getTransactionCount(account, 'pending')
+
+  return jobManager.methods.createJob(url, selector, repeat).send({from: account, nonce: String(nonce), value: eth})
+}
+
+async function getActiveJobs () {
+  let numJobs = Number(await jobManager.methods.numJobs().call())
+  let job
+  let jobs = []
+  let epoch = Number(await stateManager.methods.getEpoch().call())
+  for (let i = 1; i < numJobs; i++) {
+    job = await jobManager.methods.jobs(i).call()
+    if (!job.fulfilled && Number(job.epoch) < epoch) {
+      jobs.push(job)
+    }
+  }
+  return jobs
+}
+
 async function commit (votes, secret, account) {
   if (Number(await stateManager.methods.getState().call()) != 0) {
     throw ('Not commit state')
@@ -186,6 +212,7 @@ async function commit (votes, secret, account) {
   }
   let commitment = web3.utils.soliditySha3(epoch, root, secret)
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
+  console.log(' committing epoch, root, commitment, secret, account, nonce', epoch, root, commitment, secret, account, nonce)
   let tx = await voteManager.methods.commit(epoch, commitment).send({'from': account, 'nonce': nonce})
   return tx
 }
@@ -263,8 +290,13 @@ async function propose (account) {
   console.log('iteration1', iteration)
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
   let block = await makeBlock()
-  console.log('epoch, block, iteration, biggestStakerId', epoch, block, iteration, biggestStakerId)
-  let tx = await blockManager.methods.propose(epoch, block, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
+  let jobs = await getActiveJobs()
+  let jobIds = []
+  for (let i = 0; i < jobs.length; i++) {
+    jobIds.push(Number(jobs[i].id))
+  }
+  console.log('epoch, block, jobIds, iteration, biggestStakerId', epoch, block, jobIds, iteration, biggestStakerId)
+  let tx = await blockManager.methods.propose(epoch, block, jobIds, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
   return tx
   //
   //
@@ -377,7 +409,8 @@ async function isElectedProposer (random, iteration, biggestStake, stake, staker
 
 async function makeBlock () {
   let medians = []
-  for (assetId = 0; assetId < 5; assetId++) {
+  let jobs = await getActiveJobs()
+  for (let assetId = 0; assetId < jobs.length; assetId++) {
     let res = await getSortedVotes(assetId)
     let sortedVotes = res[1]
     // console.log('sortedVotes', sortedVotes)
@@ -483,5 +516,7 @@ module.exports = {
   makeBlock: makeBlock,
   getProposedBlockMedians: getProposedBlockMedians,
   getProposedBlock: getProposedBlock,
-  getNumProposedBlocks: getNumProposedBlocks
+  getNumProposedBlocks: getNumProposedBlocks,
+  createJob: createJob,
+  getActiveJobs: getActiveJobs
 }
