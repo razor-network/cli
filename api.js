@@ -3,10 +3,10 @@ let { randomHex } = require('web3-utils')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
-// const infuraKey = fs.readFileSync('.infura').toString().trim()
+const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8545'
-// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-let provider = 'ws://35.188.201.171:8546'
+let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+// let provider = 'ws://35.188.201.171:8546'
 // let networkid = '420' // testnet
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
@@ -212,8 +212,7 @@ async function getJobValues (jobId) {
   let blockNumber = await web3.eth.getBlockNumber()
 
   let fulfills = await jobManager.getPastEvents('JobReported', {
-    // fromBlock: Number(blockNumber) - 1000,
-    fromBlock: 0,
+    fromBlock: Math.min(0, Number(blockNumber) - 1000),
     toBlock: 'latest'
   })
   // console.log('fulfills', fulfills)
