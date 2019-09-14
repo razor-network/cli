@@ -3,11 +3,12 @@ let { randomHex } = require('web3-utils')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
-const infuraKey = fs.readFileSync('.infura').toString().trim()
-let provider = 'ws://localhost:8545'
+// const infuraKey = fs.readFileSync('.infura').toString().trim()
+// let provider = 'ws://localhost:8545'
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-let networkid = '420' // testnet
-// let networkid = '4' // rinkeby
+let provider = 'ws://35.188.201.171:8546'
+// let networkid = '420' // testnet
+let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 let merkle = require('@razor-network/merkle')
@@ -21,31 +22,31 @@ let randomBuild = require('./build/contracts/Random.json')
 let numBlocks = 10
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 500000,
+    gas: 5000000,
     gasPrice: 2000000000})
 let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 500000,
+    gas: 5000000,
     gasPrice: 2000000000})
 let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 500000,
+    gas: 5000000,
     gasPrice: 2000000000})
 let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 500000,
+    gas: 5000000,
     gasPrice: 2000000000})
 let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 500000,
+    gas: 5000000,
     gasPrice: 2000000000})
 let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 500000,
+    gas: 5000000,
     gasPrice: 2000000000})
 let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 500000,
+    gas: 5000000,
     gasPrice: 2000000000})
 
 let simpleTokenBuild = require('./build/contracts/SimpleToken.json')
@@ -186,13 +187,41 @@ async function getActiveJobs () {
   let job
   let jobs = []
   let epoch = Number(await stateManager.methods.getEpoch().call())
-  for (let i = 1; i < numJobs; i++) {
+  for (let i = 1; i <= numJobs; i++) {
     job = await jobManager.methods.jobs(i).call()
     if (!job.fulfilled && Number(job.epoch) < epoch) {
       jobs.push(job)
     }
   }
   return jobs
+}
+
+async function getJobs () {
+  let numJobs = Number(await jobManager.methods.numJobs().call())
+  let job
+  let jobs = []
+  // let epoch = Number(await stateManager.methods.getEpoch().call())
+  for (let i = 1; i <= numJobs; i++) {
+    job = await jobManager.methods.jobs(i).call()
+    jobs.push(job)
+  }
+  return jobs
+}
+
+async function getJobValues (jobId) {
+  let blockNumber = await web3.eth.getBlockNumber()
+
+  let fulfills = await jobManager.getPastEvents('JobReported', {
+    // fromBlock: Number(blockNumber) - 1000,
+    fromBlock: 0,
+    toBlock: 'latest'
+  })
+  // console.log('fulfills', fulfills)
+  let values = []
+  for (let i = 0; i < fulfills.length; i++) {
+    if (Number(fulfills[i].returnValues.id) === Number(jobId)) values.push(fulfills[i].returnValues)
+  }
+  return values
 }
 
 async function commit (votes, secret, account) {
@@ -518,5 +547,7 @@ module.exports = {
   getProposedBlock: getProposedBlock,
   getNumProposedBlocks: getNumProposedBlocks,
   createJob: createJob,
-  getActiveJobs: getActiveJobs
+  getActiveJobs: getActiveJobs,
+  getJobValues: getJobValues,
+  getJobs: getJobs
 }

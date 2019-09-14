@@ -8,16 +8,19 @@ let program = require('commander')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 let api = require('./api')
+// let server = require('./server')
 let axios = require('axios')
 let _ = require('lodash')
 // let provider = 'ws://localhost:8545/'
 
-const infuraKey = fs.readFileSync('.infura').toString().trim()
-let provider = 'ws://localhost:8545'
+// const infuraKey = fs.readFileSync('.infura').toString().trim()
+// let provider = 'ws://localhost:8545'
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+let provider = 'ws://35.188.201.171:8546'
+
 console.log('provider', provider)
-let networkid = '420' // testnet
-// let networkid = '4' // rinkeby
+// let networkid = '420' // testnet
+let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 // let keys = require('./keys.json')
@@ -348,12 +351,17 @@ async function handleBlock (blockHeader, account) {
         let response
         let datum
         for (let i = 0; i < jobs.length; i++) {
-          if (jobs[i].url === '') break
+          // if (jobs[i].url === '') break
           // console.log('i, job', i, jobs[i])
-          response = await axios.get(jobs[i].url)
-          datum = _.get(response.data, jobs[i].selector)
-          datum = Math.floor(Number(datum) * 100)
-          data.push(datum)
+          try {
+            response = await axios.get(jobs[i].url)
+            datum = _.get(response.data, jobs[i].selector)
+            datum = Math.floor(Number(datum) * 100)
+            data.push(datum)
+          } catch (e) {
+            console.error(e)
+            data.push(0)
+          }
         }
         if (data.length === 0) data = [0]
         let tx = await api.commit(data, secret, account)
