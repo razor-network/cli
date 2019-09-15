@@ -365,10 +365,16 @@ async function getState () {
   return Number(await getDelayedState())
 }
 
+// report state delayed to avoid tx reverts
 async function getDelayedState () {
   let blockNumber = await web3.eth.getBlockNumber()
-  let state = Number(Math.floor((blockNumber - 2) / 10)) % 4
-  console.log('delayed state', state)
+  // its too late to make the tx
+  if (blockNumber % 10 > 7 || blockNumber % 10 < 1) return -1
+  let state = Math.floor((blockNumber) / 10)
+
+  state = state % 4
+
+  // console.log('delayed state', state)
   return state
 }
 async function getEpoch () {
