@@ -17,7 +17,7 @@ app.use(bodyParser.json())
 
 // define a simple route
 app.get('/', (req, res) => {
-  res.json({'message': 'Welcomlol'})
+  res.json({'message': 'Welcome'})
 })
 
 app.get('/job/:jobId', async function (req, res) {

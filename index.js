@@ -328,7 +328,7 @@ function restartWatchEvents () {
 
 async function handleBlock (blockHeader, account) {
   try {
-    let state = await api.getState()
+    let state = await api.getDelayedState()
     let epoch = await api.getEpoch()
     let yourId = await api.getStakerId(account)
 
