@@ -128,7 +128,8 @@ async function stake (amount, account) {
   }
   while (true) {
     epoch = Number(await stateManager.methods.getEpoch().call())
-    state = Number(await stateManager.methods.getState().call())
+    // state = Number(await getDelayedState())
+    state = await getDelayedState()
     console.log('epoch', epoch)
     console.log('state', state)
     if (state !== 0) {
@@ -224,7 +225,7 @@ async function getJobValues (jobId) {
 }
 
 async function commit (votes, secret, account) {
-  if (Number(await stateManager.methods.getState().call()) != 0) {
+  if (await getDelayedState() != 0) {
     throw ('Not commit state')
   }
   // let votes = [100, 200, 300, 400, 500, 600, 700, 800, 900]
@@ -246,7 +247,7 @@ async function commit (votes, secret, account) {
 }
 
 async function reveal (votes, secret, commitAccount, account) {
-  if (Number(await stateManager.methods.getState().call()) != 1) {
+  if (Number(await getDelayedState()) != 1) {
     throw new Error('Not reveal state')
   }
   let stakerId = Number(await stakeManager.methods.stakerIds(account).call())
@@ -286,7 +287,7 @@ async function getBlock (epoch) {
 }
 
 async function propose (account) {
-  if (Number(await stateManager.methods.getState().call()) != 2) {
+  if (Number(await getDelayedState()) != 2) {
     throw ('Not propose state')
   }
   let stakerId = Number(await stakeManager.methods.stakerIds(account).call())
@@ -361,7 +362,14 @@ async function dispute (account) {
 }
 
 async function getState () {
-  return Number(await stateManager.methods.getState().call())
+  return Number(await getDelayedState())
+}
+
+async function getDelayedState () {
+  let blockNumber = await web3.eth.getBlockNumber()
+  let state = Number(Math.floor((blockNumber - 2) / 10)) % 4
+  console.log('delayed state', state)
+  return state
 }
 async function getEpoch () {
   return Number(await stateManager.methods.getEpoch().call())
@@ -529,6 +537,7 @@ module.exports = {
   propose: propose,
   dispute: dispute,
   getState: getState,
+  getDelayedState: getDelayedState,
   getEpoch: getEpoch,
   getStakerId: getStakerId,
   getMinStake: getMinStake,
