@@ -2,7 +2,7 @@ const express = require('express')
 var cors = require('cors')
 
 const bodyParser = require('body-parser')
-const api = require('./api')
+const api = require('./httpApi')
 
 // create express app
 const app = express()
