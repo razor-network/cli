@@ -5,10 +5,10 @@ let sleep = require('util').promisify(setTimeout)
 
 const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8546'
-let provider = 'http://localhost:8545'
+// let provider = 'http://localhost:8545'
 // let provider = 'https://rinkeby.infura.io/v3/26056f03e83343f5bbd280bafaa52684'
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-// let provider = 'ws://35.188.201.171:8546'
+let provider = 'ws://35.188.201.171:8546'
 // let networkid = '420' // testnet
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
