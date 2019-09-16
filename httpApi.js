@@ -5,8 +5,9 @@ let sleep = require('util').promisify(setTimeout)
 
 const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8546'
-let provider = 'https://rinkeby.infura.io/v3/26056f03e83343f5bbd280bafaa52684'
-//let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+let provider = 'http://localhost:8545'
+// let provider = 'https://rinkeby.infura.io/v3/26056f03e83343f5bbd280bafaa52684'
+// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
 // let provider = 'ws://35.188.201.171:8546'
 // let networkid = '420' // testnet
 let networkid = '4' // rinkeby
@@ -203,10 +204,25 @@ async function getJobs () {
   let jobs = []
   // let epoch = Number(await stateManager.methods.getEpoch().call())
   for (let i = 1; i <= numJobs; i++) {
-    job = await jobManager.methods.jobs(i).call(i,{from: '0xB279182D99E65703F0076E4812653aaB85FCA0f0'})
+    job = await jobManager.methods.jobs(i).call(i, {from: '0xB279182D99E65703F0076E4812653aaB85FCA0f0'})
     jobs.push(job)
   }
   return jobs
+}
+
+async function getStakers () {
+  let numStakers = Number(await stakeManager.methods.getNumStakers().call())
+  let res = []
+  // let epoch = Number(await stateManager.methods.getEpoch().call())
+  for (let i = 1; i <= numStakers; i++) {
+    staker = await stakeManager.methods.getStaker(i).call()
+
+    res.push({'stakerId': staker[0],
+      'address': staker[1],
+      'stake': staker[2]
+    })
+  }
+  return res
 }
 
 async function getJobValues (jobId) {
@@ -222,6 +238,49 @@ async function getJobValues (jobId) {
     if (Number(fulfills[i].returnValues.id) === Number(jobId)) values.push(fulfills[i].returnValues)
   }
   return values
+}
+
+async function getVotesLastEpoch (jobId) {
+  let blockNumber = await web3.eth.getBlockNumber()
+  let epoch = Number(await getEpoch()) - 1
+  let numStakers = Number(await stakeManager.methods.getNumStakers().call())
+  let vote
+  let votes = []
+  let staker
+  for (let i = 1; i <= numStakers; i++) {
+    vote = await voteManager.methods.getVote(epoch, i, jobId - 1).call()
+    staker = (await stakeManager.methods.getStaker(i).call())
+    console.log(staker)
+    votes.push({staker: staker._address, id: staker.id, value: Number(vote.value), weight: vote.weight})
+  }
+  return votes
+}
+
+async function getVotingEvents (jobId) {
+  let blockNumber = await web3.eth.getBlockNumber()
+  // let epoch = Number(await getEpoch()) - 1
+  let events = await voteManager.getPastEvents('allEvents', {
+    fromBlock: Math.max(0, Number(blockNumber) - 1000),
+    toBlock: 'latest'
+  })
+  console.log(events[2].returnValues)
+  let res = []
+  let value
+  let staker
+  for (let i = 0; i < events.length; i++) {
+    if (events[i].event === 'Committed') {
+      value = events[i].returnValues.commitment
+      staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+
+      res.push({epoch: events[i].returnValues.epoch, staker: staker, action: events[i].event, value: value })
+    } else if (events[i].event === 'Revealed') {
+      value = events[i].returnValues.values
+      staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+
+      res.push({epoch: events[i].returnValues.epoch, staker: staker, action: events[i].event, value: value[jobId - 1] })
+    }
+  }
+  return res
 }
 
 async function commit (votes, secret, account) {
@@ -549,5 +608,8 @@ module.exports = {
   createJob: createJob,
   getActiveJobs: getActiveJobs,
   getJobValues: getJobValues,
-  getJobs: getJobs
+  getJobs: getJobs,
+  getVotesLastEpoch: getVotesLastEpoch,
+  getVotingEvents: getVotingEvents,
+  getStakers: getStakers
 }

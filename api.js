@@ -4,8 +4,8 @@ let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
 const infuraKey = fs.readFileSync('.infura').toString().trim()
-// let provider = 'ws://localhost:8545'
-let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+let provider = 'ws://localhost:8546'
+// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
 // let provider = 'ws://35.188.201.171:8546'
 // let networkid = '420' // testnet
 let networkid = '4' // rinkeby
