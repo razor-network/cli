@@ -3,7 +3,8 @@ let { randomHex } = require('web3-utils')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
-const infuraKey = fs.readFileSync('.infura').toString().trim()
+// const infuraKey = fs.readFileSync('.infura').toString().trim()
+// let provider = 'ws://localhost:8545'
 // let provider = 'ws://localhost:8546'
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
 let provider = 'ws://35.188.201.171:8546'
@@ -133,8 +134,8 @@ async function stake (amount, account) {
     console.log('epoch', epoch)
     console.log('state', state)
     if (state !== 0) {
-      console.log('Can only stake during state 0 (commit). Retrying in 10 seconds...')
-      await sleep(10000)
+      console.log('Can only stake during state 0 (commit). Retrying in 5 seconds...')
+      await sleep(5000)
     } else break
   }
   console.log('Sending stake transaction...')

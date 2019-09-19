@@ -61,8 +61,30 @@ app.get('/votes/:jobId/', async function (req, res) {
 })
 app.get('/voteEvents/:jobId/', async function (req, res) {
   result = await api.getVotingEvents(req.params.jobId)
+  console.log(result)
   res.json({'message': result})
 })
+app.get('/jobEvents/', async function (req, res) {
+  result = await api.getJobEvents()
+  console.log(result)
+  res.json({'message': result})
+})
+app.get('/blockEvents/', async function (req, res) {
+  result = await api.getBlockEvents()
+  console.log(result)
+  res.json({'message': result})
+})
+app.get('/stakingEvents/', async function (req, res) {
+  result = await api.getStakingEvents()
+  console.log(result)
+  res.json({'message': result})
+})
+// app.get('/events/', async function (req, res) {
+//   result1 = await api.getStakingEvents()
+//   result = await api.getStakingEvents()
+//   console.log(result)
+//   res.json({'message': result})
+// })
 
 app.get('/epoch/', async function (req, res) {
   result = await api.getEpoch()
