@@ -291,8 +291,8 @@ async function getStakingEvents () {
   let blockNumber = await web3.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
   let events = await stakeManager.getPastEvents('allEvents', {
-    fromBlock: Math.max(0, Number(blockNumber) - 1000),
-    toBlock: 'latest'
+    // fromBlock: Math.max(0, Number(blockNumber) - 1000),
+    // toBlock: 'latest'
   })
 
   // event Staked(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp);
