@@ -4,10 +4,9 @@ let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
 // const infuraKey = fs.readFileSync('.infura').toString().trim()
-// let provider = 'ws://localhost:8545'
 // let provider = 'ws://localhost:8546'
+let provider = 'http://localhost:8545'
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-let provider = 'ws://35.188.201.171:8546'
 // let networkid = '420' // testnet
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
@@ -129,13 +128,12 @@ async function stake (amount, account) {
   }
   while (true) {
     epoch = Number(await stateManager.methods.getEpoch().call())
-    // state = Number(await getDelayedState())
-    state = await getDelayedState()
+    state = Number(await stateManager.methods.getState().call())
     console.log('epoch', epoch)
     console.log('state', state)
     if (state !== 0) {
-      console.log('Can only stake during state 0 (commit). Retrying in 5 seconds...')
-      await sleep(5000)
+      console.log('Can only stake during state 0 (commit). Retrying in 10 seconds...')
+      await sleep(10000)
     } else break
   }
   console.log('Sending stake transaction...')
@@ -199,22 +197,37 @@ async function getActiveJobs () {
 }
 
 async function getJobs () {
-  let numJobs = Number(await jobManager.methods.numJobs().call())
+  let numJobs = Number(await jobManager.methods.numJobs().call({from: '0xB279182D99E65703F0076E4812653aaB85FCA0f0'}))
   let job
   let jobs = []
   // let epoch = Number(await stateManager.methods.getEpoch().call())
   for (let i = 1; i <= numJobs; i++) {
-    job = await jobManager.methods.jobs(i).call()
+    job = await jobManager.methods.jobs(i).call(i, {from: '0xB279182D99E65703F0076E4812653aaB85FCA0f0'})
     jobs.push(job)
   }
   return jobs
+}
+
+async function getStakers () {
+  let numStakers = Number(await stakeManager.methods.getNumStakers().call())
+  let res = []
+  // let epoch = Number(await stateManager.methods.getEpoch().call())
+  for (let i = 1; i <= numStakers; i++) {
+    staker = await stakeManager.methods.getStaker(i).call()
+
+    res.push({'stakerId': staker[0],
+      'address': staker[1],
+      'stake': staker[2]
+    })
+  }
+  return res
 }
 
 async function getJobValues (jobId) {
   let blockNumber = await web3.eth.getBlockNumber()
 
   let fulfills = await jobManager.getPastEvents('JobReported', {
-    fromBlock: Math.min(0, Number(blockNumber) - 1000),
+    fromBlock: Math.max(0, Number(blockNumber) - 1000),
     toBlock: 'latest'
   })
   // console.log('fulfills', fulfills)
@@ -225,8 +238,152 @@ async function getJobValues (jobId) {
   return values
 }
 
+async function getVotesLastEpoch (jobId) {
+  let blockNumber = await web3.eth.getBlockNumber()
+  let epoch = Number(await getEpoch()) - 1
+  let numStakers = Number(await stakeManager.methods.getNumStakers().call())
+  let vote
+  let votes = []
+  let staker
+  for (let i = 1; i <= numStakers; i++) {
+    vote = await voteManager.methods.getVote(epoch, i, jobId - 1).call()
+    staker = (await stakeManager.methods.getStaker(i).call())
+    console.log(staker)
+    votes.push({staker: staker._address, id: staker.id, value: Number(vote.value), weight: vote.weight})
+  }
+  return votes
+}
+
+async function getVotingEvents (jobId) {
+  let blockNumber = await web3.eth.getBlockNumber()
+  // let epoch = Number(await getEpoch()) - 1
+  let events = await voteManager.getPastEvents('allEvents', {
+    fromBlock: Math.max(0, Number(blockNumber) - 1000),
+    toBlock: 'latest'
+  })
+  console.log(events[2].returnValues)
+  let res = []
+  let value
+  let staker
+  let timestamp
+  for (let i = 0; i < events.length; i++) {
+    staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    timestamp = events[i].returnValues.timestamp
+    if (events[i].event === 'Committed') {
+      value = events[i].returnValues.commitment
+      res.push({epoch: events[i].returnValues.epoch, staker: staker, action: events[i].event, value: value, timestamp: timestamp })
+    } else if (events[i].event === 'Revealed') {
+      value = events[i].returnValues.values
+      if (jobId) {
+        res.push({epoch: events[i].returnValues.epoch, staker: staker, action: events[i].event, value: value[jobId - 1], timestamp: timestamp })
+      } else {
+        res.push({epoch: events[i].returnValues.epoch, staker: staker, action: events[i].event, value: value, timestamp: timestamp })
+      }
+    }
+  }
+
+  return res
+}
+
+async function getStakingEvents () {
+  let blockNumber = await web3.eth.getBlockNumber()
+  // let epoch = Number(await getEpoch()) - 1
+  let events = await stakeManager.getPastEvents('allEvents', {
+    fromBlock: Math.max(0, Number(blockNumber) - 1000),
+    toBlock: 'latest'
+  })
+
+  // event Staked(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp);
+  // event Unstaked(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp);
+  // event Withdrew(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp);
+
+  // console.log(events[2].returnValues)
+  let res = []
+  let value
+  let staker
+  let timestamp
+  for (let i = 0; i < events.length; i++) {
+    if (events[i].event === 'WriterAdded') continue
+
+    staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    let data = events[i].returnValues
+
+    res.push({epoch: data.epoch, staker: staker, action: events[i].event, value: data.amount, timestamp: data.timestamp })
+  }
+  return res
+}
+
+async function getBlockEvents () {
+  let blockNumber = await web3.eth.getBlockNumber()
+  // let epoch = Number(await getEpoch()) - 1
+  let events = await blockManager.getPastEvents('allEvents', {
+    fromBlock: Math.max(0, Number(blockNumber) - 1000),
+    toBlock: 'latest'
+  })
+
+  // event BlockConfirmed(uint256 epoch,
+  //                     uint256 stakerId,
+  //                     uint256[] medians,
+  //                     uint256[] jobIds,
+  //                     uint256 timestamp);
+
+      // event Proposed(uint256 epoch,
+      //                 uint256 stakerId,
+      //                 uint256[] medians,
+      //                 uint256[] jobIds,
+      //                 uint256 iteration,
+      //                 uint256 biggestStakerId,
+      //                 uint256 timestamp);
+
+  console.log(events[0])
+  let res = []
+  let value
+  let staker
+  let timestamp
+  for (let i = 0; i < events.length; i++) {
+    if (events[i].event === 'WriterAdded' || events[i].event === 'DebugUint256') continue
+    // console.log(events[i])
+    staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    let data = events[i].returnValues
+
+    res.push({epoch: data.epoch, staker: staker, action: events[i].event, medians: data.medians, jobIds: data.jobIds, timestamp: data.timestamp })
+  }
+  return res
+}
+
+async function getJobEvents () {
+  let blockNumber = await web3.eth.getBlockNumber()
+  // let epoch = Number(await getEpoch()) - 1
+  let events = await jobManager.getPastEvents('allEvents', {
+    fromBlock: Math.max(0, Number(blockNumber) - 1000),
+    toBlock: 'latest'
+  })
+
+      // event JobCreated(uint256 id, uint256 epoch, string url, string selector, bool repeat,
+      //                         address creator, uint256 credit, uint256 timestamp);
+      //
+      // event JobReported(uint256 id, uint256 value, uint256 epoch,
+      //                     string url, string selector, bool repeat,
+      //                     address creator, uint256 credit, bool fulfilled, uint256 timestamp);
+      //
+
+  console.log(events[2].returnValues)
+  let res = []
+  let value
+  let staker
+  let timestamp
+  for (let i = 0; i < events.length; i++) {
+    // staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    let data = events[i].returnValues
+    if (events[i].event === 'WriterAdded') continue
+    res.push({epoch: data.epoch, id: data.id, action: events[i].event, url: data.url, selector: data.selector, repeat: data.repeat,
+      creator: data.creator, credit: data.credit, timestamp: data.timestamp })
+  }
+  return res
+}
+
 async function commit (votes, secret, account) {
-  if (await getDelayedState() != 0) {
+  if (Number(await stateManager.methods.getState().call()) != 0) {
     throw ('Not commit state')
   }
   // let votes = [100, 200, 300, 400, 500, 600, 700, 800, 900]
@@ -248,7 +405,7 @@ async function commit (votes, secret, account) {
 }
 
 async function reveal (votes, secret, commitAccount, account) {
-  if (Number(await getDelayedState()) != 1) {
+  if (Number(await stateManager.methods.getState().call()) != 1) {
     throw new Error('Not reveal state')
   }
   let stakerId = Number(await stakeManager.methods.stakerIds(account).call())
@@ -288,7 +445,7 @@ async function getBlock (epoch) {
 }
 
 async function propose (account) {
-  if (Number(await getDelayedState()) != 2) {
+  if (Number(await stateManager.methods.getState().call()) != 2) {
     throw ('Not propose state')
   }
   let stakerId = Number(await stakeManager.methods.stakerIds(account).call())
@@ -363,20 +520,7 @@ async function dispute (account) {
 }
 
 async function getState () {
-  return Number(await getDelayedState())
-}
-
-// report state delayed to avoid tx reverts
-async function getDelayedState () {
-  let blockNumber = await web3.eth.getBlockNumber()
-  // its too late to make the tx
-  if (blockNumber % 10 > 7 || blockNumber % 10 < 1) return -1
-  let state = Math.floor((blockNumber) / 10)
-
-  state = state % 4
-
-  // console.log('delayed state', state)
-  return state
+  return Number(await stateManager.methods.getState().call())
 }
 async function getEpoch () {
   return Number(await stateManager.methods.getEpoch().call())
@@ -544,7 +688,6 @@ module.exports = {
   propose: propose,
   dispute: dispute,
   getState: getState,
-  getDelayedState: getDelayedState,
   getEpoch: getEpoch,
   getStakerId: getStakerId,
   getMinStake: getMinStake,
@@ -564,5 +707,11 @@ module.exports = {
   createJob: createJob,
   getActiveJobs: getActiveJobs,
   getJobValues: getJobValues,
-  getJobs: getJobs
+  getJobs: getJobs,
+  getVotesLastEpoch: getVotesLastEpoch,
+  getVotingEvents: getVotingEvents,
+  getStakingEvents: getStakingEvents,
+  getJobEvents: getJobEvents,
+  getBlockEvents: getBlockEvents,
+  getStakers: getStakers
 }

@@ -3,61 +3,67 @@
 let Web3 = require('web3')
 let rp = require('request-promise')
 let program = require('commander')
-let KrakenClient = require('kraken-api')
-let kraken = new KrakenClient()
+// let KrakenClient = require('kraken-api')
+// let kraken = new KrakenClient()
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 let api = require('./api')
-
+// let server = require('./server')
+let axios = require('axios')
+let _ = require('lodash')
 // let provider = 'ws://localhost:8545/'
 
-const infuraKey = fs.readFileSync('.infura').toString().trim()
-let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+// const infuraKey = fs.readFileSync('.infura').toString().trim()
+// let provider = 'ws://localhost:8546'
+// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+let provider = 'ws://35.188.201.171:8546'
+
 console.log('provider', provider)
-// let networkid = '420' // rinkeby
+// let networkid = '420' // testnet
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
-let keys = require('./keys.json')
+// let keys = require('./keys.json')
 
-let priceEth
-let priceBtc
+// let priceEth
+// let priceBtc
 let lastCommit = -1
 let lastReveal = -1
 let lastProposal = -1
 let lastElection = -1
 let lastVerification = -1
-
-let cmcRequestOptions = {
-  method: 'GET',
-  uri: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
-  qs: {
-    'symbol': 'ETH'
-  },
-  headers: {
-    'X-CMC_PRO_API_KEY': keys['cmc']
-  },
-  json: true,
-  gzip: true
-}
-
-let geminiRequestOptions = {
-  method: 'GET',
-  uri: 'https://api.gemini.com/v1/pubticker/ethusd',
-  json: true,
-  gzip: true
-}
-
-let geminiBtcRequestOptions = {
-  method: 'GET',
-  uri: 'https://api.gemini.com/v1/pubticker/btcusd',
-  json: true,
-  gzip: true
-}
+let data = []
+//
+// let cmcRequestOptions = {
+//   method: 'GET',
+//   uri: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
+//   qs: {
+//     'symbol': 'ETH'
+//   },
+//   headers: {
+//     'X-CMC_PRO_API_KEY': keys['cmc']
+//   },
+//   json: true,
+//   gzip: true
+// }
+//
+// let geminiRequestOptions = {
+//   method: 'GET',
+//   uri: 'https://api.gemini.com/v1/pubticker/ethusd',
+//   json: true,
+//   gzip: true
+// }
+//
+// let geminiBtcRequestOptions = {
+//   method: 'GET',
+//   uri: 'https://api.gemini.com/v1/pubticker/btcusd',
+//   json: true,
+//   gzip: true
+// }
 console.log('web3 version', web3.version)
 
 program
-      .version('0.0.2')
+      .version('0.0.3')
       .description('Razor network')
 
 program
@@ -108,15 +114,15 @@ program
       })
 
 program
-      .command('vote <api> <account> <password>')
+      .command('vote <account> <password>')
       .alias('v')
       .description('Start monitoring contract, commit, vote, propose and dispute automatically')
-      .action(async function (priceApi, account, password) {
+      .action(async function (account, password) {
         try {
           await api.login(account, password)
 
-          priceApi = Number(priceApi)
-          await main(account, priceApi)
+          // priceApi = Number(priceApi)
+          await main(account)
         } catch (e) {
           console.error(e)
         }
@@ -154,92 +160,122 @@ program
         }
         process.exit(0)
       })
+program
+      .command('demo')
+      .alias('d')
+      .description('sample urls')
+      .action(async function () {
+        console.log(
+        'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=demo',
+                              'Global Quote["05. price"]',
+                              'https://api.gemini.com/v1/pubticker/ethusd',
+                              'last', 'https://api.gemini.com/v1/pubticker/btcusd',
+                              'last')
+        process.exit(0)
+      })
+
+program
+        .command('createJob <url> <selector> <repeat> <fee> <account> <password>')
+        .alias('j')
+        .description('create oracle query job')
+        .action(async function (url, selector, repeat, fee, account, password) {
+          try {
+            await api.login(account, password)
+
+            let res = await api.createJob(url, selector, repeat === 'true', fee, account).catch(console.log)
+            console.log(res)
+            if (res) console.log('succesfully created job')
+          } catch (e) {
+            console.error(e)
+          }
+          process.exit(0)
+        })
 
 program.parse(process.argv)
 
-async function getEthPrice (priceApi) {
-  if (priceApi === 0) {
-    return rp(cmcRequestOptions).then(response => {
-      let prr = response.data.ETH.quote.USD.price
-      if (!prr) return getEthPrice(1)
-      prr = Math.floor(Number(prr) * 100)
-      console.log('CM price', prr)
-      return prr
-    }).catch((err) => {
-      console.log('API call error:', err.message)
-      console.log('Trying API 1')
-      return getEthPrice(1)
-    })
-  } else if (priceApi === 1) {
-    return rp(geminiRequestOptions).then(response => {
-      let prr = response.last
-      if (!prr) return getEthPrice(2)
-      prr = Math.floor(Number(prr) * 100)
-      console.log('Gemini price', prr)
-      return prr
-    }).catch((err) => {
-      console.log('API call error:', err.message)
-      console.log('Trying API 2')
-      return getEthPrice(2)
-    })
-  } else {
-    try {
-      let prr = await kraken.api('Ticker', { pair: 'XETHZUSD' })
-      prr = prr.result.XETHZUSD.c
-      if (!prr) return getEthPrice(0)
-      prr = Math.floor(Number(prr[0]) * 100)
-      console.log('Kraken Price', prr)
-      return prr
-    } catch (e) {
-      console.log('Trying API 0')
-      return getEthPrice(0)
-    }
-  }
-}
-
-async function getBtcPrice (priceApi) {
-  if (priceApi === 0) {
-    return rp(cmcRequestOptions).then(response => {
-      let prr = response.data.BTC.quote.USD.price
-      if (!prr) return getBtcPrice(1)
-      prr = Math.floor(Number(prr) * 100)
-      console.log('CM btc price', prr)
-      return prr
-    }).catch((err) => {
-      console.log('API call error:', err.message)
-      console.log('Trying API 1')
-      return getBtcPrice(1)
-    })
-  } else if (priceApi === 1) {
-    return rp(geminiBtcRequestOptions).then(response => {
-      let prr = response.last
-      if (!prr) return getBtcPrice(2)
-      prr = Math.floor(Number(prr) * 100)
-      console.log('Gemini btc price', prr)
-      return prr
-    }).catch((err) => {
-      console.log('API call error:', err.message)
-      console.log('Trying API 2')
-      return getBtcPrice(2)
-    })
-  } else {
-    try {
-      let prr = await kraken.api('Ticker', { pair: 'XXBTZUSD' })
-      prr = prr.result.XXBTZUSD.c
-      if (!prr) return getBtcPrice(0)
-      prr = Math.floor(Number(prr[0]) * 100)
-      console.log('Kraken btc Price', prr)
-      return prr
-    } catch (e) {
-      console.log('Trying API 0')
-      return getBtcPrice(0)
-    }
-  }
-}
+// async function getEthPrice (priceApi) {
+//   if (priceApi === 0) {
+//     return rp(cmcRequestOptions).then(response => {
+//       let prr = response.data.ETH.quote.USD.price
+//       if (!prr) return getEthPrice(1)
+//       prr = Math.floor(Number(prr) * 100)
+//       console.log('CM price', prr)
+//       return prr
+//     }).catch((err) => {
+//       console.log('API call error:', err.message)
+//       console.log('Trying API 1')
+//       return getEthPrice(1)
+//     })
+//   } else if (priceApi === 1) {
+//     return rp(geminiRequestOptions).then(response => {
+//       let prr = response.last
+//       if (!prr) return getEthPrice(2)
+//       prr = Math.floor(Number(prr) * 100)
+//       console.log('Gemini price', prr)
+//       return prr
+//     }).catch((err) => {
+//       console.log('API call error:', err.message)
+//       console.log('Trying API 2')
+//       return getEthPrice(2)
+//     })
+//   } else {
+//     try {
+//       let prr = await kraken.api('Ticker', { pair: 'XETHZUSD' })
+//       prr = prr.result.XETHZUSD.c
+//       if (!prr) return getEthPrice(0)
+//       prr = Math.floor(Number(prr[0]) * 100)
+//       console.log('Kraken Price', prr)
+//       return prr
+//     } catch (e) {
+//       console.log('Trying API 0')
+//       return getEthPrice(0)
+//     }
+//   }
+// }
+//
+// async function getBtcPrice (priceApi) {
+//   if (priceApi === 0) {
+//     return rp(cmcRequestOptions).then(response => {
+//       let prr = response.data.BTC.quote.USD.price
+//       if (!prr) return getBtcPrice(1)
+//       prr = Math.floor(Number(prr) * 100)
+//       console.log('CM btc price', prr)
+//       return prr
+//     }).catch((err) => {
+//       console.log('API call error:', err.message)
+//       console.log('Trying API 1')
+//       return getBtcPrice(1)
+//     })
+//   } else if (priceApi === 1) {
+//     return rp(geminiBtcRequestOptions).then(response => {
+//       let prr = response.last
+//       if (!prr) return getBtcPrice(2)
+//       prr = Math.floor(Number(prr) * 100)
+//       console.log('Gemini btc price', prr)
+//       return prr
+//     }).catch((err) => {
+//       console.log('API call error:', err.message)
+//       console.log('Trying API 2')
+//       return getBtcPrice(2)
+//     })
+//   } else {
+//     try {
+//       let prr = await kraken.api('Ticker', { pair: 'XXBTZUSD' })
+//       prr = prr.result.XXBTZUSD.c
+//       if (!prr) return getBtcPrice(0)
+//       prr = Math.floor(Number(prr[0]) * 100)
+//       console.log('Kraken btc Price', prr)
+//       return prr
+//     } catch (e) {
+//       console.log('Trying API 0')
+//       return getBtcPrice(0)
+//     }
+//   }
+// }
 
 let isWatchingEvents = false
 
-function main (account, priceApi) {
+async function main (account) {
   web3.eth.subscribe('newBlockHeaders', async function (error, result) {
     if (!error) {
       // console.log(result)
@@ -249,7 +285,8 @@ function main (account, priceApi) {
   })
      .on('data', function (blockHeader) {
        // console.log('block', blockHeader)
-       handleBlock(blockHeader, account, priceApi)
+
+       handleBlock(blockHeader, account)
      })
      .on('error', console.error)
   console.log('subscribed')
@@ -274,7 +311,7 @@ web3.currentProvider.on('close', () => {
   isWatchingEvents = false
   restartWatchEvents()
 })
-web3.currentProvider.on('connect', () => {
+web3.currentProvider.on('connect', async function () {
   console.log('connected')
 })
 
@@ -289,33 +326,50 @@ function restartWatchEvents () {
   }
 }
 
-async function handleBlock (blockHeader, account, priceApi) {
+async function handleBlock (blockHeader, account) {
   try {
-    let state = await api.getState()
+    let state = await api.getDelayedState()
     let epoch = await api.getEpoch()
     let yourId = await api.getStakerId(account)
 
     let balance = await api.getStake(yourId)
     let ethBalance = Number(await web3.eth.getBalance(account)) / 1e18
-    console.log('Ethereum block #', blockHeader.number, 'epoch', epoch, 'state', state, 'priceApi', priceApi, 'account', account, 'stakerId', yourId, 'Staked Shells', balance, 'Ether balance', ethBalance)
+    console.log('Ethereum block #', blockHeader.number, 'epoch', epoch, 'state', state, 'account', account, 'stakerId', yourId, 'Staked Shells', balance, 'Ether balance', ethBalance)
     if (balance < await api.getMinStake()) throw new Error('Stake is below minimum required. Cannot vote.')
 
     if (state === 0) {
       if (lastCommit < epoch) {
         lastCommit = epoch
-        priceEth = await getEthPrice(priceApi)
-        priceBtc = await getBtcPrice(priceApi)
         let input = await web3.utils.soliditySha3(account, epoch)
         let sig = await api.sign(input, account)
         // console.log('sig', sig)
         // console.log('sig.signature', sig.signature)
         let secret = await web3.utils.soliditySha3(sig)
-
-        let tx = await api.commit([priceEth, priceBtc], secret, account)
+        let jobs = await api.getActiveJobs()
+        console.log('jobs', jobs)
+        data = []
+        let response
+        let datum
+        for (let i = 0; i < jobs.length; i++) {
+          // if (jobs[i].url === '') break
+          // console.log('i, job', i, jobs[i])
+          try {
+            response = await axios.get(jobs[i].url)
+            datum = _.get(response.data, jobs[i].selector)
+            if (isNaN(Number(datum))) throw ('Result is not a number')
+            datum = Math.floor(Number(datum) * 100)
+            data.push(datum)
+          } catch (e) {
+            console.error(e)
+            data.push(0)
+          }
+        }
+        if (data.length === 0) data = [0]
+        let tx = await api.commit(data, secret, account)
         console.log(tx.events)
       }
     } else if (state === 1) {
-      if (lastReveal < epoch && priceEth !== undefined) {
+      if (lastReveal < epoch && data !== undefined) {
         console.log('last revealed in epoch', lastReveal)
         lastReveal = epoch
         let yourId = await api.getStakerId(account)
@@ -329,7 +383,7 @@ async function handleBlock (blockHeader, account, priceApi) {
           let sig = await api.sign(input, account)
 
           let secret = await web3.utils.soliditySha3(sig)
-          let tx = await api.reveal([priceEth, priceBtc], secret, account, account)
+          let tx = await api.reveal(data, secret, account, account)
           console.log(tx)
         }
       }
