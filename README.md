@@ -14,8 +14,8 @@ You can run following commands in CLI:\
 
 `-help` See a list of available commands
 `create <password>`  Creates a new wallet with given password. The wallets are stored in `keys/` directory.
-WARNING: this is not a secure method of key generation, DO NOT use it for assets on mainnet.
-Fund this account with ether and schells to start participating in the network.
+WARNING: this is not a secure method of key generation, DO NOT use it for assets on mainnet.\
+Fund this account with rinkeby ether and rinkeby schells to start participating in the network.
 
     stake <amount> <address> <password>
     vote <address> <password>
