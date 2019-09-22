@@ -8,9 +8,9 @@ End user client for Razor network.
 
 
 ## Commands
-Run the commands in following way:
-    node index.js <commands>
-You can run following commands in CLI:
+Run the commands in following way:\
+    `node index.js <commands>`\
+You can run following commands in CLI:\
 
 `-help` See a list of available commands
 `create <password>`  Creates a new wallet with given password. The wallets are stored in `keys/` directory.
