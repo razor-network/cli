@@ -134,8 +134,8 @@ async function stake (amount, account) {
     console.log('epoch', epoch)
     console.log('state', state)
     if (state !== 0) {
-      console.log('Can only stake during state 0 (commit). Retrying in 5 seconds...')
-      await sleep(5000)
+      console.log('Can only stake during state 0 (commit). Retrying in 1 second...')
+      await sleep(1000)
     } else break
   }
   console.log('Sending stake transaction...')

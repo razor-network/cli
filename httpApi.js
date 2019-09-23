@@ -291,7 +291,7 @@ async function getStakingEvents () {
   let blockNumber = await web3.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
   let events = await stakeManager.getPastEvents('allEvents', {
-    fromBlock: Math.max(0, Number(blockNumber) - 100000),
+    fromBlock: Math.max(0, Number(blockNumber) - 1000),
     // fromBlock: 0,
     toBlock: 'latest'
   })
@@ -306,13 +306,50 @@ async function getStakingEvents () {
   let staker
   let timestamp
   for (let i = 0; i < events.length; i++) {
-    if (events[i].event === 'WriterAdded') continue
-
-    staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    if (events[i].event === 'WriterAdded' || events[i].event === 'StakeGettingRewardChange') continue
+    if (events[i].returnValues.stakerId !== undefined) {
+      staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    }
     let data = events[i].returnValues
-
-    res.push({epoch: data.epoch, staker: staker, action: events[i].event, value: data.amount, timestamp: data.timestamp })
+    if (events[i].event === 'StakeChange') {
+      res.push({epoch: data.epoch, staker: staker, action: data.reason, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
+    } else {
+      res.push({epoch: data.epoch, staker: staker, action: events[i].event, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
+    }
   }
+
+  // emit StakeChange(_id, _stake, _reason);
+
+  return res
+}
+async function getPoolChanges () {
+  let blockNumber = await web3.eth.getBlockNumber()
+  // let epoch = Number(await getEpoch()) - 1
+  let events = await stakeManager.getPastEvents('allEvents', {
+    fromBlock: Math.max(0, Number(blockNumber) - 1000),
+    // fromBlock: 0,
+    toBlock: 'latest'
+  })
+  // console.log(events[2].returnValues)
+  let res = []
+  let value
+  let staker
+  let timestamp
+  for (let i = 0; i < events.length; i++) {
+    // staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    let data = events[i].returnValues
+    console.log(events[i].event)
+    // event RewardPoolChange(uint256 epoch, uint256 value, uint256 timestamp);
+    // event StakeGettingRewardChange(uint256 epoch, uint256 value, uint256 timestamp);
+    if (events[i].event === 'RewardPoolChanges' || events[i].event === 'StakeGettingRewardChange') {
+      res.push({epoch: data.epoch, value: data.value, action: events[i].event, timestamp: data.timestamp })
+    // } else {
+      // res.push({epoch: data.epoch, value: data.value, action: events[i].event, timestamp: data.timestamp })
+    }
+  }
+
+  // emit StakeChange(_id, _stake, _reason);
+
   return res
 }
 
@@ -733,5 +770,6 @@ module.exports = {
   getStakingEvents: getStakingEvents,
   getJobEvents: getJobEvents,
   getBlockEvents: getBlockEvents,
-  getStakers: getStakers
+  getStakers: getStakers,
+  getPoolChanges: getPoolChanges
 }
