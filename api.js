@@ -450,46 +450,28 @@ async function isElectedProposer (random, iteration, biggestStake, stake, staker
   return (true)
 }
 
-async function weightedMedian (values, weights) {
-  let medianWeight = Math.floor(totalStakeRevealed / 2)
-  ler weight = 0;
-  for (i = 0; i < values.length; i++) {
-    weight += weights[i]
-      // console.log('weight', weight)
-    if (weight > medianWeight) {
-        return values[i]
-  }
-}
-}
-
 async function makeBlock () {
   let medians = []
   let jobs = await getActiveJobs()
   for (let assetId = 0; assetId < jobs.length; assetId++) {
     let res = await getSortedVotes(assetId)
-    let sortedVotes = res[0]
-    let weights = res[1]
+    let sortedVotes = res[1]
     // console.log('sortedVotes', sortedVotes)
-    // let epoch = Number(await stateManager.methods.getEpoch().call())
+    let epoch = Number(await stateManager.methods.getEpoch().call())
 
-    // let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
+    let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
     // console.log('totalStakeRevealed', totalStakeRevealed)
-    // let medianWeight = Math.floor(totalStakeRevealed / 2)
+    let medianWeight = Math.floor(totalStakeRevealed / 2)
     // console.log('medianWeight', medianWeight)
 
-    let median = await weightedMedian(sortedVotes, weights)
-    let deviations = sortedValues.map(function(value) {
-        return Math.abs(sortedValues - median);
-    })
-    let mad = await weightedMedian(deviations, weights)
-
-    let lowerCutoff =0
-    let higherCutoff =0
-    for(let i = 0; i < deviations.length; i++) {
-        if(deviations[i] > mad && lowerCutoff===0) lowerCutoff = sortedVotes[i]
+    let i = 0
+    let median = 0
+    let weight = 0
+    for (i = 0; i < sortedVotes.length; i++) {
+      weight += sortedVotes[i][1]
+      // console.log('weight', weight)
+      if (weight > medianWeight && median === 0) median = sortedVotes[i][0]
     }
-
-
     medians.push(median)
   }
   return (medians)
