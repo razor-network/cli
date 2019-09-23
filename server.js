@@ -81,6 +81,7 @@ app.get('/blockEvents/', async function (req, res) {
   // console.log(result)
   res.json({'message': result})
 })
+
 app.get('/stakingEvents/', async function (req, res) {
   result = await api.getStakingEvents()
   // console.log(result)
@@ -95,6 +96,15 @@ app.get('/stakingEvents/', async function (req, res) {
 
 app.get('/epoch/', async function (req, res) {
   result = await api.getEpoch()
+  res.json({'message': result})
+})
+app.get('/poolChanges/', async function (req, res) {
+  result = await api.getPoolChanges()
+  res.json({'message': result})
+})
+app.get('/random/', async function (req, res) {
+  // result = await api.getEpoch()
+  result = Math.random() * 1000000
   res.json({'message': result})
 })
 // listen for requests

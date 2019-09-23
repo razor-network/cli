@@ -11,16 +11,16 @@ let api = require('./api')
 // let server = require('./server')
 let axios = require('axios')
 let _ = require('lodash')
-// let provider = 'ws://localhost:8545/'
+let provider = 'ws://localhost:8545/'
 
 // const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8546'
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-let provider = 'ws://35.188.201.171:8546'
+// let provider = 'ws://35.188.201.171:8546'
 
 console.log('provider', provider)
-// let networkid = '420' // testnet
-let networkid = '4' // rinkeby
+let networkid = '420' // testnet
+// let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 // let keys = require('./keys.json')
@@ -354,7 +354,7 @@ async function handleBlock (blockHeader, account) {
           // if (jobs[i].url === '') break
           // console.log('i, job', i, jobs[i])
           try {
-            response = await axios.get(jobs[i].url)
+            response = await axios.get(jobs[i].url, {timeout: 5000})
             datum = _.get(response.data, jobs[i].selector)
             if (isNaN(Number(datum))) throw ('Result is not a number')
             datum = Math.floor(Number(datum) * 100)

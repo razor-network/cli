@@ -4,12 +4,12 @@ let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
 // const infuraKey = fs.readFileSync('.infura').toString().trim()
-// let provider = 'ws://localhost:8545'
+let provider = 'ws://localhost:8545'
 // let provider = 'ws://localhost:8546'
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-let provider = 'ws://35.188.201.171:8546'
-// let networkid = '420' // testnet
-let networkid = '4' // rinkeby
+// let provider = 'ws://35.188.201.171:8546'
+let networkid = '420' // testnet
+// let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 let merkle = require('@razor-network/merkle')
@@ -134,8 +134,8 @@ async function stake (amount, account) {
     console.log('epoch', epoch)
     console.log('state', state)
     if (state !== 0) {
-      console.log('Can only stake during state 0 (commit). Retrying in 5 seconds...')
-      await sleep(5000)
+      console.log('Can only stake during state 0 (commit). Retrying in 1 second...')
+      await sleep(1000)
     } else break
   }
   console.log('Sending stake transaction...')
@@ -450,28 +450,46 @@ async function isElectedProposer (random, iteration, biggestStake, stake, staker
   return (true)
 }
 
+async function weightedMedian (values, weights) {
+  let medianWeight = Math.floor(totalStakeRevealed / 2)
+  ler weight = 0;
+  for (i = 0; i < values.length; i++) {
+    weight += weights[i]
+      // console.log('weight', weight)
+    if (weight > medianWeight) {
+        return values[i]
+  }
+}
+}
+
 async function makeBlock () {
   let medians = []
   let jobs = await getActiveJobs()
   for (let assetId = 0; assetId < jobs.length; assetId++) {
     let res = await getSortedVotes(assetId)
-    let sortedVotes = res[1]
+    let sortedVotes = res[0]
+    let weights = res[1]
     // console.log('sortedVotes', sortedVotes)
-    let epoch = Number(await stateManager.methods.getEpoch().call())
+    // let epoch = Number(await stateManager.methods.getEpoch().call())
 
-    let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
+    // let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
     // console.log('totalStakeRevealed', totalStakeRevealed)
-    let medianWeight = Math.floor(totalStakeRevealed / 2)
+    // let medianWeight = Math.floor(totalStakeRevealed / 2)
     // console.log('medianWeight', medianWeight)
 
-    let i = 0
-    let median = 0
-    let weight = 0
-    for (i = 0; i < sortedVotes.length; i++) {
-      weight += sortedVotes[i][1]
-      // console.log('weight', weight)
-      if (weight > medianWeight && median === 0) median = sortedVotes[i][0]
+    let median = await weightedMedian(sortedVotes, weights)
+    let deviations = sortedValues.map(function(value) {
+        return Math.abs(sortedValues - median);
+    })
+    let mad = await weightedMedian(deviations, weights)
+
+    let lowerCutoff =0
+    let higherCutoff =0
+    for(let i = 0; i < deviations.length; i++) {
+        if(deviations[i] > mad && lowerCutoff===0) lowerCutoff = sortedVotes[i]
     }
+
+
     medians.push(median)
   }
   return (medians)
