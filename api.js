@@ -320,13 +320,14 @@ async function propose (account) {
   console.log('iteration1', iteration)
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
   let block = await makeBlock()
+  console.log('block', block)
   let jobs = await getActiveJobs()
   let jobIds = []
   for (let i = 0; i < jobs.length; i++) {
     jobIds.push(Number(jobs[i].id))
   }
   console.log('epoch, block, jobIds, iteration, biggestStakerId', epoch, block, jobIds, iteration, biggestStakerId)
-  let tx = await blockManager.methods.propose(epoch, block, jobIds, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
+  let tx = await blockManager.methods.propose(epoch, jobIds, block[0],block[1],block[2], iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
   return tx
   //
   //
@@ -451,12 +452,13 @@ async function isElectedProposer (random, iteration, biggestStake, stake, staker
 }
 
 async function weightedMedian (values, weights) {
-  let medianWeight = Math.floor(totalStakeRevealed / 2)
-  ler weight = 0;
+  let medianWeight = Math.floor(weights.reduce((a, b) => a + b, 0) / 2)
+  console.log('medianWeight',medianWeight)
+  let weight = 0;
   for (i = 0; i < values.length; i++) {
     weight += weights[i]
       // console.log('weight', weight)
-    if (weight > medianWeight) {
+    if (weight >= medianWeight) {
         return values[i]
   }
 }
@@ -464,12 +466,15 @@ async function weightedMedian (values, weights) {
 
 async function makeBlock () {
   let medians = []
+  let lowerCutoffs = []
+  let higherCutoffs = []
   let jobs = await getActiveJobs()
   for (let assetId = 0; assetId < jobs.length; assetId++) {
     let res = await getSortedVotes(assetId)
     let sortedVotes = res[0]
     let weights = res[1]
-    // console.log('sortedVotes', sortedVotes)
+    console.log('sortedVotes', sortedVotes)
+    console.log('weights', weights)
     // let epoch = Number(await stateManager.methods.getEpoch().call())
 
     // let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
@@ -478,21 +483,43 @@ async function makeBlock () {
     // console.log('medianWeight', medianWeight)
 
     let median = await weightedMedian(sortedVotes, weights)
-    let deviations = sortedValues.map(function(value) {
-        return Math.abs(sortedValues - median);
+    console.log('median', median)
+    let deviations = sortedVotes.map(function(value, index) {
+        return [Math.abs(value - median),weights[index]]
     })
-    let mad = await weightedMedian(deviations, weights)
 
-    let lowerCutoff =0
-    let higherCutoff =0
+    console.log('deviations', deviations)
+
+
+    let mad = await weightedMedian(deviations, weights)
+    console.log('mad', mad)
+
+
+    let penalized = []
     for(let i = 0; i < deviations.length; i++) {
-        if(deviations[i] > mad && lowerCutoff===0) lowerCutoff = sortedVotes[i]
+        if(deviations[i] > mad) penalized.push(sortedVotes[i])
     }
+    console.log('penalized', penalized)
+    // penalized.sort(function (a, b) { return a[1] - b[1] })
+
+    // console.log('penalizedSorted', penalized)
+if(median===undefined) median = 0
+let lowerCutoff    = median
+let higherCutoff = median
+if(penalized.length>0) {
+     lowerCutoff = Math.min(...penalized)
+    console.log('lowerCutoff', lowerCutoff)
+
+     higherCutoff = Math.max(...penalized)
+    console.log('higherCutoff', higherCutoff)
+}
 
 
     medians.push(median)
+    lowerCutoffs.push(lowerCutoff)
+    higherCutoffs.push(higherCutoff)
   }
-  return (medians)
+  return ([medians, lowerCutoffs, higherCutoffs])
 }
 
 async function getSortedVotes (assetId) {
@@ -514,7 +541,7 @@ async function getSortedVotes (assetId) {
   // get weights of those values
   for (let val of values) {
     let weight = Number(await voteManager.methods.voteWeights(epoch, assetId, val).call())
-    voteWeights.push([val, weight])
+    voteWeights.push(weight)
   }
   return [values, voteWeights]
 }
@@ -538,6 +565,12 @@ async function getStake (stakerId) {
   return Number((await stakeManager.methods.stakers(stakerId).call()).stake)
 }
 
+async function getProposedBlockMedians (epoch, proposedBlock) {
+  return (await blockManager.methods.getProposedBlockMedians(epoch, proposedBlock).call())
+}
+async function getProposedBlockMedians (epoch, proposedBlock) {
+  return (await blockManager.methods.getProposedBlockMedians(epoch, proposedBlock).call())
+}
 async function getProposedBlockMedians (epoch, proposedBlock) {
   return (await blockManager.methods.getProposedBlockMedians(epoch, proposedBlock).call())
 }

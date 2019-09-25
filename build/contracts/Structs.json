@@ -1,15 +1,15 @@
 {
   "contractName": "Structs",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/hrishi/contracts/contracts/lib/Structs.sol\":\"Structs\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/hrishi/contracts/contracts/lib/Structs.sol\":{\"keccak256\":\"0x7a850f75938ef746d9b3ff0bb1e794eaad325d0e7032132f62c2f3a15da8c247\",\"urls\":[\"bzzr://5ed4c1a6831039c4cbdcaf649e49ea50f51a81e4cd5abf2258090dd939b4fbf6\",\"dweb:/ipfs/QmfZMjCyWG4UEmvcptE14LdqRtyZLg7iP1y61dLaRKdqza\"]}},\"version\":1}",
-  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a7230582013226d9976327a9352057ec0787c4e030b94c5a9603a23421fc8c4ddf1d9af5564736f6c634300050a0032",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a7230582013226d9976327a9352057ec0787c4e030b94c5a9603a23421fc8c4ddf1d9af5564736f6c634300050a0032",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/hrishi/contracts/contracts/lib/Structs.sol\":\"Structs\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/hrishi/contracts/contracts/lib/Structs.sol\":{\"keccak256\":\"0x7a850f75938ef746d9b3ff0bb1e794eaad325d0e7032132f62c2f3a15da8c247\",\"urls\":[\"bzzr://5ed4c1a6831039c4cbdcaf649e49ea50f51a81e4cd5abf2258090dd939b4fbf6\",\"dweb:/ipfs/QmfZMjCyWG4UEmvcptE14LdqRtyZLg7iP1y61dLaRKdqza\"]}},\"version\":1}",
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723058203364ec064a06e79472875a959524397cd8b18f5d1159c77cc28ca0076074abd164736f6c634300050a0032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723058203364ec064a06e79472875a959524397cd8b18f5d1159c77cc28ca0076074abd164736f6c634300050a0032",
   "sourceMap": "26:997:21:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
   "deployedSourceMap": "26:997:21:-;;;;;;;;",
   "source": "pragma solidity 0.5.10;\n\n\nlibrary Structs {\n    struct Vote {\n        uint256 value;\n        uint256 weight;\n    }\n\n    struct Staker {\n        uint256 id;\n        address _address;\n        uint256 stake;\n        uint256 epochStaked;\n        uint256 epochLastCommitted;\n        uint256 epochLastRevealed;\n        uint256 unstakeAfter;\n        uint256 withdrawAfter;\n    }\n\n    struct Block {\n        uint256 proposerId;\n        uint256[] jobIds;\n        uint256[] medians;\n        uint256[] lowerCutoffs;\n        uint256[] higherCutoffs;\n        uint256 iteration;\n        uint256 biggestStake;\n        bool valid;\n    }\n\n    struct Dispute {\n        uint256 accWeight;\n        uint256 median;\n        uint256 lowerCutoffs;\n        uint256 higherCutoffs;\n        uint256 lastVisited;\n        uint256 assetId;\n    }\n\n    struct Job {\n        uint256 id;\n        uint256 epoch;\n        string url;\n        string selector;\n        bool repeat;\n        address creator;\n        uint256 credit;\n        bool fulfilled;\n    }\n\n}\n",
-  "sourcePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
+  "sourcePath": "/home/hrishi/contracts/contracts/lib/Structs.sol",
   "ast": {
-    "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
+    "absolutePath": "/home/hrishi/contracts/contracts/lib/Structs.sol",
     "exportedSymbols": {
       "Structs": [
         4090
@@ -978,7 +978,7 @@
     "src": "0:1024:21"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
+    "absolutePath": "/home/hrishi/contracts/contracts/lib/Structs.sol",
     "exportedSymbols": {
       "Structs": [
         4090
@@ -1951,27 +1951,15 @@
     "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
   },
   "networks": {
-    "4": {
-      "events": {},
-      "links": {},
-      "address": "0xF79CB0d0eb72b13f842EdbD38D0112D8bFAbb1D7",
-      "transactionHash": "0x2c334e75b6ceed18277fee4dbe7f5bd1877a81bffa199a8678861253d1c1d7ca"
-    },
-    "5": {
-      "events": {},
-      "links": {},
-      "address": "0x9b4e383192a089C8177f5E1293FC037956Cfd884",
-      "transactionHash": "0x63a56af5eaa24d1552dce24d47d6d864309db6b0fabfd0c5e4f2f513a9fe9c65"
-    },
     "420": {
       "events": {},
       "links": {},
-      "address": "0x9b4e383192a089C8177f5E1293FC037956Cfd884",
-      "transactionHash": "0x391c7e05d5cb415fcf67071b6ab14a1c8c88fcdd3a87d5725f84e7777585afb8"
+      "address": "0x421C6c046D1cd62Df0dDBFd56A2dc702E1295CD7",
+      "transactionHash": "0x695f29e9a54f7eba5ac079c20ccc8d47904c97cb73e133a844046e832a50d75b"
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-09-23T10:21:32.253Z",
+  "updatedAt": "2019-09-25T08:31:55.478Z",
   "devdoc": {
     "methods": {}
   },

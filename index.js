@@ -376,7 +376,7 @@ async function handleBlock (blockHeader, account) {
         let staker = await api.getStaker(yourId)
         console.log('stakerepochLastCommitted', Number(staker.epochLastCommitted))
         if (Number(staker.epochLastCommitted) !== epoch) {
-          console.log('Commitment for this epoch not found on mainnet. Aborting reveal')
+          console.log('Commitment for this epoch not found on network. Aborting reveal')
         } else {
           console.log('stakerepochLastRevealed', Number(staker.epochLastRevealed))
           let input = await web3.utils.soliditySha3(account, epoch)
@@ -404,17 +404,22 @@ async function handleBlock (blockHeader, account) {
         lastVerification = epoch
         let numProposedBlocks = await api.getNumProposedBlocks(epoch)
         for (let i = 0; i < numProposedBlocks; i++) {
-          let blockMedians = await api.getProposedBlockMedians(epoch, i)
-
+          // let blockMedians = await api.getProposedBlockMedians(epoch, i)
+          let proposedBlock = await api.getProposedBlock(epoch, i)
         // console.log('proposedBlock', proposedBlock)
 
-          let medians = blockMedians.map(Number)
-          console.log('Medians proposed in block', medians)
+          let medians = proposedBlock[1].map(Number)
+          let lowerCutoffs = proposedBlock[2].map(Number)
+          let higherCutoffs = proposedBlock[3].map(Number)
+          console.log('values proposed in block', medians, lowerCutoffs, higherCutoffs)
 
           let block = await api.makeBlock()
-          console.log('Locally calculated medians', block)
-          if (JSON.stringify(medians) !== JSON.stringify(block)) {
-            console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local median:' + block + 'block medians:', medians)
+          console.log('Locally calculated median:', block[0], ' lowerCutoff: ',block[1], ' higherCutoff: ',block[2])
+          if (JSON.stringify(medians) !== JSON.stringify(block[0]) ||
+          JSON.stringify(lowerCutoffs) !== JSON.stringify(block[1]) ||
+          JSON.stringify(higherCutoffs) !== JSON.stringify(block[2])
+        ) {
+            console.log('WARNING: BLOCK NOT MATCHING WITH LOCAL CALCULATIONS. local values:' + block + 'block values:', medians,lowerCutoffs,higherCutoffs)
             await api.dispute(account)
           } else {
             console.log('Proposed median matches with local calculations. Will not open dispute.')

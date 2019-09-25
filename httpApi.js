@@ -313,9 +313,19 @@ async function getStakingEvents () {
     let data = events[i].returnValues
     if (events[i].event === 'StakeChange') {
       res.push({epoch: data.epoch, staker: staker, action: data.reason, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
+    } else if(events[i].event === 'RewardPoolChange' ) {
+      res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevRewardPool, newStake: data.rewardPool, timestamp: data.timestamp })
+
+    } else if(events[i].event === 'StakeGettingRewardChange' ) {
+      res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevStakeGettingReward, newStake: data.stakeGettingReward, timestamp: data.timestamp })
+
     } else {
       res.push({epoch: data.epoch, staker: staker, action: events[i].event, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
     }
+  // emit RewardPoolChange(epoch, prevRewardPool, rewardPool, now);
+  //
+  // emit StakeGettingRewardChange(epoch, prevStakeGettingReward, stakeGettingReward, now);
+
   }
 
   // emit StakeChange(_id, _stake, _reason);
@@ -367,13 +377,7 @@ async function getBlockEvents () {
   //                     uint256[] jobIds,
   //                     uint256 timestamp);
 
-      // event Proposed(uint256 epoch,
-      //                 uint256 stakerId,
-      //                 uint256[] medians,
-      //                 uint256[] jobIds,
-      //                 uint256 iteration,
-      //                 uint256 biggestStakerId,
-      //                 uint256 timestamp);
+  // emit Proposed(epoch, proposerId, jobIds, medians, lowerCutoffs, higherCutoffs, iteration, biggestStakerId, now);
 
   // console.log(events[0])
   let res = []
@@ -390,6 +394,8 @@ async function getBlockEvents () {
         staker: staker,
         action: events[i].event,
         medians: data.medians,
+        lowerCutoffs: data.lowerCutoffs,
+        higherCutoffs: data.higherCutoffs,
         jobIds: data.jobIds,
         timestamp: data.timestamp,
         iteration: data.iteration,
@@ -399,6 +405,8 @@ async function getBlockEvents () {
         staker: staker,
         action: events[i].event,
         medians: data.medians,
+        lowerCutoffs: data.lowerCutoffs,
+        higherCutoffs: data.higherCutoffs,
         jobIds: data.jobIds,
         timestamp: data.timestamp,
         iteration: '',

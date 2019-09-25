@@ -65,6 +65,7 @@ app.get('/voteEvents/:jobId/', async function (req, res) {
   // console.log(result)
   res.json({'message': result})
 })
+
 app.get('/voteEvents/', async function (req, res) {
   result = await api.getVotingEvents()
   // console.log(result)
