@@ -50,6 +50,11 @@ app.get('/stakers/', async function (req, res) {
   res.json({result})
 })
 
+app.get('/stakerEvents/:address', async function (req, res) {
+  result = await api.getStakerEvents(req.params.address)
+  res.json({result})
+})
+
 app.post('/job/', async function (req, res) {
   result = await api.createJob()
   res.json({'message': result})

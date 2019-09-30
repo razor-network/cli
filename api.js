@@ -24,38 +24,38 @@ let numBlocks = 10
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 
 let simpleTokenBuild = require('./build/contracts/SimpleToken.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 500000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 
 async function login (address, password) {
   await web3.eth.accounts.wallet.create(0, randomHex(32))
@@ -81,7 +81,7 @@ async function transfer (to, amount, from) {
   // console.log(gas)
 
   let res = await simpleToken.methods.transfer(to, amount).send({ from: from,
-    nonce: nonce})
+  nonce: nonce})
   console.log(res)
 }
 
@@ -105,7 +105,7 @@ async function approve (to, amount, from) {
     console.log('Sending approve transaction...')
     return simpleToken.methods.approve(to, amount).send({
       from: from,
-      nonce: nonce})
+    nonce: nonce})
   }
 }
 
@@ -143,7 +143,7 @@ async function stake (amount, account) {
 
   let tx2 = await stakeManager.methods.stake(epoch, amount).send({
     from: account,
-    nonce: String(nonce)})
+  nonce: String(nonce)})
   console.log(tx2.events)
   return (tx2.events.Staked.event === 'Staked')
 }
@@ -158,7 +158,7 @@ async function unstake (account) {
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
 
   let tx = await stakeManager.methods.unstake(epoch).send({from: account,
-    nonce: String(nonce)})
+  nonce: String(nonce)})
   console.log(tx.events)
   return (tx.events.Unstaked.event === 'Unstaked')
 }
@@ -173,7 +173,7 @@ async function withdraw (account) {
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
 
   let tx = await stakeManager.methods.withdraw(epoch).send({from: account,
-    nonce: String(nonce)})
+  nonce: String(nonce)})
   console.log(tx.events)
   return (tx.events.Unstaked.event === 'Unstaked')
 }
@@ -232,7 +232,7 @@ async function commit (votes, secret, account) {
   // let votes = [100, 200, 300, 400, 500, 600, 700, 800, 900]
   console.log(votes)
   let tree = merkle('keccak256').sync(votes)
-     // console.log(tree.root())
+  // console.log(tree.root())
   let root = tree.root()
 
   let stakerId = Number(await stakeManager.methods.stakerIds(account).call())
@@ -265,7 +265,7 @@ async function reveal (votes, secret, commitAccount, account) {
     throw new Error('Already Revealed', voted)
   }
   let tree = merkle('keccak256').sync(votes)
-     // console.log(tree.root())
+  // console.log(tree.root())
   let root = tree.root()
   let proof = []
   for (let i = 0; i < votes.length; i++) {
@@ -327,23 +327,23 @@ async function propose (account) {
     jobIds.push(Number(jobs[i].id))
   }
   console.log('epoch, block, jobIds, iteration, biggestStakerId', epoch, block, jobIds, iteration, biggestStakerId)
-  let tx = await blockManager.methods.propose(epoch, jobIds, block[0],block[1],block[2], iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
+  let tx = await blockManager.methods.propose(epoch, jobIds, block[0], block[1], block[2], iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
   return tx
-  //
-  //
-  // let res = await getIteration()
-  // let electedProposer = res[0]
-  // let iteration = res[1]
-  // let biggestStakerId = res[2]
-  // // console.log('biggestStakerId', biggestStakerId)
-  // // console.log('electedProposer, iteration', electedProposer, iteration)
-  // let block = await makeBlock()
-  // // console.log('block', block)
-  // let median = block
-  // console.log('epoch, median, electedProposer, iteration, biggestStakerId', epoch, median, electedProposer, iteration, biggestStakerId)
-  // const nonce = await web3.eth.getTransactionCount(account, 'pending')
-  // let tx = await blockManager.methods.propose(epoch, medians, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
-  // return tx
+//
+//
+// let res = await getIteration()
+// let electedProposer = res[0]
+// let iteration = res[1]
+// let biggestStakerId = res[2]
+// // console.log('biggestStakerId', biggestStakerId)
+// // console.log('electedProposer, iteration', electedProposer, iteration)
+// let block = await makeBlock()
+// // console.log('block', block)
+// let median = block
+// console.log('epoch, median, electedProposer, iteration, biggestStakerId', epoch, median, electedProposer, iteration, biggestStakerId)
+// const nonce = await web3.eth.getTransactionCount(account, 'pending')
+// let tx = await blockManager.methods.propose(epoch, medians, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
+// return tx
 }
 
 // automatically calculate alternative block and submit
@@ -355,12 +355,12 @@ async function dispute (account) {
   for (let i = 0; i < iter; i++) {
     console.log(epoch, sortedVotes.slice(i * 1000, (i * 1000) + 1000))
     await blockManager.methods.giveSorted(epoch, sortedVotes.slice(i * 1000, (i * 1000) + 1000)).send({from: account,
-      nonce: String(nonce)})
+    nonce: String(nonce)})
   }
   const nonce = await web3.eth.getTransactionCount(account, 'pending')
 
   return blockManager.methods.proposeAlt(epoch).send({from: account,
-    nonce: String(nonce)})
+  nonce: String(nonce)})
 }
 
 async function getState () {
@@ -396,7 +396,7 @@ async function getStaker (stakerId) {
 }
 
 async function getBiggestStakeAndId (stakeManager) {
-// async function getBiggestStakeAndId (schelling) {
+  // async function getBiggestStakeAndId (schelling) {
   let biggestStake = 0
   let biggestStakerId = 0
   let numStakers = await stakeManager.methods.numStakers().call()
@@ -420,9 +420,9 @@ async function prng (seed, max, blockHashes) {
 
 // pseudo random hash generator based on block hashes.
 async function prngHash (seed, blockHashes) {
-// let sum = blockHashes(numBlocks)
+  // let sum = blockHashes(numBlocks)
   let sum = await web3.utils.soliditySha3(blockHashes, seed)
-// console.log('prngHash', sum)
+  // console.log('prngHash', sum)
   return (sum)
 }
 
@@ -430,7 +430,7 @@ async function getIteration (random, biggestStake, stake, stakerId, numStakers, 
   let j = 0
   console.log(blockHashes)
   for (let i = 0; i < 10000000000; i++) {
-// console.log('iteration ', i)
+    // console.log('iteration ', i)
 
     let isElected = await isElectedProposer(random, i, biggestStake, stake, stakerId, numStakers, blockHashes)
     if (isElected) return (i)
@@ -438,30 +438,44 @@ async function getIteration (random, biggestStake, stake, stakerId, numStakers, 
 }
 
 async function isElectedProposer (random, iteration, biggestStake, stake, stakerId, numStakers, blockHashes) {
-// rand = 0 -> totalStake-1
-// add +1 since prng returns 0 to max-1 and staker start from 1
+  // rand = 0 -> totalStake-1
+  // add +1 since prng returns 0 to max-1 and staker start from 1
   let seed = await web3.utils.soliditySha3(iteration)
-// console.log('seed', seed)
+  // console.log('seed', seed)
   if ((Number(await prng(seed, numStakers, blockHashes)) + 1) !== stakerId) return (false)
   let seed2 = await web3.utils.soliditySha3(stakerId, iteration)
   let randHash = await prngHash(seed2, blockHashes)
   let rand = Number((await web3.utils.toBN(randHash)).mod(await web3.utils.toBN(2 ** 32)))
-// let biggestStake = stakers[biggestStake].stake;
+  // let biggestStake = stakers[biggestStake].stake
   if (rand * (biggestStake) > stake * (2 ** 32)) return (false)
   return (true)
 }
 
-async function weightedMedian (values, weights) {
+async function weightedMedianAndCuttofs (values, weights) {
   let medianWeight = Math.floor(weights.reduce((a, b) => a + b, 0) / 2)
-  console.log('medianWeight',medianWeight)
-  let weight = 0;
+  let lowerCutoffWeight = Math.floor(weights.reduce((a, b) => a + b, 0) / 4)
+  let higherCutoffWeight = Math.floor(weights.reduce((a, b) => a + b, 0) * 3 / 4)
+  let median = 0
+  let lowerCutoff = 0
+  let higherCutoff = 0
+  console.log('medianWeight', medianWeight)
+  console.log('lowerCutoffWeight', lowerCutoffWeight)
+  console.log('higherCutoffWeight', higherCutoffWeight)
+  let weight = 0
   for (i = 0; i < values.length; i++) {
     weight += weights[i]
-      // console.log('weight', weight)
-    if (weight >= medianWeight) {
-        return values[i]
+    // console.log('weight', weight)
+    if (weight >= medianWeight && median === 0) {
+      median = values[i]
+    }
+    if (weight >= lowerCutoffWeight && lowerCutoff === 0) {
+      lowerCutoff = values[i]
+    }
+    if (weight >= higherCutoffWeight && higherCutoff === 0) {
+      higherCutoff = values[i]
+    }
   }
-}
+  return ([median, lowerCutoff, higherCutoff])
 }
 
 async function makeBlock () {
@@ -482,38 +496,43 @@ async function makeBlock () {
     // let medianWeight = Math.floor(totalStakeRevealed / 2)
     // console.log('medianWeight', medianWeight)
 
-    let median = await weightedMedian(sortedVotes, weights)
+    let result = await weightedMedianAndCuttofs(sortedVotes, weights)
+    let median = result[0]
+    let lowerCutoff = result[1]
+    let higherCutoff = result[2]
     console.log('median', median)
-    let deviations = sortedVotes.map(function(value, index) {
-        return [Math.abs(value - median),weights[index]]
-    })
-
-    console.log('deviations', deviations)
-
-
-    let mad = await weightedMedian(deviations, weights)
-    console.log('mad', mad)
-
-
-    let penalized = []
-    for(let i = 0; i < deviations.length; i++) {
-        if(deviations[i] > mad) penalized.push(sortedVotes[i])
-    }
-    console.log('penalized', penalized)
-    // penalized.sort(function (a, b) { return a[1] - b[1] })
-
-    // console.log('penalizedSorted', penalized)
-if(median===undefined) median = 0
-let lowerCutoff    = median
-let higherCutoff = median
-if(penalized.length>0) {
-     lowerCutoff = Math.min(...penalized)
     console.log('lowerCutoff', lowerCutoff)
-
-     higherCutoff = Math.max(...penalized)
     console.log('higherCutoff', higherCutoff)
-}
-
+    //     let deviations = sortedVotes.map(function(value, index) {
+    //         return [Math.abs(value - median),weights[index]]
+    //     })
+    //
+    //     console.log('deviations', deviations)
+    //
+    //
+    //     let mad = await weightedMedian(deviations, weights)
+    //     console.log('mad', mad)
+    //
+    //
+    //     let penalized = []
+    //     for(let i = 0; i < deviations.length; i++) {
+    //         if(deviations[i] > mad) penalized.push(sortedVotes[i])
+    //     }
+    //     console.log('penalized', penalized)
+    //     // penalized.sort(function (a, b) { return a[1] - b[1] })
+    //
+    //     // console.log('penalizedSorted', penalized)
+    // if(median===undefined) median = 0
+    // let lowerCutoff    = median
+    // let higherCutoff = median
+    // if(penalized.length>0) {
+    //      lowerCutoff = Math.min(...penalized)
+    //     console.log('lowerCutoff', lowerCutoff)
+    //
+    //      higherCutoff = Math.max(...penalized)
+    //     console.log('higherCutoff', higherCutoff)
+    // }
+    //
 
     medians.push(median)
     lowerCutoffs.push(lowerCutoff)
@@ -522,6 +541,45 @@ if(penalized.length>0) {
   return ([medians, lowerCutoffs, higherCutoffs])
 }
 
+//
+// async function makeBlock () {
+//       let medians = []
+//       let lowerCutoffs = []
+//       let higherCutoffs = []
+//       let jobs = await getActiveJobs()
+//       for (let assetId = 0; assetId < jobs.length; assetId++) {
+//
+//   let res = await getSortedVotes(assetId)
+//   let sortedVotes = res[1]
+//   console.log('sortedVotes', sortedVotes)
+//   let epoch = Number(await schelling.methods.getEpoch().call())
+//
+//   let totalStakeRevealed = Number(await schelling.methods.totalStakeRevealed(epoch).call())
+//   console.log('totalStakeRevealed', totalStakeRevealed)
+//   let medianWeight = Math.floor(totalStakeRevealed / 2)
+//   console.log('medianWeight', medianWeight)
+//   let twoFiveWeight = Math.floor(totalStakeRevealed / 4)
+//   console.log('twoFiveWeight', twoFiveWeight)
+//   let sevenFiveWeight = Math.floor(totalStakeRevealed * 3 / 4)
+//   console.log('sevenFiveWeight', sevenFiveWeight)
+//
+//   let i = 0
+//   let twoFive = 0
+//   let sevenFive = 0
+//   let median = 0
+//   let weight = 0
+//   let stakeGettingReward = 0
+//   let stakeGettingPenalty = 0
+//   for (i = 0; i < sortedVotes.length; i++) {
+//     weight += sortedVotes[i][1]
+//     console.log('weight', weight)
+//     if (weight > twoFiveWeight && twoFive === 0) twoFive = sortedVotes[i][0]
+//     if (weight > medianWeight && median === 0) median = sortedVotes[i][0]
+//     if (weight >= sevenFiveWeight && sevenFive === 0) sevenFive = sortedVotes[i][0]
+//   }
+//   return ([median, twoFive, sevenFive])
+// }
+
 async function getSortedVotes (assetId) {
   let epoch = Number(await stateManager.methods.getEpoch().call())
 
@@ -529,7 +587,7 @@ async function getSortedVotes (assetId) {
   let values = []
   let voteWeights = []
 
-// get all values that stakers voted.
+  // get all values that stakers voted.
   for (let i = 1; i <= numStakers; i++) {
     let vote = Number((await voteManager.methods.votes(epoch, i, assetId).call()).value)
     // console.log(i, 'voted', vote)
