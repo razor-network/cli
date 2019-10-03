@@ -5,12 +5,12 @@ let sleep = require('util').promisify(setTimeout)
 
 // const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8546'
-// let provider = 'http://localhost:8545'
-let provider = 'http://35.188.201.171:8545'
+let provider = 'http://localhost:8545'
+// let provider = 'http://35.188.201.171:8545'
 
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-// let networkid = '420' // testnet
-let networkid = '4' // rinkeby
+let networkid = '420' // testnet
+// let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 let merkle = require('@razor-network/merkle')
@@ -19,6 +19,7 @@ let stateManagerBuild = require('./build/contracts/StateManager.json')
 let blockManagerBuild = require('./build/contracts/BlockManager.json')
 let voteManagerBuild = require('./build/contracts/VoteManager.json')
 let jobManagerBuild = require('./build/contracts/JobManager.json')
+let delegatorBuild = require('./build/contracts/Delegator.json')
 let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
 let numBlocks = 10
@@ -68,7 +69,7 @@ async function login (address, password) {
   await web3.eth.accounts.wallet.add(account)
   let from = await wall[0].address
   console.log(from, ' unlocked')
-  return (from)
+  return ([from, pk])
 }
 
 // async function transfer (to, amount, from) {
@@ -208,6 +209,16 @@ async function getJobs () {
     jobs.push(job)
   }
   return jobs
+}
+async function getNumJobs () {
+  let numJobs = Number(await jobManager.methods.numJobs().call({from: '0xB279182D99E65703F0076E4812653aaB85FCA0f0'}))
+
+  return numJobs
+}
+async function getResult (id) {
+  let result = Number(await jobManager.methods.getResult(id).call())
+
+  return result
 }
 
 async function getStakers () {
@@ -826,6 +837,8 @@ module.exports = {
   getActiveJobs: getActiveJobs,
   getJobValues: getJobValues,
   getJobs: getJobs,
+  getResult: getResult,
+  getNumJobs: getNumJobs,
   getVotesLastEpoch: getVotesLastEpoch,
   getVotingEvents: getVotingEvents,
   getStakingEvents: getStakingEvents,

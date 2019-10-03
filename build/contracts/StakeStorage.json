@@ -110,41 +110,41 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"stakeGettingReward\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"rewardPool\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"numStakers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"stakerIds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"stakers\",\"outputs\":[{\"name\":\"id\",\"type\":\"uint256\"},{\"name\":\"_address\",\"type\":\"address\"},{\"name\":\"stake\",\"type\":\"uint256\"},{\"name\":\"epochStaked\",\"type\":\"uint256\"},{\"name\":\"epochLastCommitted\",\"type\":\"uint256\"},{\"name\":\"epochLastRevealed\",\"type\":\"uint256\"},{\"name\":\"unstakeAfter\",\"type\":\"uint256\"},{\"name\":\"withdrawAfter\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol\":\"StakeStorage\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol\":{\"keccak256\":\"0xc744cd706f6f16a69c09237f962111301327b721e884edac69c5661085d48022\",\"urls\":[\"bzzr://bc51b3f253fe060ac9c68b055f94838219fc7688ba966002cb1fea89a24fb117\",\"dweb:/ipfs/Qmaq5gRx98R3t9ufegAfHihp8Mh3xV44VmNCbGMKythmAd\"]},\"/Users/hrishi/contracts/contracts/lib/Structs.sol\":{\"keccak256\":\"0x8a096baedf737cb70119ffe7e6b5e4c0eb28c20f9e24ef2dcea3234d78359ac7\",\"urls\":[\"bzzr://46ba3abc43b887168d1f514aebf86cb171e41e1b1bd647a8d702a973f9113740\",\"dweb:/ipfs/QmRxRQJct1QdRaRpFPgixbKHV6Ea74WcPXvAdJDhFqFYHa\"]}},\"version\":1}",
-  "bytecode": "0x608060405260006002556000600355600060045534801561001f57600080fd5b506102748061002f6000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80630ec88d3f1461005c57806366666aa91461007a5780636c8b052a14610098578063c8ae0d7d146100b6578063fd5e6dd11461010e575b600080fd5b6100646101ad565b6040518082815260200191505060405180910390f35b6100826101b3565b6040518082815260200191505060405180910390f35b6100a06101b9565b6040518082815260200191505060405180910390f35b6100f8600480360360208110156100cc57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506101bf565b6040518082815260200191505060405180910390f35b61013a6004803603602081101561012457600080fd5b81019080803590602001909291905050506101d7565b604051808981526020018873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018781526020018681526020018581526020018481526020018381526020018281526020019850505050505050505060405180910390f35b60045481565b60035481565b60025481565b60006020528060005260406000206000915090505481565b60016020528060005260406000206000915090508060000154908060010160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690806002015490806003015490806004015490806005015490806006015490806007015490508856fea265627a7a723058202eb63d5a9d04f7b3994de99ed6a32a99d046672a9765f1e81790a532b5dbc6f464736f6c634300050a0032",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c80630ec88d3f1461005c57806366666aa91461007a5780636c8b052a14610098578063c8ae0d7d146100b6578063fd5e6dd11461010e575b600080fd5b6100646101ad565b6040518082815260200191505060405180910390f35b6100826101b3565b6040518082815260200191505060405180910390f35b6100a06101b9565b6040518082815260200191505060405180910390f35b6100f8600480360360208110156100cc57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506101bf565b6040518082815260200191505060405180910390f35b61013a6004803603602081101561012457600080fd5b81019080803590602001909291905050506101d7565b604051808981526020018873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018781526020018681526020018581526020018481526020018381526020018281526020019850505050505050505060405180910390f35b60045481565b60035481565b60025481565b60006020528060005260406000206000915090505481565b60016020528060005260406000206000915090508060000154908060010160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690806002015490806003015490806004015490806005015490806006015490806007015490508856fea265627a7a723058202eb63d5a9d04f7b3994de99ed6a32a99d046672a9765f1e81790a532b5dbc6f464736f6c634300050a0032",
-  "sourceMap": "55:354:12:-;;;254:1;226:29;;320:1;292:29;;363:1;327:37;;55:354;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:354:12;;;;;;;",
-  "deployedSourceMap": "55:354:12:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:354:12;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;327:37;;;:::i;:::-;;;;;;;;;;;;;;;;;;;292:29;;;:::i;:::-;;;;;;;;;;;;;;;;;;;226;;;:::i;:::-;;;;;;;;;;;;;;;;;;;119:45;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;119:45:12;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;170:50;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;170:50:12;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;327:37;;;;:::o;292:29::-;;;;:::o;226:::-;;;;:::o;119:45::-;;;;;;;;;;;;;;;;;:::o;170:50::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"stakeGettingReward\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"rewardPool\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"numStakers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"stakerIds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"stakers\",\"outputs\":[{\"name\":\"id\",\"type\":\"uint256\"},{\"name\":\"_address\",\"type\":\"address\"},{\"name\":\"stake\",\"type\":\"uint256\"},{\"name\":\"epochStaked\",\"type\":\"uint256\"},{\"name\":\"epochLastCommitted\",\"type\":\"uint256\"},{\"name\":\"epochLastRevealed\",\"type\":\"uint256\"},{\"name\":\"unstakeAfter\",\"type\":\"uint256\"},{\"name\":\"withdrawAfter\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/hrishi/contracts/contracts/Core/StakeStorage.sol\":\"StakeStorage\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/hrishi/contracts/contracts/Core/StakeStorage.sol\":{\"keccak256\":\"0xc744cd706f6f16a69c09237f962111301327b721e884edac69c5661085d48022\",\"urls\":[\"bzzr://bc51b3f253fe060ac9c68b055f94838219fc7688ba966002cb1fea89a24fb117\",\"dweb:/ipfs/Qmaq5gRx98R3t9ufegAfHihp8Mh3xV44VmNCbGMKythmAd\"]},\"/Users/hrishi/contracts/contracts/lib/Structs.sol\":{\"keccak256\":\"0xa93304d7998a25f56118a8f11b57343fc20adb410f2a975da3f1926a6330c1fa\",\"urls\":[\"bzzr://1c8cf1d2e98728c7d097d97db239f80f50530dd3a58debfb2976f38d135ff7af\",\"dweb:/ipfs/QmVnr1sP7S82fyDmqXa4LqzRpm4ebLuGBX6aUjKkw5q2kJ\"]}},\"version\":1}",
+  "bytecode": "0x608060405260006002556000600355600060045534801561001f57600080fd5b506102748061002f6000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80630ec88d3f1461005c57806366666aa91461007a5780636c8b052a14610098578063c8ae0d7d146100b6578063fd5e6dd11461010e575b600080fd5b6100646101ad565b6040518082815260200191505060405180910390f35b6100826101b3565b6040518082815260200191505060405180910390f35b6100a06101b9565b6040518082815260200191505060405180910390f35b6100f8600480360360208110156100cc57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506101bf565b6040518082815260200191505060405180910390f35b61013a6004803603602081101561012457600080fd5b81019080803590602001909291905050506101d7565b604051808981526020018873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018781526020018681526020018581526020018481526020018381526020018281526020019850505050505050505060405180910390f35b60045481565b60035481565b60025481565b60006020528060005260406000206000915090505481565b60016020528060005260406000206000915090508060000154908060010160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690806002015490806003015490806004015490806005015490806006015490806007015490508856fea265627a7a72305820a5d341a7c8362f1d9b0884bc76219a18f7050dbe5a93d153f1a9fb7e828a0b3564736f6c634300050a0032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c80630ec88d3f1461005c57806366666aa91461007a5780636c8b052a14610098578063c8ae0d7d146100b6578063fd5e6dd11461010e575b600080fd5b6100646101ad565b6040518082815260200191505060405180910390f35b6100826101b3565b6040518082815260200191505060405180910390f35b6100a06101b9565b6040518082815260200191505060405180910390f35b6100f8600480360360208110156100cc57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506101bf565b6040518082815260200191505060405180910390f35b61013a6004803603602081101561012457600080fd5b81019080803590602001909291905050506101d7565b604051808981526020018873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018781526020018681526020018581526020018481526020018381526020018281526020019850505050505050505060405180910390f35b60045481565b60035481565b60025481565b60006020528060005260406000206000915090505481565b60016020528060005260406000206000915090508060000154908060010160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690806002015490806003015490806004015490806005015490806006015490806007015490508856fea265627a7a72305820a5d341a7c8362f1d9b0884bc76219a18f7050dbe5a93d153f1a9fb7e828a0b3564736f6c634300050a0032",
+  "sourceMap": "55:354:10:-;;;254:1;226:29;;320:1;292:29;;363:1;327:37;;55:354;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:354:10;;;;;;;",
+  "deployedSourceMap": "55:354:10:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:354:10;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;327:37;;;:::i;:::-;;;;;;;;;;;;;;;;;;;292:29;;;:::i;:::-;;;;;;;;;;;;;;;;;;;226;;;:::i;:::-;;;;;;;;;;;;;;;;;;;119:45;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;119:45:10;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;170:50;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;170:50:10;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;327:37;;;;:::o;292:29::-;;;;:::o;226:::-;;;;:::o;119:45::-;;;;;;;;;;;;;;;;;:::o;170:50::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
   "source": "pragma solidity 0.5.10;\nimport \"../lib/Structs.sol\";\n\n\ncontract StakeStorage {\n\n    // Constants public constants;\n    mapping (address => uint256) public stakerIds;\n    mapping (uint256 => Structs.Staker) public stakers;\n    uint256 public numStakers = 0;\n    // SimpleToken public sch;\n    uint256 public rewardPool = 0;\n    uint256 public stakeGettingReward = 0;\n\n       // uint256 public totalStake = 0;\n}\n",
-  "sourcePath": "/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol",
+  "sourcePath": "/Users/hrishi/contracts/contracts/Core/StakeStorage.sol",
   "ast": {
-    "absolutePath": "/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol",
+    "absolutePath": "/Users/hrishi/contracts/contracts/Core/StakeStorage.sol",
     "exportedSymbols": {
       "StakeStorage": [
-        3218
+        3180
       ]
     },
-    "id": 3219,
+    "id": 3181,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3199,
+        "id": 3161,
         "literals": [
           "solidity",
           "0.5",
           ".10"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:12"
+        "src": "0:23:10"
       },
       {
         "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
         "file": "../lib/Structs.sol",
-        "id": 3200,
+        "id": 3162,
         "nodeType": "ImportDirective",
-        "scope": 3219,
-        "sourceUnit": 4322,
-        "src": "24:28:12",
+        "scope": 3181,
+        "sourceUnit": 4464,
+        "src": "24:28:10",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -154,20 +154,20 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 3218,
+        "id": 3180,
         "linearizedBaseContracts": [
-          3218
+          3180
         ],
         "name": "StakeStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 3204,
+            "id": 3166,
             "name": "stakerIds",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "119:45:12",
+            "scope": 3180,
+            "src": "119:45:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -175,28 +175,28 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 3203,
+              "id": 3165,
               "keyType": {
-                "id": 3201,
+                "id": 3163,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "128:7:12",
+                "src": "128:7:10",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
                 }
               },
               "nodeType": "Mapping",
-              "src": "119:28:12",
+              "src": "119:28:10",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 3202,
+                "id": 3164,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "139:7:12",
+                "src": "139:7:10",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -208,44 +208,44 @@
           },
           {
             "constant": false,
-            "id": 3208,
+            "id": 3170,
             "name": "stakers",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "170:50:12",
+            "scope": 3180,
+            "src": "170:50:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$4269_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$4409_storage_$",
               "typeString": "mapping(uint256 => struct Structs.Staker)"
             },
             "typeName": {
-              "id": 3207,
+              "id": 3169,
               "keyType": {
-                "id": 3205,
+                "id": 3167,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "179:7:12",
+                "src": "179:7:10",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
               "nodeType": "Mapping",
-              "src": "170:35:12",
+              "src": "170:35:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$4269_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$4409_storage_$",
                 "typeString": "mapping(uint256 => struct Structs.Staker)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 3206,
+                "id": 3168,
                 "name": "Structs.Staker",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 4269,
-                "src": "190:14:12",
+                "referencedDeclaration": 4409,
+                "src": "190:14:10",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Staker_$4269_storage_ptr",
+                  "typeIdentifier": "t_struct$_Staker_$4409_storage_ptr",
                   "typeString": "struct Structs.Staker"
                 }
               }
@@ -255,11 +255,11 @@
           },
           {
             "constant": false,
-            "id": 3211,
+            "id": 3173,
             "name": "numStakers",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "226:29:12",
+            "scope": 3180,
+            "src": "226:29:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -267,10 +267,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 3209,
+              "id": 3171,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "226:7:12",
+              "src": "226:7:10",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -279,14 +279,14 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "30",
-              "id": 3210,
+              "id": 3172,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "254:1:12",
+              "src": "254:1:10",
               "subdenomination": null,
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_0_by_1",
@@ -298,11 +298,11 @@
           },
           {
             "constant": false,
-            "id": 3214,
+            "id": 3176,
             "name": "rewardPool",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "292:29:12",
+            "scope": 3180,
+            "src": "292:29:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -310,10 +310,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 3212,
+              "id": 3174,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "292:7:12",
+              "src": "292:7:10",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -322,14 +322,14 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "30",
-              "id": 3213,
+              "id": 3175,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "320:1:12",
+              "src": "320:1:10",
               "subdenomination": null,
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_0_by_1",
@@ -341,11 +341,11 @@
           },
           {
             "constant": false,
-            "id": 3217,
+            "id": 3179,
             "name": "stakeGettingReward",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "327:37:12",
+            "scope": 3180,
+            "src": "327:37:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -353,10 +353,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 3215,
+              "id": 3177,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "327:7:12",
+              "src": "327:7:10",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -365,14 +365,14 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "30",
-              "id": 3216,
+              "id": 3178,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "363:1:12",
+              "src": "363:1:10",
               "subdenomination": null,
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_0_by_1",
@@ -383,40 +383,40 @@
             "visibility": "public"
           }
         ],
-        "scope": 3219,
-        "src": "55:354:12"
+        "scope": 3181,
+        "src": "55:354:10"
       }
     ],
-    "src": "0:410:12"
+    "src": "0:410:10"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hrishi/contracts/contracts/Schelling4/StakeStorage.sol",
+    "absolutePath": "/Users/hrishi/contracts/contracts/Core/StakeStorage.sol",
     "exportedSymbols": {
       "StakeStorage": [
-        3218
+        3180
       ]
     },
-    "id": 3219,
+    "id": 3181,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3199,
+        "id": 3161,
         "literals": [
           "solidity",
           "0.5",
           ".10"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:12"
+        "src": "0:23:10"
       },
       {
         "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
         "file": "../lib/Structs.sol",
-        "id": 3200,
+        "id": 3162,
         "nodeType": "ImportDirective",
-        "scope": 3219,
-        "sourceUnit": 4322,
-        "src": "24:28:12",
+        "scope": 3181,
+        "sourceUnit": 4464,
+        "src": "24:28:10",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -426,20 +426,20 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 3218,
+        "id": 3180,
         "linearizedBaseContracts": [
-          3218
+          3180
         ],
         "name": "StakeStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 3204,
+            "id": 3166,
             "name": "stakerIds",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "119:45:12",
+            "scope": 3180,
+            "src": "119:45:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -447,28 +447,28 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 3203,
+              "id": 3165,
               "keyType": {
-                "id": 3201,
+                "id": 3163,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "128:7:12",
+                "src": "128:7:10",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
                 }
               },
               "nodeType": "Mapping",
-              "src": "119:28:12",
+              "src": "119:28:10",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 3202,
+                "id": 3164,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "139:7:12",
+                "src": "139:7:10",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -480,44 +480,44 @@
           },
           {
             "constant": false,
-            "id": 3208,
+            "id": 3170,
             "name": "stakers",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "170:50:12",
+            "scope": 3180,
+            "src": "170:50:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$4269_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$4409_storage_$",
               "typeString": "mapping(uint256 => struct Structs.Staker)"
             },
             "typeName": {
-              "id": 3207,
+              "id": 3169,
               "keyType": {
-                "id": 3205,
+                "id": 3167,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "179:7:12",
+                "src": "179:7:10",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
               "nodeType": "Mapping",
-              "src": "170:35:12",
+              "src": "170:35:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$4269_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Staker_$4409_storage_$",
                 "typeString": "mapping(uint256 => struct Structs.Staker)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 3206,
+                "id": 3168,
                 "name": "Structs.Staker",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 4269,
-                "src": "190:14:12",
+                "referencedDeclaration": 4409,
+                "src": "190:14:10",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Staker_$4269_storage_ptr",
+                  "typeIdentifier": "t_struct$_Staker_$4409_storage_ptr",
                   "typeString": "struct Structs.Staker"
                 }
               }
@@ -527,11 +527,11 @@
           },
           {
             "constant": false,
-            "id": 3211,
+            "id": 3173,
             "name": "numStakers",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "226:29:12",
+            "scope": 3180,
+            "src": "226:29:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -539,10 +539,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 3209,
+              "id": 3171,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "226:7:12",
+              "src": "226:7:10",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -551,14 +551,14 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "30",
-              "id": 3210,
+              "id": 3172,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "254:1:12",
+              "src": "254:1:10",
               "subdenomination": null,
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_0_by_1",
@@ -570,11 +570,11 @@
           },
           {
             "constant": false,
-            "id": 3214,
+            "id": 3176,
             "name": "rewardPool",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "292:29:12",
+            "scope": 3180,
+            "src": "292:29:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -582,10 +582,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 3212,
+              "id": 3174,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "292:7:12",
+              "src": "292:7:10",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -594,14 +594,14 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "30",
-              "id": 3213,
+              "id": 3175,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "320:1:12",
+              "src": "320:1:10",
               "subdenomination": null,
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_0_by_1",
@@ -613,11 +613,11 @@
           },
           {
             "constant": false,
-            "id": 3217,
+            "id": 3179,
             "name": "stakeGettingReward",
             "nodeType": "VariableDeclaration",
-            "scope": 3218,
-            "src": "327:37:12",
+            "scope": 3180,
+            "src": "327:37:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -625,10 +625,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 3215,
+              "id": 3177,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "327:7:12",
+              "src": "327:7:10",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -637,14 +637,14 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "30",
-              "id": 3216,
+              "id": 3178,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "363:1:12",
+              "src": "363:1:10",
               "subdenomination": null,
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_0_by_1",
@@ -655,11 +655,11 @@
             "visibility": "public"
           }
         ],
-        "scope": 3219,
-        "src": "55:354:12"
+        "scope": 3181,
+        "src": "55:354:10"
       }
     ],
-    "src": "0:410:12"
+    "src": "0:410:10"
   },
   "compiler": {
     "name": "solc",
@@ -667,7 +667,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-09-29T11:12:02.095Z",
+  "updatedAt": "2019-10-03T03:32:01.023Z",
   "devdoc": {
     "methods": {}
   },
