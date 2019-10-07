@@ -14619,12 +14619,87 @@
   },
   "networks": {
     "4": {
-      "events": {},
-      "links": {
-        "Constants": "0x9abC75C153bD7f54066A3573B60E27b31E4E4F4F"
+      "events": {
+        "0x6ad04b07dbe80ee3971460ebc13808fb6dd0fa67fbf7d7ebc4de85811d2c9928": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "epoch",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "stakerId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "commitment",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "timestamp",
+              "type": "uint256"
+            }
+          ],
+          "name": "Committed",
+          "type": "event",
+          "signature": "0x6ad04b07dbe80ee3971460ebc13808fb6dd0fa67fbf7d7ebc4de85811d2c9928"
+        },
+        "0x17f4759c403dfc3fa26ab75ce82d3d090a0bdbfe9977d8ee87445d6dd83c68a1": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "epoch",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "stakerId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "stake",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "values",
+              "type": "uint256[]"
+            },
+            {
+              "indexed": false,
+              "name": "timestamp",
+              "type": "uint256"
+            }
+          ],
+          "name": "Revealed",
+          "type": "event",
+          "signature": "0x17f4759c403dfc3fa26ab75ce82d3d090a0bdbfe9977d8ee87445d6dd83c68a1"
+        },
+        "0x43d4b4706539f9e22baf8767ebea21ad24f723f14b6981664ac4d0af596dddbe": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "a",
+              "type": "uint256"
+            }
+          ],
+          "name": "DebugUint256",
+          "type": "event",
+          "signature": "0x43d4b4706539f9e22baf8767ebea21ad24f723f14b6981664ac4d0af596dddbe"
+        }
       },
-      "address": "0x4E76784306E1aE41EDa2FaF51fd7e6F4B2A64539",
-      "transactionHash": "0xb7ec4bbc759fd743067e5b4628aa9408c701adee5bb47e11a93ffb5c39be86a9"
+      "links": {
+        "Constants": "0x179f540d0312671b4FbFCe0b1eC3e6fe1423e1f9"
+      },
+      "address": "0x27a0826834547D77faf59E94941294d0c29e186b",
+      "transactionHash": "0x204a772062e2e562f78afe823c6b094207ac3dea5b056e038f5b068ba2b0cacb"
     },
     "5": {
       "events": {},
@@ -14635,16 +14710,91 @@
       "transactionHash": "0xd303c9a36e51402ea4ffd489331f1993febebf8a38e0408c78c31a6d517d1762"
     },
     "420": {
-      "events": {},
-      "links": {
-        "Constants": "0x119Cb9c643CDC09d139b5912Ea99AA20C9d3e51D"
+      "events": {
+        "0x6ad04b07dbe80ee3971460ebc13808fb6dd0fa67fbf7d7ebc4de85811d2c9928": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "epoch",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "stakerId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "commitment",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "timestamp",
+              "type": "uint256"
+            }
+          ],
+          "name": "Committed",
+          "type": "event",
+          "signature": "0x6ad04b07dbe80ee3971460ebc13808fb6dd0fa67fbf7d7ebc4de85811d2c9928"
+        },
+        "0x17f4759c403dfc3fa26ab75ce82d3d090a0bdbfe9977d8ee87445d6dd83c68a1": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "epoch",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "stakerId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "stake",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "values",
+              "type": "uint256[]"
+            },
+            {
+              "indexed": false,
+              "name": "timestamp",
+              "type": "uint256"
+            }
+          ],
+          "name": "Revealed",
+          "type": "event",
+          "signature": "0x17f4759c403dfc3fa26ab75ce82d3d090a0bdbfe9977d8ee87445d6dd83c68a1"
+        },
+        "0x43d4b4706539f9e22baf8767ebea21ad24f723f14b6981664ac4d0af596dddbe": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "a",
+              "type": "uint256"
+            }
+          ],
+          "name": "DebugUint256",
+          "type": "event",
+          "signature": "0x43d4b4706539f9e22baf8767ebea21ad24f723f14b6981664ac4d0af596dddbe"
+        }
       },
-      "address": "0x19550457F532A47f8B64e1246563e9013DF20260",
-      "transactionHash": "0x6737320516eb404e2f07923b2faf2ca794c328b85f9f05b064eb3cb533d39387"
+      "links": {
+        "Constants": "0x2ca0A5f57f8469E64dc8Afd859CDCa7BA98D169f"
+      },
+      "address": "0xd0a1f3C4a905041E189648DDD725D8a14cba1a5d",
+      "transactionHash": "0x9efe6e9699a44c8033540905b80ea7a044802cbcc20842f74be2ceacda26c4e6"
     }
   },
-  "schemaVersion": "3.0.11",
-  "updatedAt": "2019-10-03T08:32:04.524Z",
+  "schemaVersion": "3.0.16",
+  "updatedAt": "2019-10-07T07:53:47.627Z",
   "devdoc": {
     "methods": {}
   },

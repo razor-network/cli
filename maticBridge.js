@@ -15,11 +15,7 @@ let matic3 = new Web3(provider, null, {})
 // web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'))
 matic3.eth.net.getId()
   .then(console.log)
-let bridge = new matic3.eth.Contract(bridgeBuild['abi'],
-  {
-    // {transactionConfirmationBlocks: 0,
-    gas: 100000,
-  gasPrice: '0'})
+let bridge = new matic3.eth.Contract(bridgeBuild['abi'])
 
 var Tx = require('ethereumjs-tx').Transaction
 var ethjs = require('ethereumjs-util')
@@ -61,7 +57,7 @@ async function copy () { // }(address, pk) {
   //   'hex',
   // )
 
-  var privateKey = new Buffer('e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109', 'hex')
+  var privateKey = new Buffer('e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd110', 'hex')
 
   let addy = ethjs.bufferToHex((ethjs.privateToAddress(privateKey)))
   let numJobs = await api.getNumJobs()
@@ -73,21 +69,22 @@ async function copy () { // }(address, pk) {
     result = await api.getResult(i)
     console.log('result', i, result)
     nonce = await matic3.eth.getTransactionCount(addy)
-    // nonce = await matic3.utils.toHex(nonce)
+    nonce = await matic3.utils.toHex(nonce)
 
     console.log('nonce', nonce)
-    dataTx = bridge.methods.setResult(i, result).encodeABI() // The encoded ABI of the method
+    dataTx = bridge.methods.setResult(1, 420).encodeABI() // The encoded ABI of the method
     console.log('dataTx', dataTx)
     // console.log('address', address)
     var rawTx = {
-      nonce: nonce,
-      gasPrice: 0, // '0x00',
-      gasLimit: 100000, // matic3.utils.toHex(100000),
+      nonce: '0x0',
+      gasPrice: null,
+      gasLimit: matic3.utils.toHex(31000),
+      from: addy,
       // gas: matic3.utils.toHex(100000),
-      to: '0xe092b1fa25DF5786D151246E492Eed3d15EA4dAA',
-      value: '0x00'
-    // data: dataTx
-    // chainId: matic3.utils.toHex(8995)
+      to: '0x5821d86DE0B4E30997319eE446C6eE7C98533C83',
+      value: null,
+      data: dataTx,
+      chainId: matic3.utils.toHex(8995)
     }
     console.log(rawTx)
     var tx = new Tx(rawTx)
