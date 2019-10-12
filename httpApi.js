@@ -52,7 +52,7 @@ let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][n
     gas: 5000000,
   gasPrice: 2000000000})
 
-let simpleTokenBuild = require('./build/contracts/SimpleToken.json')
+let simpleTokenBuild = require('./build/contracts/SchellingCoin.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
@@ -325,11 +325,9 @@ async function getStakingEvents () {
     if (events[i].event === 'StakeChange') {
       res.push({epoch: data.epoch, staker: staker, action: data.reason, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
     } else if (events[i].event === 'RewardPoolChange') {
-      // res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevRewardPool, newStake: data.rewardPool, timestamp: data.timestamp })
-
+      res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevRewardPool, newStake: data.rewardPool, timestamp: data.timestamp })
     } else if (events[i].event === 'StakeGettingRewardChange') {
-      // res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevStakeGettingReward, newStake: data.stakeGettingReward, timestamp: data.timestamp })
-
+      res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevStakeGettingReward, newStake: data.stakeGettingReward, timestamp: data.timestamp })
     } else {
       res.push({epoch: data.epoch, staker: staker, action: events[i].event, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
     }

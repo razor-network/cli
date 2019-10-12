@@ -2,6 +2,7 @@ let Web3 = require('web3')
 let { randomHex } = require('web3-utils')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
+const BN = require('bn.js')
 
 // const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8545'
@@ -50,7 +51,7 @@ let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][n
     gas: 5000000,
   gasPrice: 2000000000})
 
-let simpleTokenBuild = require('./build/contracts/SimpleToken.json')
+let simpleTokenBuild = require('./build/contracts/SchellingCoin.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
@@ -79,8 +80,9 @@ async function transfer (to, amount, from) {
   // gas = Math.round(gas * 1.5)
 
   // console.log(gas)
-
-  let res = await simpleToken.methods.transfer(to, amount).send({ from: from,
+  let amountBN = new BN(amount).mul(new BN(10).pow(new BN('18')))
+  // amountBN = String(amountBN)
+  let res = await simpleToken.methods.transfer(to, amountBN).send({ from: from,
   nonce: nonce})
   console.log(res)
 }
@@ -112,9 +114,8 @@ async function approve (to, amount, from) {
 async function stake (amount, account) {
   let epoch
   let state
-
   console.log('account', account)
-  let balance = Number(await simpleToken.methods.balanceOf(account).call())
+  let balance = Number(await simpleToken.methods.balanceOf(account).call()) / 1e18
   console.log('schell balance', balance, 'schells')
   if (balance < amount) throw new Error('Not enough schells to stake')
   let ethBalance = Number(await web3.eth.getBalance(account)) / 1e18
@@ -122,7 +123,11 @@ async function stake (amount, account) {
 
   if (ethBalance < 0.01) throw new Error('Please fund this account with more ether to pay for tx fees')
 
-  let tx = await approve(stakeManager.options.address, amount, account)
+  let amountBN = new BN(amount)
+  amountBN = amountBN.mul(new BN(10).pow(new BN('18')))
+  amountBN = String(amountBN)
+  console.log('amountBN', amountBN)
+  let tx = await approve(stakeManager.options.address, amountBN, account)
   if (tx) {
     console.log(tx.events)
     if (tx.events.Approval.event !== 'Approval') throw new Error('Approval failed')
@@ -141,7 +146,7 @@ async function stake (amount, account) {
   console.log('Sending stake transaction...')
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
 
-  let tx2 = await stakeManager.methods.stake(epoch, amount).send({
+  let tx2 = await stakeManager.methods.stake(epoch, amountBN).send({
     from: account,
   nonce: String(nonce)})
   console.log(tx2.events)

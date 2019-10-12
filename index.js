@@ -330,10 +330,10 @@ async function handleBlock (blockHeader, account) {
     let epoch = await api.getEpoch()
     let yourId = await api.getStakerId(account)
 
-    let balance = await api.getStake(yourId)
+    let balance = Number(await api.getStake(yourId)) / 1e18
     let ethBalance = Number(await web3.eth.getBalance(account)) / 1e18
     console.log('Ethereum block #', blockHeader.number, 'epoch', epoch, 'state', state, 'account', account, 'stakerId', yourId, 'Staked Shells', balance, 'Ether balance', ethBalance)
-    if (balance < await api.getMinStake()) throw new Error('Stake is below minimum required. Cannot vote.')
+    if (balance < (await api.getMinStake()) / 1e18) throw new Error('Stake is below minimum required. Cannot vote.')
 
     if (state === 0) {
       if (lastCommit < epoch) {
