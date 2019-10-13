@@ -788,7 +788,7 @@ async function getBiggestStakerId (stakeManager) {
 }
 
 async function getStake (stakerId) {
-  return Number((await stakeManager.methods.stakers(stakerId).call()).stake)
+  return String((await stakeManager.methods.stakers(stakerId).call()).stake)
 }
 
 async function getProposedBlockMedians (epoch, proposedBlock) {

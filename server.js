@@ -119,6 +119,14 @@ app.get('/getSchBalance/:address', async function (req, res) {
   result = await api.getSchBalance(req.params.address)
   res.json({'message': result})
 })
+
+app.get('/getStake/:address', async function (req, res) {
+  // result = await api.getEpoch()
+  let id = Number(await api.getStakerId(req.params.address))
+  result = await api.getStake(id)
+  res.json({'message': result})
+})
+
 app.get('/getEthBalance/:address', async function (req, res) {
   // result = await api.getEpoch()
   result = await api.getEthBalance(req.params.address)
