@@ -400,7 +400,8 @@ async function handleBlock (blockHeader, account) {
     } else if (state === 3) {
       if (lastVerification < epoch) {
         lastVerification = epoch
-        let numProposedBlocks = await api.getNumProposedBlocks(epoch)
+        let numProposedBlocks = Number(await api.getNumProposedBlocks(epoch))
+        if (numProposedBlocks > 5) numProposedBlocks = 5
         for (let i = 0; i < numProposedBlocks; i++) {
           // let blockMedians = await api.getProposedBlockMedians(epoch, i)
           let proposedBlock = await api.getProposedBlock(epoch, i)
