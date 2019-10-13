@@ -113,6 +113,17 @@ app.get('/random/', async function (req, res) {
   result = Math.random() * 1000000
   res.json({'message': result})
 })
+
+app.get('/getSchBalance/:address', async function (req, res) {
+  // result = await api.getEpoch()
+  result = await api.getSchBalance(req.params.address)
+  res.json({'message': result})
+})
+app.get('/getEthBalance/:address', async function (req, res) {
+  // result = await api.getEpoch()
+  result = await api.getEthBalance(req.params.address)
+  res.json({'message': result})
+})
 // listen for requests
 app.listen(3000, () => {
   console.log('Server is listening on port 3000')

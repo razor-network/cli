@@ -801,6 +801,14 @@ async function getNumProposedBlocks (epoch) {
   return (await blockManager.methods.getNumProposedBlocks(epoch).call())
 }
 
+async function getSchBalance (address) {
+  return String(await simpleToken.methods.balanceOf(address).call())
+}
+
+async function getEthBalance (address) {
+  return String(await web3.eth.getBalance(address))
+}
+
 async function sign (input, account) {
   return await web3.eth.sign(input, account)
 }
@@ -844,5 +852,7 @@ module.exports = {
   getBlockEvents: getBlockEvents,
   getStakers: getStakers,
   getPoolChanges: getPoolChanges,
-  getStakerEvents: getStakerEvents
+  getStakerEvents: getStakerEvents,
+  getEthBalance: getEthBalance,
+  getSchBalance: getSchBalance
 }
