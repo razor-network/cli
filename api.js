@@ -4,11 +4,19 @@ let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 const BN = require('bn.js')
 
+<<<<<<< HEAD
 const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8545'
 // let provider = 'ws://localhost:8546'
 let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
 // let provider = 'ws://35.188.201.171:8546'
+=======
+// const infuraKey = fs.readFileSync('.infura').toString().trim()
+// let provider = 'ws://localhost:8545'
+// let provider = 'ws://localhost:8546'
+// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+let provider = 'ws://35.188.201.171:8546'
+>>>>>>> master
 // let networkid = '420' // testnet
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
@@ -456,6 +464,7 @@ async function isElectedProposer (random, iteration, biggestStake, stake, staker
   return (true)
 }
 
+<<<<<<< HEAD
 async function weightedMedianAndCuttofs (values, weights) {
   let medianWeight = Math.floor(weights.reduce((a, b) => a + b, 0) / 2)
   let lowerCutoffWeight = Math.floor(weights.reduce((a, b) => a + b, 0) / 4)
@@ -483,6 +492,8 @@ async function weightedMedianAndCuttofs (values, weights) {
   return ([median, lowerCutoff, higherCutoff])
 }
 
+=======
+>>>>>>> master
 async function makeBlock () {
   let medians = []
   let lowerCutoffs = []
@@ -490,17 +501,24 @@ async function makeBlock () {
   let jobs = await getActiveJobs()
   for (let assetId = 0; assetId < jobs.length; assetId++) {
     let res = await getSortedVotes(assetId)
+<<<<<<< HEAD
     let sortedVotes = res[0]
     let weights = res[1]
     console.log('sortedVotes', sortedVotes)
     console.log('weights', weights)
     // let epoch = Number(await stateManager.methods.getEpoch().call())
+=======
+    let sortedVotes = res[1]
+    // console.log('sortedVotes', sortedVotes)
+    let epoch = Number(await stateManager.methods.getEpoch().call())
+>>>>>>> master
 
-    // let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
+    let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
     // console.log('totalStakeRevealed', totalStakeRevealed)
-    // let medianWeight = Math.floor(totalStakeRevealed / 2)
+    let medianWeight = Math.floor(totalStakeRevealed / 2)
     // console.log('medianWeight', medianWeight)
 
+<<<<<<< HEAD
     let result = await weightedMedianAndCuttofs(sortedVotes, weights)
     let median = result[0]
     let lowerCutoff = result[1]
@@ -539,6 +557,16 @@ async function makeBlock () {
     // }
     //
 
+=======
+    let i = 0
+    let median = 0
+    let weight = 0
+    for (i = 0; i < sortedVotes.length; i++) {
+      weight += sortedVotes[i][1]
+      // console.log('weight', weight)
+      if (weight > medianWeight && median === 0) median = sortedVotes[i][0]
+    }
+>>>>>>> master
     medians.push(median)
     lowerCutoffs.push(lowerCutoff)
     higherCutoffs.push(higherCutoff)

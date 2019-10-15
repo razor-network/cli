@@ -6,9 +6,15 @@ let sleep = require('util').promisify(setTimeout)
 const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8546'
 // let provider = 'http://localhost:8545'
+<<<<<<< HEAD
 // let provider = 'http://35.188.201.171:8545'
 
 let provider = 'https://rinkeby.infura.io/v3/' + infuraKey
+=======
+let provider = 'http://35.188.201.171:8545'
+
+// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+>>>>>>> master
 // let networkid = '420' // testnet
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
@@ -317,7 +323,7 @@ async function getStakingEvents () {
   let staker
   let timestamp
   for (let i = 0; i < events.length; i++) {
-    if (events[i].event === 'WriterAdded') continue
+    if (events[i].event === 'WriterAdded' || events[i].event === 'StakeGettingRewardChange') continue
     if (events[i].returnValues.stakerId !== undefined) {
       staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
     }
