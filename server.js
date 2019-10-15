@@ -50,6 +50,11 @@ app.get('/stakers/', async function (req, res) {
   res.json({result})
 })
 
+app.get('/stakerEvents/:address', async function (req, res) {
+  result = await api.getStakerEvents(req.params.address)
+  res.json({result})
+})
+
 app.post('/job/', async function (req, res) {
   result = await api.createJob()
   res.json({'message': result})
@@ -65,6 +70,7 @@ app.get('/voteEvents/:jobId/', async function (req, res) {
   // console.log(result)
   res.json({'message': result})
 })
+
 app.get('/voteEvents/', async function (req, res) {
   result = await api.getVotingEvents()
   // console.log(result)
@@ -105,6 +111,25 @@ app.get('/poolChanges/', async function (req, res) {
 app.get('/random/', async function (req, res) {
   // result = await api.getEpoch()
   result = Math.random() * 1000000
+  res.json({'message': result})
+})
+
+app.get('/getSchBalance/:address', async function (req, res) {
+  // result = await api.getEpoch()
+  result = await api.getSchBalance(req.params.address)
+  res.json({'message': result})
+})
+
+app.get('/getStake/:address', async function (req, res) {
+  // result = await api.getEpoch()
+  let id = Number(await api.getStakerId(req.params.address))
+  result = await api.getStake(id)
+  res.json({'message': result})
+})
+
+app.get('/getEthBalance/:address', async function (req, res) {
+  // result = await api.getEpoch()
+  result = await api.getEthBalance(req.params.address)
   res.json({'message': result})
 })
 // listen for requests

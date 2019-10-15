@@ -3,12 +3,18 @@ let { randomHex } = require('web3-utils')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
-// const infuraKey = fs.readFileSync('.infura').toString().trim()
+const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8546'
 // let provider = 'http://localhost:8545'
+<<<<<<< HEAD
+// let provider = 'http://35.188.201.171:8545'
+
+let provider = 'https://rinkeby.infura.io/v3/' + infuraKey
+=======
 let provider = 'http://35.188.201.171:8545'
 
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+>>>>>>> master
 // let networkid = '420' // testnet
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
@@ -19,44 +25,45 @@ let stateManagerBuild = require('./build/contracts/StateManager.json')
 let blockManagerBuild = require('./build/contracts/BlockManager.json')
 let voteManagerBuild = require('./build/contracts/VoteManager.json')
 let jobManagerBuild = require('./build/contracts/JobManager.json')
+let delegatorBuild = require('./build/contracts/Delegator.json')
 let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
 let numBlocks = 10
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 
-let simpleTokenBuild = require('./build/contracts/SimpleToken.json')
+let simpleTokenBuild = require('./build/contracts/SchellingCoin.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 500000,
-    gasPrice: 2000000000})
+  gasPrice: 2000000000})
 
 async function login (address, password) {
   await web3.eth.accounts.wallet.create(0, randomHex(32))
@@ -68,7 +75,7 @@ async function login (address, password) {
   await web3.eth.accounts.wallet.add(account)
   let from = await wall[0].address
   console.log(from, ' unlocked')
-  return (from)
+  return ([from, pk])
 }
 
 // async function transfer (to, amount, from) {
@@ -209,6 +216,16 @@ async function getJobs () {
   }
   return jobs
 }
+async function getNumJobs () {
+  let numJobs = Number(await jobManager.methods.numJobs().call({from: '0xB279182D99E65703F0076E4812653aaB85FCA0f0'}))
+
+  return numJobs
+}
+async function getResult (id) {
+  let result = Number(await jobManager.methods.getResult(id).call())
+
+  return result
+}
 
 async function getStakers () {
   let numStakers = Number(await stakeManager.methods.getNumStakers().call())
@@ -296,9 +313,9 @@ async function getStakingEvents () {
     toBlock: 'latest'
   })
 
-  // event Staked(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp);
-  // event Unstaked(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp);
-  // event Withdrew(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp);
+  // event Staked(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp)
+  // event Unstaked(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp)
+  // event Withdrew(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp)
 
   // console.log(events[2].returnValues)
   let res = []
@@ -313,15 +330,76 @@ async function getStakingEvents () {
     let data = events[i].returnValues
     if (events[i].event === 'StakeChange') {
       res.push({epoch: data.epoch, staker: staker, action: data.reason, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
+    } else if (events[i].event === 'RewardPoolChange') {
+      res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevRewardPool, newStake: data.rewardPool, timestamp: data.timestamp })
+    } else if (events[i].event === 'StakeGettingRewardChange') {
+      res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevStakeGettingReward, newStake: data.stakeGettingReward, timestamp: data.timestamp })
     } else {
       res.push({epoch: data.epoch, staker: staker, action: events[i].event, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
     }
+    // emit RewardPoolChange(epoch, prevRewardPool, rewardPool, now)
+    //
+    // emit StakeGettingRewardChange(epoch, prevStakeGettingReward, stakeGettingReward, now)
+
   }
 
-  // emit StakeChange(_id, _stake, _reason);
+  // emit StakeChange(_id, _stake, _reason)
 
   return res
 }
+
+async function getStakerEvents (_address) {
+  let blockNumber = await web3.eth.getBlockNumber()
+  // let epoch = Number(await getEpoch()) - 1
+  let stakerId = String(await stakeManager.methods.stakerIds(_address).call())
+  console.log('stakerId', stakerId)
+
+  let events = await stakeManager.getPastEvents('allEvents', {
+    fromBlock: Math.max(0, Number(blockNumber) - 1000),
+    // filter: {stakerId: stakerId},
+    // fromBlock: 0,
+    toBlock: 'latest'
+  })
+  // console.log(events[3])
+
+  // event Staked(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp)
+  // event Unstaked(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp)
+  // event Withdrew(uint256 epoch, uint256 stakerId, uint256 amount, uint256 timestamp)
+
+  // console.log(events[2].returnValues)
+  let res = []
+  let value
+  let staker
+  let timestamp
+  for (let i = 0; i < events.length; i++) {
+    if (events[i].returnValues.stakerId !== stakerId) continue
+    if (events[i].event === 'WriterAdded') continue
+    if (events[i].returnValues.stakerId !== undefined) {
+      staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    }
+    let data = events[i].returnValues
+    if (events[i].event === 'StakeChange') {
+      res.push({epoch: data.epoch, staker: staker, action: data.reason, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
+    // } else if (events[i].event === 'RewardPoolChange') {
+    //   // res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevRewardPool, newStake: data.rewardPool, timestamp: data.timestamp })
+    //
+    // } else if (events[i].event === 'StakeGettingRewardChange') {
+    //   // res.push({epoch: data.epoch,  action: events[i].event, previousStake: data.prevStakeGettingReward, newStake: data.stakeGettingReward, timestamp: data.timestamp })
+    //
+    // } else {
+    //   res.push({epoch: data.epoch, staker: staker, action: events[i].event, previousStake: data.previousStake, newStake: data.newStake, timestamp: data.timestamp })
+    }
+    // emit RewardPoolChange(epoch, prevRewardPool, rewardPool, now)
+    //
+    // emit StakeGettingRewardChange(epoch, prevStakeGettingReward, stakeGettingReward, now)
+
+  }
+
+  // emit StakeChange(_id, _stake, _reason)
+
+  return res
+}
+
 async function getPoolChanges () {
   let blockNumber = await web3.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
@@ -339,16 +417,16 @@ async function getPoolChanges () {
     // staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
     let data = events[i].returnValues
     console.log(events[i].event)
-    // event RewardPoolChange(uint256 epoch, uint256 value, uint256 timestamp);
-    // event StakeGettingRewardChange(uint256 epoch, uint256 value, uint256 timestamp);
+    // event RewardPoolChange(uint256 epoch, uint256 value, uint256 timestamp)
+    // event StakeGettingRewardChange(uint256 epoch, uint256 value, uint256 timestamp)
     if (events[i].event === 'RewardPoolChanges' || events[i].event === 'StakeGettingRewardChange') {
       res.push({epoch: data.epoch, value: data.value, action: events[i].event, timestamp: data.timestamp })
     // } else {
-      // res.push({epoch: data.epoch, value: data.value, action: events[i].event, timestamp: data.timestamp })
+    // res.push({epoch: data.epoch, value: data.value, action: events[i].event, timestamp: data.timestamp })
     }
   }
 
-  // emit StakeChange(_id, _stake, _reason);
+  // emit StakeChange(_id, _stake, _reason)
 
   return res
 }
@@ -365,15 +443,9 @@ async function getBlockEvents () {
   //                     uint256 stakerId,
   //                     uint256[] medians,
   //                     uint256[] jobIds,
-  //                     uint256 timestamp);
+  //                     uint256 timestamp)
 
-      // event Proposed(uint256 epoch,
-      //                 uint256 stakerId,
-      //                 uint256[] medians,
-      //                 uint256[] jobIds,
-      //                 uint256 iteration,
-      //                 uint256 biggestStakerId,
-      //                 uint256 timestamp);
+  // emit Proposed(epoch, proposerId, jobIds, medians, lowerCutoffs, higherCutoffs, iteration, biggestStakerId, now)
 
   // console.log(events[0])
   let res = []
@@ -390,19 +462,23 @@ async function getBlockEvents () {
         staker: staker,
         action: events[i].event,
         medians: data.medians,
+        lowerCutoffs: data.lowerCutoffs,
+        higherCutoffs: data.higherCutoffs,
         jobIds: data.jobIds,
         timestamp: data.timestamp,
         iteration: data.iteration,
-        biggestStakerId: data.biggestStakerId})
+      biggestStakerId: data.biggestStakerId})
     } else {
       res.push({epoch: data.epoch,
         staker: staker,
         action: events[i].event,
         medians: data.medians,
+        lowerCutoffs: data.lowerCutoffs,
+        higherCutoffs: data.higherCutoffs,
         jobIds: data.jobIds,
         timestamp: data.timestamp,
         iteration: '',
-        biggestStakerId: ''})
+      biggestStakerId: ''})
     }
   }
   return res
@@ -416,13 +492,13 @@ async function getJobEvents () {
     toBlock: 'latest'
   })
 
-      // event JobCreated(uint256 id, uint256 epoch, string url, string selector, bool repeat,
-      //                         address creator, uint256 credit, uint256 timestamp);
-      //
-      // event JobReported(uint256 id, uint256 value, uint256 epoch,
-      //                     string url, string selector, bool repeat,
-      //                     address creator, uint256 credit, bool fulfilled, uint256 timestamp);
-      //
+  // event JobCreated(uint256 id, uint256 epoch, string url, string selector, bool repeat,
+  //                         address creator, uint256 credit, uint256 timestamp)
+  //
+  // event JobReported(uint256 id, uint256 value, uint256 epoch,
+  //                     string url, string selector, bool repeat,
+  //                     address creator, uint256 credit, bool fulfilled, uint256 timestamp)
+  //
 
   // console.log(events[2].returnValues)
   let res = []
@@ -434,7 +510,7 @@ async function getJobEvents () {
     let data = events[i].returnValues
     if (events[i].event === 'WriterAdded') continue
     res.push({epoch: data.epoch, id: data.id, action: events[i].event, url: data.url, selector: data.selector, repeat: data.repeat,
-      creator: data.creator, credit: data.credit, timestamp: data.timestamp })
+    creator: data.creator, credit: data.credit, timestamp: data.timestamp })
   }
   return res
 }
@@ -446,7 +522,7 @@ async function commit (votes, secret, account) {
   // let votes = [100, 200, 300, 400, 500, 600, 700, 800, 900]
   // console.log(votes)
   let tree = merkle('keccak256').sync(votes)
-     // console.log(tree.root())
+  // console.log(tree.root())
   let root = tree.root()
 
   let stakerId = Number(await stakeManager.methods.stakerIds(account).call())
@@ -479,7 +555,7 @@ async function reveal (votes, secret, commitAccount, account) {
     throw new Error('Already Revealed', voted)
   }
   let tree = merkle('keccak256').sync(votes)
-     // console.log(tree.root())
+  // console.log(tree.root())
   let root = tree.root()
   let proof = []
   for (let i = 0; i < votes.length; i++) {
@@ -542,21 +618,21 @@ async function propose (account) {
   console.log('epoch, block, jobIds, iteration, biggestStakerId', epoch, block, jobIds, iteration, biggestStakerId)
   let tx = await blockManager.methods.propose(epoch, block, jobIds, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
   return tx
-  //
-  //
-  // let res = await getIteration()
-  // let electedProposer = res[0]
-  // let iteration = res[1]
-  // let biggestStakerId = res[2]
-  // // console.log('biggestStakerId', biggestStakerId)
-  // // console.log('electedProposer, iteration', electedProposer, iteration)
-  // let block = await makeBlock()
-  // // console.log('block', block)
-  // let median = block
-  // console.log('epoch, median, electedProposer, iteration, biggestStakerId', epoch, median, electedProposer, iteration, biggestStakerId)
-  // const nonce = await web3.eth.getTransactionCount(account, 'pending')
-  // let tx = await blockManager.methods.propose(epoch, medians, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
-  // return tx
+//
+//
+// let res = await getIteration()
+// let electedProposer = res[0]
+// let iteration = res[1]
+// let biggestStakerId = res[2]
+// // console.log('biggestStakerId', biggestStakerId)
+// // console.log('electedProposer, iteration', electedProposer, iteration)
+// let block = await makeBlock()
+// // console.log('block', block)
+// let median = block
+// console.log('epoch, median, electedProposer, iteration, biggestStakerId', epoch, median, electedProposer, iteration, biggestStakerId)
+// const nonce = await web3.eth.getTransactionCount(account, 'pending')
+// let tx = await blockManager.methods.propose(epoch, medians, iteration, biggestStakerId).send({'from': account, 'nonce': nonce})
+// return tx
 }
 
 // automatically calculate alternative block and submit
@@ -568,12 +644,12 @@ async function dispute (account) {
   for (let i = 0; i < iter; i++) {
     console.log(epoch, sortedVotes.slice(i * 1000, (i * 1000) + 1000))
     await blockManager.methods.giveSorted(epoch, sortedVotes.slice(i * 1000, (i * 1000) + 1000)).send({from: account,
-      nonce: String(nonce)})
+    nonce: String(nonce)})
   }
   const nonce = await web3.eth.getTransactionCount(account, 'pending')
 
   return blockManager.methods.proposeAlt(epoch).send({from: account,
-    nonce: String(nonce)})
+  nonce: String(nonce)})
 }
 
 async function getState () {
@@ -596,7 +672,7 @@ async function getStaker (stakerId) {
 }
 
 async function getBiggestStakeAndId (stakeManager) {
-// async function getBiggestStakeAndId (schelling) {
+  // async function getBiggestStakeAndId (schelling) {
   let biggestStake = 0
   let biggestStakerId = 0
   let numStakers = await stakeManager.methods.numStakers().call()
@@ -620,9 +696,9 @@ async function prng (seed, max, blockHashes) {
 
 // pseudo random hash generator based on block hashes.
 async function prngHash (seed, blockHashes) {
-// let sum = blockHashes(numBlocks)
+  // let sum = blockHashes(numBlocks)
   let sum = await web3.utils.soliditySha3(blockHashes, seed)
-// console.log('prngHash', sum)
+  // console.log('prngHash', sum)
   return (sum)
 }
 
@@ -630,7 +706,7 @@ async function getIteration (random, biggestStake, stake, stakerId, numStakers, 
   let j = 0
   console.log(blockHashes)
   for (let i = 0; i < 10000000000; i++) {
-// console.log('iteration ', i)
+    // console.log('iteration ', i)
 
     let isElected = await isElectedProposer(random, i, biggestStake, stake, stakerId, numStakers, blockHashes)
     if (isElected) return (i)
@@ -638,15 +714,15 @@ async function getIteration (random, biggestStake, stake, stakerId, numStakers, 
 }
 
 async function isElectedProposer (random, iteration, biggestStake, stake, stakerId, numStakers, blockHashes) {
-// rand = 0 -> totalStake-1
-// add +1 since prng returns 0 to max-1 and staker start from 1
+  // rand = 0 -> totalStake-1
+  // add +1 since prng returns 0 to max-1 and staker start from 1
   let seed = await web3.utils.soliditySha3(iteration)
-// console.log('seed', seed)
+  // console.log('seed', seed)
   if ((Number(await prng(seed, numStakers, blockHashes)) + 1) !== stakerId) return (false)
   let seed2 = await web3.utils.soliditySha3(stakerId, iteration)
   let randHash = await prngHash(seed2, blockHashes)
   let rand = Number((await web3.utils.toBN(randHash)).mod(await web3.utils.toBN(2 ** 32)))
-// let biggestStake = stakers[biggestStake].stake;
+  // let biggestStake = stakers[biggestStake].stake
   if (rand * (biggestStake) > stake * (2 ** 32)) return (false)
   return (true)
 }
@@ -685,7 +761,7 @@ async function getSortedVotes (assetId) {
   let values = []
   let voteWeights = []
 
-// get all values that stakers voted.
+  // get all values that stakers voted.
   for (let i = 1; i <= numStakers; i++) {
     let vote = Number((await voteManager.methods.votes(epoch, i, assetId).call()).value)
     // console.log(i, 'voted', vote)
@@ -718,7 +794,7 @@ async function getBiggestStakerId (stakeManager) {
 }
 
 async function getStake (stakerId) {
-  return Number((await stakeManager.methods.stakers(stakerId).call()).stake)
+  return String((await stakeManager.methods.stakers(stakerId).call()).stake)
 }
 
 async function getProposedBlockMedians (epoch, proposedBlock) {
@@ -729,6 +805,14 @@ async function getProposedBlock (epoch, proposedBlock) {
 }
 async function getNumProposedBlocks (epoch) {
   return (await blockManager.methods.getNumProposedBlocks(epoch).call())
+}
+
+async function getSchBalance (address) {
+  return String(await simpleToken.methods.balanceOf(address).call())
+}
+
+async function getEthBalance (address) {
+  return String(await web3.eth.getBalance(address))
 }
 
 async function sign (input, account) {
@@ -765,11 +849,16 @@ module.exports = {
   getActiveJobs: getActiveJobs,
   getJobValues: getJobValues,
   getJobs: getJobs,
+  getResult: getResult,
+  getNumJobs: getNumJobs,
   getVotesLastEpoch: getVotesLastEpoch,
   getVotingEvents: getVotingEvents,
   getStakingEvents: getStakingEvents,
   getJobEvents: getJobEvents,
   getBlockEvents: getBlockEvents,
   getStakers: getStakers,
-  getPoolChanges: getPoolChanges
+  getPoolChanges: getPoolChanges,
+  getStakerEvents: getStakerEvents,
+  getEthBalance: getEthBalance,
+  getSchBalance: getSchBalance
 }
