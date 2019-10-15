@@ -3,12 +3,12 @@ let { randomHex } = require('web3-utils')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 
-// const infuraKey = fs.readFileSync('.infura').toString().trim()
+const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8546'
 // let provider = 'http://localhost:8545'
-let provider = 'http://35.188.201.171:8545'
+// let provider = 'http://35.188.201.171:8545'
 
-// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
+let provider = 'https://rinkeby.infura.io/v3/' + infuraKey
 // let networkid = '420' // testnet
 let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
