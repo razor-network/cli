@@ -2,21 +2,18 @@ let Web3 = require('web3')
 let { randomHex } = require('web3-utils')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
+var config = require('./config.json')
 
-const infuraKey = fs.readFileSync('.infura').toString().trim()
-// let provider = 'ws://localhost:8546'
-// let provider = 'http://localhost:8545'
-<<<<<<< HEAD
+let infuraKey = config.infuraKey
+let provider = config.provider
+let networkid = config.networkid
+let numBlocks = config.numBlocks
 // let provider = 'http://35.188.201.171:8545'
 
-let provider = 'https://rinkeby.infura.io/v3/' + infuraKey
-=======
-let provider = 'http://35.188.201.171:8545'
+// let provider = 'https://rinkeby.infura.io/v3/' + infuraKey
 
-// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
->>>>>>> master
 // let networkid = '420' // testnet
-let networkid = '4' // rinkeby
+// let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 let merkle = require('@razor-network/merkle')
@@ -28,7 +25,6 @@ let jobManagerBuild = require('./build/contracts/JobManager.json')
 let delegatorBuild = require('./build/contracts/Delegator.json')
 let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
-let numBlocks = 10
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
@@ -77,113 +73,6 @@ async function login (address, password) {
   console.log(from, ' unlocked')
   return ([from, pk])
 }
-
-// async function transfer (to, amount, from) {
-//   const nonce = await web3.eth.getTransactionCount(from, 'pending')
-//   // console.log(nonce)
-//   // let gas = await simpleToken.methods
-//   //   .approve(to, amount)
-//   //   .estimateGas({ from, gas: '6000000'})
-//   // gas = Math.round(gas * 1.5)
-//
-//   // console.log(gas)
-//
-//   let res = await simpleToken.methods.transfer(to, amount).send({ from: from,
-//     nonce: nonce})
-//   console.log(res)
-// }
-
-// async function approve (to, amount, from) {
-//   const nonce = await web3.eth.getTransactionCount(from, 'pending')
-//   console.log('web3.eth.version', web3.version)
-//   // console.log(nonce)
-//   // let gas = await simpleToken.methods
-//   //   .approve(to, amount)
-//   //   .estimateGas({ from, gas: '6000000'})
-//   // gas = Math.round(gas * 1.5)
-//
-//   // console.log(gas)
-//   console.log('checking allowance... from, to', from, to)
-//   let allowance = await simpleToken.methods.allowance(from, to).call()
-//   console.log('allowance', Number(allowance))
-//   if (Number(allowance) >= amount) {
-//     console.log('sufficient allowance. No need to increase')
-//     return
-//   } else {
-//     console.log('Sending approve transaction...')
-//     return simpleToken.methods.approve(to, amount).send({
-//       from: from,
-//       nonce: nonce})
-//   }
-// }
-//
-// async function stake (amount, account) {
-//   let epoch
-//   let state
-//
-//   console.log('account', account)
-//   let balance = Number(await simpleToken.methods.balanceOf(account).call())
-//   console.log('schell balance', balance, 'schells')
-//   if (balance < amount) throw new Error('Not enough schells to stake')
-//   let ethBalance = Number(await web3.eth.getBalance(account)) / 1e18
-//   console.log('ether balance', ethBalance, 'eth')
-//
-//   if (ethBalance < 0.01) throw new Error('Please fund this account with more ether to pay for tx fees')
-//
-//   let tx = await approve(stakeManager.options.address, amount, account)
-//   if (tx) {
-//     console.log(tx.events)
-//     if (tx.events.Approval.event !== 'Approval') throw new Error('Approval failed')
-//   }
-//   while (true) {
-//     epoch = Number(await stateManager.methods.getEpoch().call())
-//     state = Number(await stateManager.methods.getState().call())
-//     console.log('epoch', epoch)
-//     console.log('state', state)
-//     if (state !== 0) {
-//       console.log('Can only stake during state 0 (commit). Retrying in 10 seconds...')
-//       await sleep(10000)
-//     } else break
-//   }
-//   console.log('Sending stake transaction...')
-//   let nonce = await web3.eth.getTransactionCount(account, 'pending')
-//
-//   let tx2 = await stakeManager.methods.stake(epoch, amount).send({
-//     from: account,
-//     nonce: String(nonce)})
-//   console.log(tx2.events)
-//   return (tx2.events.Staked.event === 'Staked')
-// }
-//
-// async function unstake (account) {
-//   let epoch = Number(await stateManager.methods.getEpoch().call())
-//   console.log('epoch', epoch)
-//   console.log('account', account)
-//   let balance = Number(await simpleToken.methods.balanceOf(account).call())
-//   console.log('balance', balance)
-//   if (balance === 0) throw new Error('balance is 0')
-//   let nonce = await web3.eth.getTransactionCount(account, 'pending')
-//
-//   let tx = await stakeManager.methods.unstake(epoch).send({from: account,
-//     nonce: String(nonce)})
-//   console.log(tx.events)
-//   return (tx.events.Unstaked.event === 'Unstaked')
-// }
-//
-// async function withdraw (account) {
-//   let epoch = Number(await stateManager.methods.getEpoch().call())
-//   console.log('epoch', epoch)
-//   console.log('account', account)
-//   let balance = Number(await simpleToken.methods.balanceOf(account).call())
-//   console.log('balance', balance)
-//   if (balance === 0) throw new Error('balance is 0')
-//   let nonce = await web3.eth.getTransactionCount(account, 'pending')
-//
-//   let tx = await stakeManager.methods.withdraw(epoch).send({from: account,
-//     nonce: String(nonce)})
-//   console.log(tx.events)
-//   return (tx.events.Unstaked.event === 'Unstaked')
-// }
 
 async function createJob (url, selector, repeat, eth, account) {
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
@@ -268,7 +157,9 @@ async function getVotesLastEpoch (jobId) {
     vote = await voteManager.methods.getVote(epoch, i, jobId - 1).call()
     staker = (await stakeManager.methods.getStaker(i).call())
     // console.log(staker)
-    votes.push({staker: staker._address, id: staker.id, value: Number(vote.value), weight: vote.weight})
+    if (Number(vote.value) > 0) {
+      votes.push({staker: staker._address, id: staker.id, value: Number(vote.value), weight: vote.weight})
+    }
   }
   return votes
 }

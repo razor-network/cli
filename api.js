@@ -3,22 +3,19 @@ let { randomHex } = require('web3-utils')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 const BN = require('bn.js')
+var config = require('./config.json')
 
-<<<<<<< HEAD
-const infuraKey = fs.readFileSync('.infura').toString().trim()
-// let provider = 'ws://localhost:8545'
-// let provider = 'ws://localhost:8546'
-let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-// let provider = 'ws://35.188.201.171:8546'
-=======
+let infuraKey = config.infuraKey
+let provider = config.provider
+let networkid = config.networkid
+let numBlocks = config.numBlocks
 // const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8545'
 // let provider = 'ws://localhost:8546'
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-let provider = 'ws://35.188.201.171:8546'
->>>>>>> master
+// let provider = 'ws://35.188.201.171:8546'
 // let networkid = '420' // testnet
-let networkid = '4' // rinkeby
+// let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 let merkle = require('@razor-network/merkle')
@@ -29,7 +26,10 @@ let voteManagerBuild = require('./build/contracts/VoteManager.json')
 let jobManagerBuild = require('./build/contracts/JobManager.json')
 let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
-let numBlocks = 10
+
+let simpleTokenBuild = require('./build/contracts/SchellingCoin.json')
+let simpleTokenAbi = simpleTokenBuild['abi']
+// let numBlocks = 10
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
@@ -59,8 +59,6 @@ let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][n
     gas: 5000000,
   gasPrice: 2000000000})
 
-let simpleTokenBuild = require('./build/contracts/SchellingCoin.json')
-let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 500000,
@@ -464,7 +462,6 @@ async function isElectedProposer (random, iteration, biggestStake, stake, staker
   return (true)
 }
 
-<<<<<<< HEAD
 async function weightedMedianAndCuttofs (values, weights) {
   let medianWeight = Math.floor(weights.reduce((a, b) => a + b, 0) / 2)
   let lowerCutoffWeight = Math.floor(weights.reduce((a, b) => a + b, 0) / 4)
@@ -492,8 +489,6 @@ async function weightedMedianAndCuttofs (values, weights) {
   return ([median, lowerCutoff, higherCutoff])
 }
 
-=======
->>>>>>> master
 async function makeBlock () {
   let medians = []
   let lowerCutoffs = []
@@ -501,24 +496,17 @@ async function makeBlock () {
   let jobs = await getActiveJobs()
   for (let assetId = 0; assetId < jobs.length; assetId++) {
     let res = await getSortedVotes(assetId)
-<<<<<<< HEAD
     let sortedVotes = res[0]
     let weights = res[1]
     console.log('sortedVotes', sortedVotes)
     console.log('weights', weights)
     // let epoch = Number(await stateManager.methods.getEpoch().call())
-=======
-    let sortedVotes = res[1]
-    // console.log('sortedVotes', sortedVotes)
-    let epoch = Number(await stateManager.methods.getEpoch().call())
->>>>>>> master
 
-    let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
+    // let totalStakeRevealed = Number(await voteManager.methods.totalStakeRevealed(epoch, assetId).call())
     // console.log('totalStakeRevealed', totalStakeRevealed)
-    let medianWeight = Math.floor(totalStakeRevealed / 2)
+    // let medianWeight = Math.floor(totalStakeRevealed / 2)
     // console.log('medianWeight', medianWeight)
 
-<<<<<<< HEAD
     let result = await weightedMedianAndCuttofs(sortedVotes, weights)
     let median = result[0]
     let lowerCutoff = result[1]
@@ -557,16 +545,6 @@ async function makeBlock () {
     // }
     //
 
-=======
-    let i = 0
-    let median = 0
-    let weight = 0
-    for (i = 0; i < sortedVotes.length; i++) {
-      weight += sortedVotes[i][1]
-      // console.log('weight', weight)
-      if (weight > medianWeight && median === 0) median = sortedVotes[i][0]
-    }
->>>>>>> master
     medians.push(median)
     lowerCutoffs.push(lowerCutoff)
     higherCutoffs.push(higherCutoff)

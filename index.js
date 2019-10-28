@@ -3,29 +3,29 @@
 let Web3 = require('web3')
 let rp = require('request-promise')
 let program = require('commander')
-// let KrakenClient = require('kraken-api')
-// let kraken = new KrakenClient()
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 let api = require('./api')
-// let server = require('./server')
 let axios = require('axios')
 let _ = require('lodash')
+var colors = require('colors')
+
 // let provider = 'ws://localhost:8545/'
 
-const infuraKey = fs.readFileSync('.infura').toString().trim()
+// const infuraKey = fs.readFileSync('.infura').toString().trim()
+var config = require('./config.json')
+
+let infuraKey = config.infuraKey
+let provider = config.provider
+let networkid = config.networkid
+let numBlocks = config.numBlocks
 // let provider = 'ws://localhost:8546'
-<<<<<<< HEAD
-let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-// let provider = 'ws://35.188.201.171:8546'
-=======
 // let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-let provider = 'ws://35.188.201.171:8546'
->>>>>>> master
+// let provider = 'ws://35.188.201.171:8546'
 
 console.log('provider', provider)
 // let networkid = '420' // testnet
-let networkid = '4' // rinkeby
+// let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
 
 // let keys = require('./keys.json')
@@ -337,7 +337,9 @@ async function handleBlock (blockHeader, account) {
 
     let balance = Number(await api.getStake(yourId)) / 1e18
     let ethBalance = Number(await web3.eth.getBalance(account)) / 1e18
-    console.log('Ethereum block #', blockHeader.number, 'epoch', epoch, 'state', state, 'account', account, 'stakerId', yourId, 'Staked Shells', balance, 'Ether balance', ethBalance)
+    console.log('🔲 Block'.red, String(blockHeader.number).red, '⌛ Epoch'.yellow, String(epoch).yellow, '⏱️  State'.green, String(state).green, '📒', String(account).blue, '👤 Staker ID'.brightBlue
+      , String(yourId).brightBlue
+      , '💰Stake'.cyan, String(balance).cyan, 'Ξ'.magenta, String(ethBalance).magenta)
     if (balance < (await api.getMinStake()) / 1e18) throw new Error('Stake is below minimum required. Cannot vote.')
 
     if (state === 0) {
