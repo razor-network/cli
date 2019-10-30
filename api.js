@@ -189,10 +189,10 @@ async function withdraw (account) {
   return (tx.events.Unstaked.event === 'Unstaked')
 }
 
-async function createJob (url, selector, repeat, eth, account) {
+async function createJob (url, selector, name, repeat, eth, account) {
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
 
-  return jobManager.methods.createJob(url, selector, repeat).send({from: account, nonce: String(nonce), value: eth})
+  return jobManager.methods.createJob(url, selector, name, repeat).send({from: account, nonce: String(nonce), value: eth})
 }
 
 async function getActiveJobs () {

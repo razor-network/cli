@@ -178,14 +178,14 @@ program
   })
 
 program
-  .command('createJob <url> <selector> <repeat> <fee> <account> <password>')
+  .command('createJob <url> <selector> <name> <repeat> <fee> <account> <password>')
   .alias('j')
   .description('create oracle query job')
-  .action(async function (url, selector, repeat, fee, account, password) {
+  .action(async function (url, selector, name, repeat, fee, account, password) {
     try {
       await api.login(account, password)
 
-      let res = await api.createJob(url, selector, repeat === 'true', fee, account).catch(console.log)
+      let res = await api.createJob(url, selector, name, repeat === 'true', fee, account).catch(console.log)
       console.log(res)
       if (res) console.log('succesfully created job')
     } catch (e) {

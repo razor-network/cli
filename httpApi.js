@@ -400,7 +400,7 @@ async function getJobEvents () {
     // staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
     let data = events[i].returnValues
     if (events[i].event === 'WriterAdded') continue
-    res.push({epoch: data.epoch, id: data.id, action: events[i].event, url: data.url, selector: data.selector, repeat: data.repeat,
+    res.push({epoch: data.epoch, id: data.id, action: events[i].event, url: data.url, selector: data.selector, name: data.name, repeat: data.repeat,
     creator: data.creator, credit: data.credit, timestamp: data.timestamp })
   }
   return res
