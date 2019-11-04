@@ -359,9 +359,9 @@ async function handleBlock (blockHeader, account) {
           // if (jobs[i].url === '') break
           // console.log('i, job', i, jobs[i])
           try {
-            response = await axios.get(jobs[i].url, {timeout: 5000})
+            response = await axios.get(jobs[i].url, {timeout: 10000})
             datum = _.get(response.data, jobs[i].selector)
-            if (isNaN(Number(datum))) throw ('Result is not a number')
+            if (isNaN(Number(datum))) throw (String(datum) + ' Result is not a number')
             datum = Math.floor(Number(datum) * 100000000)
             data.push(datum)
           } catch (e) {
