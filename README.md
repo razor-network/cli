@@ -19,10 +19,9 @@ Fund this account with rinkeby ether and rinkeby schells to start participating 
 
     stake <amount> <address> <password>
     vote <address> <password>
-    unstake <address> <password>    
+    unstake <address> <password>
     withdraw <address> <password>
-    transfer <toAddress> <fromAddress> <password>
-
+    transfer <to> <amount> <from> <password>
 `<address>` is the address of the wallet generated using create command.
 
 ## Example

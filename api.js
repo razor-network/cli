@@ -86,7 +86,7 @@ async function transfer (to, amount, from) {
   // gas = Math.round(gas * 1.5)
 
   // console.log(gas)
-  let amountBN = new BN(amount).mul(new BN(10).pow(new BN('18')))
+  let amountBN = String(new BN(amount).mul(new BN(10).pow(new BN('18'))))
   // amountBN = String(amountBN)
   let res = await simpleToken.methods.transfer(to, amountBN).send({ from: from,
   nonce: nonce})
