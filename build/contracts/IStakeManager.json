@@ -322,25 +322,25 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"_schAddress\",\"type\":\"address\"},{\"name\":\"_voteManagerAddress\",\"type\":\"address\"},{\"name\":\"_blockManagerAddress\",\"type\":\"address\"},{\"name\":\"_stateManagerAddress\",\"type\":\"address\"}],\"name\":\"init\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"id\",\"type\":\"uint256\"},{\"name\":\"bountyHunter\",\"type\":\"address\"},{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"slash\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"stakerId\",\"type\":\"uint256\"}],\"name\":\"updateCommitmentEpoch\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getStakeGettingReward\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getRewardPool\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"unstake\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"stakerId\",\"type\":\"uint256\"},{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"givePenalties\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"getStakerId\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"stakerId\",\"type\":\"uint256\"},{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"giveBlockReward\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"epoch\",\"type\":\"uint256\"},{\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"stake\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_id\",\"type\":\"uint256\"},{\"name\":\"_epochLastRevealed\",\"type\":\"uint256\"}],\"name\":\"setStakerEpochLastRevealed\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_id\",\"type\":\"uint256\"},{\"name\":\"_stake\",\"type\":\"uint256\"},{\"name\":\"_reason\",\"type\":\"string\"},{\"name\":\"_epoch\",\"type\":\"uint256\"}],\"name\":\"setStakerStake\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getNumStakers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_id\",\"type\":\"uint256\"}],\"name\":\"getStaker\",\"outputs\":[{\"components\":[{\"name\":\"id\",\"type\":\"uint256\"},{\"name\":\"_address\",\"type\":\"address\"},{\"name\":\"stake\",\"type\":\"uint256\"},{\"name\":\"epochStaked\",\"type\":\"uint256\"},{\"name\":\"epochLastCommitted\",\"type\":\"uint256\"},{\"name\":\"epochLastRevealed\",\"type\":\"uint256\"},{\"name\":\"unstakeAfter\",\"type\":\"uint256\"},{\"name\":\"withdrawAfter\",\"type\":\"uint256\"}],\"name\":\"staker\",\"type\":\"tuple\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"stakerId\",\"type\":\"uint256\"},{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"giveRewards\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/hrishi/contracts/contracts/Core/IStakeManager.sol\":\"IStakeManager\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/hrishi/contracts/contracts/Core/IStakeManager.sol\":{\"keccak256\":\"0x93493ec8975f9f26a75c9642af9faa01479252bd606099cd15343fcfe2836a9b\",\"urls\":[\"bzzr://45ee4a758909d688f3cf3306b463132277d7d6185785125e454aab503d3f97e5\",\"dweb:/ipfs/QmWNLWuschxZvYRFCcj6bq4wSSaoaP29gAy24QQzmrPDKb\"]},\"/Users/hrishi/contracts/contracts/lib/Structs.sol\":{\"keccak256\":\"0x67e2064bc878832c24a01efe7203e61488556353238a52616d112174fd41145a\",\"urls\":[\"bzzr://934f2528e76ac6f2558d5c98bc173948c1280c496f13ba9601751355dff087a4\",\"dweb:/ipfs/QmVzpAc6RkKuHAHdDKKTwpBz5q23YPLVmmUN8G3RyxYUSu\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"_schAddress\",\"type\":\"address\"},{\"name\":\"_voteManagerAddress\",\"type\":\"address\"},{\"name\":\"_blockManagerAddress\",\"type\":\"address\"},{\"name\":\"_stateManagerAddress\",\"type\":\"address\"}],\"name\":\"init\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"id\",\"type\":\"uint256\"},{\"name\":\"bountyHunter\",\"type\":\"address\"},{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"slash\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"stakerId\",\"type\":\"uint256\"}],\"name\":\"updateCommitmentEpoch\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getStakeGettingReward\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getRewardPool\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"unstake\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"stakerId\",\"type\":\"uint256\"},{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"givePenalties\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"getStakerId\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"stakerId\",\"type\":\"uint256\"},{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"giveBlockReward\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"epoch\",\"type\":\"uint256\"},{\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"stake\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_id\",\"type\":\"uint256\"},{\"name\":\"_epochLastRevealed\",\"type\":\"uint256\"}],\"name\":\"setStakerEpochLastRevealed\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_id\",\"type\":\"uint256\"},{\"name\":\"_stake\",\"type\":\"uint256\"},{\"name\":\"_reason\",\"type\":\"string\"},{\"name\":\"_epoch\",\"type\":\"uint256\"}],\"name\":\"setStakerStake\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getNumStakers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_id\",\"type\":\"uint256\"}],\"name\":\"getStaker\",\"outputs\":[{\"components\":[{\"name\":\"id\",\"type\":\"uint256\"},{\"name\":\"_address\",\"type\":\"address\"},{\"name\":\"stake\",\"type\":\"uint256\"},{\"name\":\"epochStaked\",\"type\":\"uint256\"},{\"name\":\"epochLastCommitted\",\"type\":\"uint256\"},{\"name\":\"epochLastRevealed\",\"type\":\"uint256\"},{\"name\":\"unstakeAfter\",\"type\":\"uint256\"},{\"name\":\"withdrawAfter\",\"type\":\"uint256\"}],\"name\":\"staker\",\"type\":\"tuple\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"stakerId\",\"type\":\"uint256\"},{\"name\":\"epoch\",\"type\":\"uint256\"}],\"name\":\"giveRewards\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/hrishikesh/contracts/contracts/Core/IStakeManager.sol\":\"IStakeManager\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/hrishikesh/contracts/contracts/Core/IStakeManager.sol\":{\"keccak256\":\"0x93493ec8975f9f26a75c9642af9faa01479252bd606099cd15343fcfe2836a9b\",\"urls\":[\"bzzr://45ee4a758909d688f3cf3306b463132277d7d6185785125e454aab503d3f97e5\",\"dweb:/ipfs/QmWNLWuschxZvYRFCcj6bq4wSSaoaP29gAy24QQzmrPDKb\"]},\"/home/hrishikesh/contracts/contracts/lib/Structs.sol\":{\"keccak256\":\"0x67e2064bc878832c24a01efe7203e61488556353238a52616d112174fd41145a\",\"urls\":[\"bzzr://934f2528e76ac6f2558d5c98bc173948c1280c496f13ba9601751355dff087a4\",\"dweb:/ipfs/QmVzpAc6RkKuHAHdDKKTwpBz5q23YPLVmmUN8G3RyxYUSu\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity 0.5.10;\npragma experimental ABIEncoderV2;\nimport \"../lib/Structs.sol\";\n\n\ninterface IStakeManager {\n    function init (address _schAddress, address _voteManagerAddress,\n    address _blockManagerAddress, address _stateManagerAddress) external;\n\n    function setStakerStake(uint256 _id, uint256 _stake, string calldata _reason, uint256 _epoch) external;\n    function setStakerEpochLastRevealed(uint256 _id, uint256 _epochLastRevealed) external;\n    function updateCommitmentEpoch(uint256 stakerId) external;\n    function stake (uint256 epoch, uint256 amount) external;\n    function unstake (uint256 epoch) external;\n    function withdraw (uint256 epoch) external;\n    function givePenalties (uint256 stakerId, uint256 epoch) external;\n    function giveBlockReward(uint256 stakerId, uint256 epoch) external;\n    function giveRewards (uint256 stakerId, uint256 epoch) external;\n    function slash (uint256 id, address bountyHunter, uint256 epoch) external;\n    // function calculateInactivityPenalties(uint256 epochs, uint256 stakeValue) public pure returns(uint256);\n    function getStakerId(address _address) external view returns(uint256);\n    function getStaker(uint256 _id) external view returns(Structs.Staker memory staker);\n    function getNumStakers() external view returns(uint256);\n    function getRewardPool() external view returns(uint256);\n    function getStakeGettingReward() external view returns(uint256);\n\n}\n",
-  "sourcePath": "/Users/hrishi/contracts/contracts/Core/IStakeManager.sol",
+  "sourcePath": "/home/hrishikesh/contracts/contracts/Core/IStakeManager.sol",
   "ast": {
-    "absolutePath": "/Users/hrishi/contracts/contracts/Core/IStakeManager.sol",
+    "absolutePath": "/home/hrishikesh/contracts/contracts/Core/IStakeManager.sol",
     "exportedSymbols": {
       "IStakeManager": [
-        1556
+        1558
       ]
     },
-    "id": 1557,
+    "id": 1559,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1443,
+        "id": 1445,
         "literals": [
           "solidity",
           "0.5",
@@ -350,7 +350,7 @@
         "src": "0:23:5"
       },
       {
-        "id": 1444,
+        "id": 1446,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -359,12 +359,12 @@
         "src": "24:33:5"
       },
       {
-        "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
+        "absolutePath": "/home/hrishikesh/contracts/contracts/lib/Structs.sol",
         "file": "../lib/Structs.sol",
-        "id": 1445,
+        "id": 1447,
         "nodeType": "ImportDirective",
-        "scope": 1557,
-        "sourceUnit": 4635,
+        "scope": 1559,
+        "sourceUnit": 4678,
         "src": "58:28:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -375,9 +375,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1556,
+        "id": 1558,
         "linearizedBaseContracts": [
-          1556
+          1558
         ],
         "name": "IStakeManager",
         "nodeType": "ContractDefinition",
@@ -385,22 +385,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1456,
+            "id": 1458,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "init",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1454,
+              "id": 1456,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1447,
+                  "id": 1449,
                   "name": "_schAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1456,
+                  "scope": 1458,
                   "src": "134:19:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -409,7 +409,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1446,
+                    "id": 1448,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "134:7:5",
@@ -424,10 +424,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1449,
+                  "id": 1451,
                   "name": "_voteManagerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1456,
+                  "scope": 1458,
                   "src": "155:27:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -436,7 +436,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1448,
+                    "id": 1450,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "155:7:5",
@@ -451,10 +451,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1451,
+                  "id": 1453,
                   "name": "_blockManagerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1456,
+                  "scope": 1458,
                   "src": "188:28:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -463,7 +463,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1450,
+                    "id": 1452,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "188:7:5",
@@ -478,10 +478,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1453,
+                  "id": 1455,
                   "name": "_stateManagerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1456,
+                  "scope": 1458,
                   "src": "218:28:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -490,7 +490,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1452,
+                    "id": 1454,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "218:7:5",
@@ -507,12 +507,12 @@
               "src": "133:114:5"
             },
             "returnParameters": {
-              "id": 1455,
+              "id": 1457,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "256:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "119:138:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -521,22 +521,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1467,
+            "id": 1469,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "setStakerStake",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1465,
+              "id": 1467,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1458,
+                  "id": 1460,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1467,
+                  "scope": 1469,
                   "src": "287:11:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -545,7 +545,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1457,
+                    "id": 1459,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "287:7:5",
@@ -559,10 +559,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1460,
+                  "id": 1462,
                   "name": "_stake",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1467,
+                  "scope": 1469,
                   "src": "300:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -571,7 +571,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1459,
+                    "id": 1461,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "300:7:5",
@@ -585,10 +585,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1462,
+                  "id": 1464,
                   "name": "_reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1467,
+                  "scope": 1469,
                   "src": "316:23:5",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -597,7 +597,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1461,
+                    "id": 1463,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "316:6:5",
@@ -611,10 +611,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1464,
+                  "id": 1466,
                   "name": "_epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1467,
+                  "scope": 1469,
                   "src": "341:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -623,7 +623,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1463,
+                    "id": 1465,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "341:7:5",
@@ -639,12 +639,12 @@
               "src": "286:70:5"
             },
             "returnParameters": {
-              "id": 1466,
+              "id": 1468,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "365:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "263:103:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -653,22 +653,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1474,
+            "id": 1476,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "setStakerEpochLastRevealed",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1472,
+              "id": 1474,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1469,
+                  "id": 1471,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1474,
+                  "scope": 1476,
                   "src": "407:11:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -677,7 +677,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1468,
+                    "id": 1470,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "407:7:5",
@@ -691,10 +691,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1471,
+                  "id": 1473,
                   "name": "_epochLastRevealed",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1474,
+                  "scope": 1476,
                   "src": "420:26:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -703,7 +703,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1470,
+                    "id": 1472,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "420:7:5",
@@ -719,12 +719,12 @@
               "src": "406:41:5"
             },
             "returnParameters": {
-              "id": 1473,
+              "id": 1475,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "456:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "371:86:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -733,22 +733,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1479,
+            "id": 1481,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "updateCommitmentEpoch",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1477,
+              "id": 1479,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1476,
+                  "id": 1478,
                   "name": "stakerId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1479,
+                  "scope": 1481,
                   "src": "493:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -757,7 +757,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1475,
+                    "id": 1477,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "493:7:5",
@@ -773,12 +773,12 @@
               "src": "492:18:5"
             },
             "returnParameters": {
-              "id": 1478,
+              "id": 1480,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "519:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "462:58:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -787,22 +787,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1486,
+            "id": 1488,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "stake",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1484,
+              "id": 1486,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1481,
+                  "id": 1483,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1486,
+                  "scope": 1488,
                   "src": "541:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -811,7 +811,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1480,
+                    "id": 1482,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "541:7:5",
@@ -825,10 +825,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1483,
+                  "id": 1485,
                   "name": "amount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1486,
+                  "scope": 1488,
                   "src": "556:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -837,7 +837,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1482,
+                    "id": 1484,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "556:7:5",
@@ -853,12 +853,12 @@
               "src": "540:31:5"
             },
             "returnParameters": {
-              "id": 1485,
+              "id": 1487,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "580:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "525:56:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -867,22 +867,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1491,
+            "id": 1493,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "unstake",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1489,
+              "id": 1491,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1488,
+                  "id": 1490,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1491,
+                  "scope": 1493,
                   "src": "604:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -891,7 +891,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1487,
+                    "id": 1489,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "604:7:5",
@@ -907,12 +907,12 @@
               "src": "603:15:5"
             },
             "returnParameters": {
-              "id": 1490,
+              "id": 1492,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "627:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "586:42:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -921,22 +921,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1496,
+            "id": 1498,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "withdraw",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1494,
+              "id": 1496,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1493,
+                  "id": 1495,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1496,
+                  "scope": 1498,
                   "src": "652:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -945,7 +945,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1492,
+                    "id": 1494,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "652:7:5",
@@ -961,12 +961,12 @@
               "src": "651:15:5"
             },
             "returnParameters": {
-              "id": 1495,
+              "id": 1497,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "675:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "633:43:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -975,22 +975,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1503,
+            "id": 1505,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "givePenalties",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1501,
+              "id": 1503,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1498,
+                  "id": 1500,
                   "name": "stakerId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1503,
+                  "scope": 1505,
                   "src": "705:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -999,7 +999,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1497,
+                    "id": 1499,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "705:7:5",
@@ -1013,10 +1013,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1500,
+                  "id": 1502,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1503,
+                  "scope": 1505,
                   "src": "723:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1025,7 +1025,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1499,
+                    "id": 1501,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "723:7:5",
@@ -1041,12 +1041,12 @@
               "src": "704:33:5"
             },
             "returnParameters": {
-              "id": 1502,
+              "id": 1504,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "746:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "681:66:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1055,22 +1055,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1510,
+            "id": 1512,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "giveBlockReward",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1508,
+              "id": 1510,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1505,
+                  "id": 1507,
                   "name": "stakerId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1510,
+                  "scope": 1512,
                   "src": "777:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1079,7 +1079,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1504,
+                    "id": 1506,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "777:7:5",
@@ -1093,10 +1093,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1507,
+                  "id": 1509,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1510,
+                  "scope": 1512,
                   "src": "795:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1105,7 +1105,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1506,
+                    "id": 1508,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "795:7:5",
@@ -1121,12 +1121,12 @@
               "src": "776:33:5"
             },
             "returnParameters": {
-              "id": 1509,
+              "id": 1511,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "818:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "752:67:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1135,22 +1135,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1517,
+            "id": 1519,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "giveRewards",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1515,
+              "id": 1517,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1512,
+                  "id": 1514,
                   "name": "stakerId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1517,
+                  "scope": 1519,
                   "src": "846:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1159,7 +1159,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1511,
+                    "id": 1513,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "846:7:5",
@@ -1173,10 +1173,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1514,
+                  "id": 1516,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1517,
+                  "scope": 1519,
                   "src": "864:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1185,7 +1185,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1513,
+                    "id": 1515,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "864:7:5",
@@ -1201,12 +1201,12 @@
               "src": "845:33:5"
             },
             "returnParameters": {
-              "id": 1516,
+              "id": 1518,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "887:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "824:64:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1215,22 +1215,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1526,
+            "id": 1528,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "slash",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1524,
+              "id": 1526,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1519,
+                  "id": 1521,
                   "name": "id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1526,
+                  "scope": 1528,
                   "src": "909:10:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1239,7 +1239,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1518,
+                    "id": 1520,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "909:7:5",
@@ -1253,10 +1253,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1521,
+                  "id": 1523,
                   "name": "bountyHunter",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1526,
+                  "scope": 1528,
                   "src": "921:20:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1265,7 +1265,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1520,
+                    "id": 1522,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "921:7:5",
@@ -1280,10 +1280,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1523,
+                  "id": 1525,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1526,
+                  "scope": 1528,
                   "src": "943:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1292,7 +1292,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1522,
+                    "id": 1524,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "943:7:5",
@@ -1308,12 +1308,12 @@
               "src": "908:49:5"
             },
             "returnParameters": {
-              "id": 1525,
+              "id": 1527,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "966:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "893:74:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1322,22 +1322,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1533,
+            "id": 1535,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getStakerId",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1529,
+              "id": 1531,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1528,
+                  "id": 1530,
                   "name": "_address",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1533,
+                  "scope": 1535,
                   "src": "1104:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1346,7 +1346,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1527,
+                    "id": 1529,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1104:7:5",
@@ -1363,15 +1363,15 @@
               "src": "1103:18:5"
             },
             "returnParameters": {
-              "id": 1532,
+              "id": 1534,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1531,
+                  "id": 1533,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1533,
+                  "scope": 1535,
                   "src": "1144:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1380,7 +1380,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1530,
+                    "id": 1532,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1144:7:5",
@@ -1395,7 +1395,7 @@
               ],
               "src": "1143:9:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1083:70:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -1404,22 +1404,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1540,
+            "id": 1542,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getStaker",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1536,
+              "id": 1538,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1535,
+                  "id": 1537,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1540,
+                  "scope": 1542,
                   "src": "1177:11:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1428,7 +1428,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1534,
+                    "id": 1536,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1177:7:5",
@@ -1444,31 +1444,31 @@
               "src": "1176:13:5"
             },
             "returnParameters": {
-              "id": 1539,
+              "id": 1541,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1538,
+                  "id": 1540,
                   "name": "staker",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1540,
+                  "scope": 1542,
                   "src": "1212:28:5",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Staker_$4578_memory_ptr",
+                    "typeIdentifier": "t_struct$_Staker_$4621_memory_ptr",
                     "typeString": "struct Structs.Staker"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 1537,
+                    "id": 1539,
                     "name": "Structs.Staker",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 4578,
+                    "referencedDeclaration": 4621,
                     "src": "1212:14:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Staker_$4578_storage_ptr",
+                      "typeIdentifier": "t_struct$_Staker_$4621_storage_ptr",
                       "typeString": "struct Structs.Staker"
                     }
                   },
@@ -1478,7 +1478,7 @@
               ],
               "src": "1211:30:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1158:84:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -1487,28 +1487,28 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1545,
+            "id": 1547,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getNumStakers",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1541,
+              "id": 1543,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1269:2:5"
             },
             "returnParameters": {
-              "id": 1544,
+              "id": 1546,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1543,
+                  "id": 1545,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1545,
+                  "scope": 1547,
                   "src": "1294:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1517,7 +1517,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1542,
+                    "id": 1544,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1294:7:5",
@@ -1532,7 +1532,7 @@
               ],
               "src": "1293:9:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1247:56:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -1541,28 +1541,28 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1550,
+            "id": 1552,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getRewardPool",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1546,
+              "id": 1548,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1330:2:5"
             },
             "returnParameters": {
-              "id": 1549,
+              "id": 1551,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1548,
+                  "id": 1550,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1550,
+                  "scope": 1552,
                   "src": "1355:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1571,7 +1571,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1547,
+                    "id": 1549,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1355:7:5",
@@ -1586,7 +1586,7 @@
               ],
               "src": "1354:9:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1308:56:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -1595,28 +1595,28 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1555,
+            "id": 1557,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getStakeGettingReward",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1551,
+              "id": 1553,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1399:2:5"
             },
             "returnParameters": {
-              "id": 1554,
+              "id": 1556,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1553,
+                  "id": 1555,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1555,
+                  "scope": 1557,
                   "src": "1424:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1625,7 +1625,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1552,
+                    "id": 1554,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1424:7:5",
@@ -1640,31 +1640,31 @@
               ],
               "src": "1423:9:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1369:64:5",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 1557,
+        "scope": 1559,
         "src": "89:1347:5"
       }
     ],
     "src": "0:1437:5"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hrishi/contracts/contracts/Core/IStakeManager.sol",
+    "absolutePath": "/home/hrishikesh/contracts/contracts/Core/IStakeManager.sol",
     "exportedSymbols": {
       "IStakeManager": [
-        1556
+        1558
       ]
     },
-    "id": 1557,
+    "id": 1559,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1443,
+        "id": 1445,
         "literals": [
           "solidity",
           "0.5",
@@ -1674,7 +1674,7 @@
         "src": "0:23:5"
       },
       {
-        "id": 1444,
+        "id": 1446,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -1683,12 +1683,12 @@
         "src": "24:33:5"
       },
       {
-        "absolutePath": "/Users/hrishi/contracts/contracts/lib/Structs.sol",
+        "absolutePath": "/home/hrishikesh/contracts/contracts/lib/Structs.sol",
         "file": "../lib/Structs.sol",
-        "id": 1445,
+        "id": 1447,
         "nodeType": "ImportDirective",
-        "scope": 1557,
-        "sourceUnit": 4635,
+        "scope": 1559,
+        "sourceUnit": 4678,
         "src": "58:28:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1699,9 +1699,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1556,
+        "id": 1558,
         "linearizedBaseContracts": [
-          1556
+          1558
         ],
         "name": "IStakeManager",
         "nodeType": "ContractDefinition",
@@ -1709,22 +1709,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1456,
+            "id": 1458,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "init",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1454,
+              "id": 1456,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1447,
+                  "id": 1449,
                   "name": "_schAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1456,
+                  "scope": 1458,
                   "src": "134:19:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1733,7 +1733,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1446,
+                    "id": 1448,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "134:7:5",
@@ -1748,10 +1748,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1449,
+                  "id": 1451,
                   "name": "_voteManagerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1456,
+                  "scope": 1458,
                   "src": "155:27:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1760,7 +1760,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1448,
+                    "id": 1450,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "155:7:5",
@@ -1775,10 +1775,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1451,
+                  "id": 1453,
                   "name": "_blockManagerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1456,
+                  "scope": 1458,
                   "src": "188:28:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1787,7 +1787,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1450,
+                    "id": 1452,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "188:7:5",
@@ -1802,10 +1802,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1453,
+                  "id": 1455,
                   "name": "_stateManagerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1456,
+                  "scope": 1458,
                   "src": "218:28:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1814,7 +1814,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1452,
+                    "id": 1454,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "218:7:5",
@@ -1831,12 +1831,12 @@
               "src": "133:114:5"
             },
             "returnParameters": {
-              "id": 1455,
+              "id": 1457,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "256:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "119:138:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1845,22 +1845,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1467,
+            "id": 1469,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "setStakerStake",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1465,
+              "id": 1467,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1458,
+                  "id": 1460,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1467,
+                  "scope": 1469,
                   "src": "287:11:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1869,7 +1869,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1457,
+                    "id": 1459,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "287:7:5",
@@ -1883,10 +1883,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1460,
+                  "id": 1462,
                   "name": "_stake",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1467,
+                  "scope": 1469,
                   "src": "300:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1895,7 +1895,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1459,
+                    "id": 1461,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "300:7:5",
@@ -1909,10 +1909,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1462,
+                  "id": 1464,
                   "name": "_reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1467,
+                  "scope": 1469,
                   "src": "316:23:5",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -1921,7 +1921,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1461,
+                    "id": 1463,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "316:6:5",
@@ -1935,10 +1935,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1464,
+                  "id": 1466,
                   "name": "_epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1467,
+                  "scope": 1469,
                   "src": "341:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1947,7 +1947,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1463,
+                    "id": 1465,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "341:7:5",
@@ -1963,12 +1963,12 @@
               "src": "286:70:5"
             },
             "returnParameters": {
-              "id": 1466,
+              "id": 1468,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "365:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "263:103:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1977,22 +1977,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1474,
+            "id": 1476,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "setStakerEpochLastRevealed",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1472,
+              "id": 1474,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1469,
+                  "id": 1471,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1474,
+                  "scope": 1476,
                   "src": "407:11:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2001,7 +2001,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1468,
+                    "id": 1470,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "407:7:5",
@@ -2015,10 +2015,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1471,
+                  "id": 1473,
                   "name": "_epochLastRevealed",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1474,
+                  "scope": 1476,
                   "src": "420:26:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2027,7 +2027,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1470,
+                    "id": 1472,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "420:7:5",
@@ -2043,12 +2043,12 @@
               "src": "406:41:5"
             },
             "returnParameters": {
-              "id": 1473,
+              "id": 1475,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "456:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "371:86:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2057,22 +2057,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1479,
+            "id": 1481,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "updateCommitmentEpoch",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1477,
+              "id": 1479,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1476,
+                  "id": 1478,
                   "name": "stakerId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1479,
+                  "scope": 1481,
                   "src": "493:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2081,7 +2081,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1475,
+                    "id": 1477,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "493:7:5",
@@ -2097,12 +2097,12 @@
               "src": "492:18:5"
             },
             "returnParameters": {
-              "id": 1478,
+              "id": 1480,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "519:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "462:58:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2111,22 +2111,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1486,
+            "id": 1488,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "stake",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1484,
+              "id": 1486,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1481,
+                  "id": 1483,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1486,
+                  "scope": 1488,
                   "src": "541:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2135,7 +2135,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1480,
+                    "id": 1482,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "541:7:5",
@@ -2149,10 +2149,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1483,
+                  "id": 1485,
                   "name": "amount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1486,
+                  "scope": 1488,
                   "src": "556:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2161,7 +2161,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1482,
+                    "id": 1484,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "556:7:5",
@@ -2177,12 +2177,12 @@
               "src": "540:31:5"
             },
             "returnParameters": {
-              "id": 1485,
+              "id": 1487,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "580:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "525:56:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2191,22 +2191,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1491,
+            "id": 1493,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "unstake",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1489,
+              "id": 1491,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1488,
+                  "id": 1490,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1491,
+                  "scope": 1493,
                   "src": "604:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2215,7 +2215,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1487,
+                    "id": 1489,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "604:7:5",
@@ -2231,12 +2231,12 @@
               "src": "603:15:5"
             },
             "returnParameters": {
-              "id": 1490,
+              "id": 1492,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "627:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "586:42:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2245,22 +2245,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1496,
+            "id": 1498,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "withdraw",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1494,
+              "id": 1496,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1493,
+                  "id": 1495,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1496,
+                  "scope": 1498,
                   "src": "652:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2269,7 +2269,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1492,
+                    "id": 1494,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "652:7:5",
@@ -2285,12 +2285,12 @@
               "src": "651:15:5"
             },
             "returnParameters": {
-              "id": 1495,
+              "id": 1497,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "675:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "633:43:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2299,22 +2299,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1503,
+            "id": 1505,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "givePenalties",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1501,
+              "id": 1503,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1498,
+                  "id": 1500,
                   "name": "stakerId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1503,
+                  "scope": 1505,
                   "src": "705:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2323,7 +2323,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1497,
+                    "id": 1499,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "705:7:5",
@@ -2337,10 +2337,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1500,
+                  "id": 1502,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1503,
+                  "scope": 1505,
                   "src": "723:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2349,7 +2349,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1499,
+                    "id": 1501,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "723:7:5",
@@ -2365,12 +2365,12 @@
               "src": "704:33:5"
             },
             "returnParameters": {
-              "id": 1502,
+              "id": 1504,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "746:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "681:66:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2379,22 +2379,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1510,
+            "id": 1512,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "giveBlockReward",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1508,
+              "id": 1510,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1505,
+                  "id": 1507,
                   "name": "stakerId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1510,
+                  "scope": 1512,
                   "src": "777:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2403,7 +2403,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1504,
+                    "id": 1506,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "777:7:5",
@@ -2417,10 +2417,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1507,
+                  "id": 1509,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1510,
+                  "scope": 1512,
                   "src": "795:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2429,7 +2429,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1506,
+                    "id": 1508,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "795:7:5",
@@ -2445,12 +2445,12 @@
               "src": "776:33:5"
             },
             "returnParameters": {
-              "id": 1509,
+              "id": 1511,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "818:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "752:67:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2459,22 +2459,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1517,
+            "id": 1519,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "giveRewards",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1515,
+              "id": 1517,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1512,
+                  "id": 1514,
                   "name": "stakerId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1517,
+                  "scope": 1519,
                   "src": "846:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2483,7 +2483,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1511,
+                    "id": 1513,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "846:7:5",
@@ -2497,10 +2497,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1514,
+                  "id": 1516,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1517,
+                  "scope": 1519,
                   "src": "864:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2509,7 +2509,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1513,
+                    "id": 1515,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "864:7:5",
@@ -2525,12 +2525,12 @@
               "src": "845:33:5"
             },
             "returnParameters": {
-              "id": 1516,
+              "id": 1518,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "887:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "824:64:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2539,22 +2539,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1526,
+            "id": 1528,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "slash",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1524,
+              "id": 1526,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1519,
+                  "id": 1521,
                   "name": "id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1526,
+                  "scope": 1528,
                   "src": "909:10:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2563,7 +2563,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1518,
+                    "id": 1520,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "909:7:5",
@@ -2577,10 +2577,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1521,
+                  "id": 1523,
                   "name": "bountyHunter",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1526,
+                  "scope": 1528,
                   "src": "921:20:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2589,7 +2589,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1520,
+                    "id": 1522,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "921:7:5",
@@ -2604,10 +2604,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1523,
+                  "id": 1525,
                   "name": "epoch",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1526,
+                  "scope": 1528,
                   "src": "943:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2616,7 +2616,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1522,
+                    "id": 1524,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "943:7:5",
@@ -2632,12 +2632,12 @@
               "src": "908:49:5"
             },
             "returnParameters": {
-              "id": 1525,
+              "id": 1527,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "966:0:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "893:74:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2646,22 +2646,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1533,
+            "id": 1535,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getStakerId",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1529,
+              "id": 1531,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1528,
+                  "id": 1530,
                   "name": "_address",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1533,
+                  "scope": 1535,
                   "src": "1104:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2670,7 +2670,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1527,
+                    "id": 1529,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1104:7:5",
@@ -2687,15 +2687,15 @@
               "src": "1103:18:5"
             },
             "returnParameters": {
-              "id": 1532,
+              "id": 1534,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1531,
+                  "id": 1533,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1533,
+                  "scope": 1535,
                   "src": "1144:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2704,7 +2704,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1530,
+                    "id": 1532,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1144:7:5",
@@ -2719,7 +2719,7 @@
               ],
               "src": "1143:9:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1083:70:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -2728,22 +2728,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1540,
+            "id": 1542,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getStaker",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1536,
+              "id": 1538,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1535,
+                  "id": 1537,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1540,
+                  "scope": 1542,
                   "src": "1177:11:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2752,7 +2752,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1534,
+                    "id": 1536,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1177:7:5",
@@ -2768,31 +2768,31 @@
               "src": "1176:13:5"
             },
             "returnParameters": {
-              "id": 1539,
+              "id": 1541,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1538,
+                  "id": 1540,
                   "name": "staker",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1540,
+                  "scope": 1542,
                   "src": "1212:28:5",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Staker_$4578_memory_ptr",
+                    "typeIdentifier": "t_struct$_Staker_$4621_memory_ptr",
                     "typeString": "struct Structs.Staker"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 1537,
+                    "id": 1539,
                     "name": "Structs.Staker",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 4578,
+                    "referencedDeclaration": 4621,
                     "src": "1212:14:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Staker_$4578_storage_ptr",
+                      "typeIdentifier": "t_struct$_Staker_$4621_storage_ptr",
                       "typeString": "struct Structs.Staker"
                     }
                   },
@@ -2802,7 +2802,7 @@
               ],
               "src": "1211:30:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1158:84:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -2811,28 +2811,28 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1545,
+            "id": 1547,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getNumStakers",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1541,
+              "id": 1543,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1269:2:5"
             },
             "returnParameters": {
-              "id": 1544,
+              "id": 1546,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1543,
+                  "id": 1545,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1545,
+                  "scope": 1547,
                   "src": "1294:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2841,7 +2841,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1542,
+                    "id": 1544,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1294:7:5",
@@ -2856,7 +2856,7 @@
               ],
               "src": "1293:9:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1247:56:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -2865,28 +2865,28 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1550,
+            "id": 1552,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getRewardPool",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1546,
+              "id": 1548,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1330:2:5"
             },
             "returnParameters": {
-              "id": 1549,
+              "id": 1551,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1548,
+                  "id": 1550,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1550,
+                  "scope": 1552,
                   "src": "1355:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2895,7 +2895,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1547,
+                    "id": 1549,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1355:7:5",
@@ -2910,7 +2910,7 @@
               ],
               "src": "1354:9:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1308:56:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -2919,28 +2919,28 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1555,
+            "id": 1557,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getStakeGettingReward",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1551,
+              "id": 1553,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1399:2:5"
             },
             "returnParameters": {
-              "id": 1554,
+              "id": 1556,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1553,
+                  "id": 1555,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1555,
+                  "scope": 1557,
                   "src": "1424:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2949,7 +2949,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1552,
+                    "id": 1554,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1424:7:5",
@@ -2964,14 +2964,14 @@
               ],
               "src": "1423:9:5"
             },
-            "scope": 1556,
+            "scope": 1558,
             "src": "1369:64:5",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 1557,
+        "scope": 1559,
         "src": "89:1347:5"
       }
     ],
@@ -2982,8 +2982,8 @@
     "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.16",
-  "updatedAt": "2019-10-29T18:34:50.830Z",
+  "schemaVersion": "3.0.19",
+  "updatedAt": "2019-12-01T08:14:27.400Z",
   "devdoc": {
     "methods": {}
   },
