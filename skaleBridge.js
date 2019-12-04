@@ -34,7 +34,7 @@ async function copy() {
 
         var rawTx = {
             from: web3.eth.accounts.wallet[0].address,
-            to: '0x03908F109e0A9Cf2014CAD07bf5a7B188D15aC9a',
+            to: '0x6bD981e20d7A8A880E5cEea68f163d3091A998F8',
             gas: 80000,
             data: dataTx
         }
