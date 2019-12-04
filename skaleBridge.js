@@ -2,8 +2,10 @@ const api = require('./httpApi')
 let Web3 = require('web3')
 // let sleep = require('sleep')
 let bridgeBuild = require('./build/contracts/Bridge.json')
+const fs = require('fs')
 
-let provider = 'https://sip2211-0.skalenodes.com:10007'
+const provider = fs.readFileSync(".skale").toString().trim();
+
 let web3 = new Web3(provider, null, {})
 let bridge = new web3.eth.Contract(bridgeBuild['abi'])
 
@@ -14,7 +16,6 @@ async function main() {
     copy()
     setInterval(() => copy(), 120000)
 }
-const fs = require('fs')
 const privateKey = fs.readFileSync('.bridgeKey').toString().trim()
 web3.eth.accounts.wallet.add(privateKey)
 console.log('using address ', web3.eth.accounts.wallet[0].address)
@@ -34,7 +35,7 @@ async function copy() {
 
         var rawTx = {
             from: web3.eth.accounts.wallet[0].address,
-            to: '0x6bD981e20d7A8A880E5cEea68f163d3091A998F8',
+            to: bridgeBuild['networks'][1].address,
             gas: 80000,
             data: dataTx
         }
