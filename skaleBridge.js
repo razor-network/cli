@@ -3,7 +3,7 @@ let Web3 = require('web3')
 // let sleep = require('sleep')
 let bridgeBuild = require('./build/contracts/Bridge.json')
 
-let provider = 'https://testnet2.matic.network'
+let provider = 'https://sip2211-0.skalenodes.com:10007'
 let web3 = new Web3(provider, null, {})
 let bridge = new web3.eth.Contract(bridgeBuild['abi'])
 
@@ -34,7 +34,7 @@ async function copy() {
 
         var rawTx = {
             from: web3.eth.accounts.wallet[0].address,
-            to: '0xA1Bb7956066c589c424210B5Bf94fa647829B099',
+            to: '0x03908F109e0A9Cf2014CAD07bf5a7B188D15aC9a',
             gas: 80000,
             data: dataTx
         }
