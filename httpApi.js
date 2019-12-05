@@ -112,7 +112,11 @@ async function getNumJobs () {
 }
 async function getResult (id) {
   let result = Number(await jobManager.methods.getResult(id).call())
+  return result
+}
 
+async function getJob (id) {
+  let result = await jobManager.methods.getJob(id).call()
   return result
 }
 
@@ -741,6 +745,7 @@ module.exports = {
   getJobValues: getJobValues,
   getJobs: getJobs,
   getResult: getResult,
+  getJob: getJob,
   getNumJobs: getNumJobs,
   getVotesLastEpoch: getVotesLastEpoch,
   getVotingEvents: getVotingEvents,
