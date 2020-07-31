@@ -3,8 +3,11 @@ End user client for Razor network.
 ## Installation
 1.`npm i` \
 2.`mv keys_sample.json keys.json`\
-3. add api keys in keys.json\
-4. create directory 'keys'
+3. `cp config-sample.json config.json` \
+4. `mkdir keys`\
+5. add api keys in keys.json\
+6. create directory 'keys'
+7. `node index.js c <password>`
 
 
 ## Commands
