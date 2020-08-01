@@ -22,7 +22,6 @@ let stateManagerBuild = require('./build/contracts/StateManager.json')
 let blockManagerBuild = require('./build/contracts/BlockManager.json')
 let voteManagerBuild = require('./build/contracts/VoteManager.json')
 let jobManagerBuild = require('./build/contracts/JobManager.json')
-let jobStorageBuild = require('./build/contracts/JobStorage.json')
 let delegatorBuild = require('./build/contracts/Delegator.json')
 let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
@@ -43,10 +42,6 @@ let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuil
     gas: 5000000,
   gasPrice: 2000000000})
 let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
-  {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 2000000000})
-let jobStorage = new web3.eth.Contract(jobStorageBuild['abi'], jobStorageBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 5000000,
   gasPrice: 2000000000})
@@ -86,7 +81,7 @@ async function createJob (url, selector, repeat, eth, account) {
 }
 
 async function getActiveJobs () {
-  let numJobs = Number(await jobStorage.methods.numJobs().call())
+  let numJobs = Number(await jobManager.methods.numJobs().call())
   let job
   let jobs = []
   let epoch = Number(await stateManager.methods.getEpoch().call())
