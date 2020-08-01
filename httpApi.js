@@ -100,9 +100,10 @@ async function getJobs () {
   let jobs = []
   // let epoch = Number(await stateManager.methods.getEpoch().call())
   for (let i = 1; i <= numJobs; i++) {
-    job = await jobManager.methods.jobs(i).call(i)
+    job = await jobManager.methods.getJob(i).call()
     jobs.push(job)
   }
+
   return jobs
 }
 async function getNumJobs () {
