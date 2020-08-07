@@ -108,7 +108,7 @@ async function getJobs () {
   return jobs
 }
 async function getNumJobs () {
-  let numJobs = Number(await jobManager.methods.numJobs().call({from: '0xB279182D99E65703F0076E4812653aaB85FCA0f0'}))
+  let numJobs = Number(await jobManager.methods.numJobs().call())
 
   return numJobs
 }
