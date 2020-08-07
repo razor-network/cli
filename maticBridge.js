@@ -3,8 +3,8 @@ let Web3 = require('web3')
 // let sleep = require('sleep')
 let bridgeBuild = require('./build/contracts/Bridge.json')
 
-let provider = 'https://testnet2.matic.network'
-let web3 = new Web3(provider, null, {})
+let provider = 'https://rpc-mumbai.matic.today'
+let web3 = new Web3(new Web3.providers.HttpProvider(provider))
 let bridge = new web3.eth.Contract(bridgeBuild['abi'])
 const fs = require('fs')
 
@@ -31,7 +31,7 @@ async function setResult(i) {
 
     var rawTx = {
         from: web3.eth.accounts.wallet[0].address,
-        to: bridgeBuild['networks'][8995].address,
+        to: bridgeBuild['networks'][80001].address,
         gas: 80000,
         data: dataTx
     }
@@ -51,7 +51,7 @@ async function setJob(i) {
 
     var rawTx = {
         from: web3.eth.accounts.wallet[0].address,
-        to: bridgeBuild['networks'][8995].address,
+        to: bridgeBuild['networks'][80001].address,
         gas: 2000000,
         data: dataTx
     }
