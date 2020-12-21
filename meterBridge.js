@@ -3,7 +3,10 @@ let Web3 = require('web3')
 // let sleep = require('sleep')
 const mtr = require("meterify").meterify;
 let bridgeBuild = require('./build/contracts/Bridge.json')
-const meterify = mtr(new Web3(), "http://c01.meter.io:8669");
+
+let provider = 'https://rpctest.meter.io'
+
+const meterify = new Web3(new Web3.providers.HttpProvider(provider))
 
 let bridge = new meterify.eth.Contract(bridgeBuild['abi'])
 const fs = require('fs')
@@ -28,7 +31,7 @@ async function setResult(i) {
 
     var rawTx = {
         from: meterify.eth.accounts.wallet[0].address,
-        to: "0x67182b1cC3f09fdF3cBb27592b9F871839f4B020",
+        to: "0x18E56c34E5551dD6203e060eea67C8765404193C",
         gas: 80000,
         data: dataTx
     }
@@ -45,7 +48,7 @@ async function setJob(i) {
 
     var rawTx = {
         from: meterify.eth.accounts.wallet[0].address,
-        to: "0x67182b1cC3f09fdF3cBb27592b9F871839f4B020",
+        to: "0x18E56c34E5551dD6203e060eea67C8765404193C",
         gas: 2000000,
         data: dataTx
     }
