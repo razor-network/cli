@@ -31,7 +31,7 @@ async function setResult(i) {
 
     var rawTx = {
         from: meterify.eth.accounts.wallet[0].address,
-        to: "0x18E56c34E5551dD6203e060eea67C8765404193C",
+        to: "0x0873B12aDbF2eAeDFD684E38ec22DF17C58017AD",
         gas: 80000,
         data: dataTx
     }
@@ -48,7 +48,7 @@ async function setJob(i) {
 
     var rawTx = {
         from: meterify.eth.accounts.wallet[0].address,
-        to: "0x18E56c34E5551dD6203e060eea67C8765404193C",
+        to: "0x0873B12aDbF2eAeDFD684E38ec22DF17C58017AD",
         gas: 2000000,
         data: dataTx
     }
