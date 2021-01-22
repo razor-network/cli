@@ -31,7 +31,7 @@ async function setResult(i) {
 
     var rawTx = {
         from: web3.eth.accounts.wallet[0].address,
-        to: bridgeBuild['networks'][1287].address,
+        to: '0xC6F33c0F15FE5e3A51A019524ac43574cFF29EFB',
         gas: 80000,
         data: dataTx
     }
@@ -51,7 +51,7 @@ async function setJob(i) {
 
     var rawTx = {
         from: web3.eth.accounts.wallet[0].address,
-        to: bridgeBuild['networks'][1287].address,
+        to: '0xC6F33c0F15FE5e3A51A019524ac43574cFF29EFB',
         gas: 2000000,
         data: dataTx
     }
