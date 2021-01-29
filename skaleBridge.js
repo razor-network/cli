@@ -5,10 +5,10 @@ let bridgeBuild = require('./build/contracts/Bridge.json')
 const fs = require('fs')
 
 const provider = fs.readFileSync(".skale").toString().trim();
-let networkid = 1
+let networkid = 344435
 let web3 = new Web3(provider, null, {})
 let bridge = new web3.eth.Contract(bridgeBuild['abi'])
-console.log('contract address',bridgeBuild['networks'][1].address)
+console.log('contract address',bridgeBuild['networks'][344435].address)
 // var Tx = require('ethereumjs-tx').Transaction
 // var ethjs = require('ethereumjs-util')
 
