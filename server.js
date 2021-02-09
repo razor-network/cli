@@ -120,6 +120,12 @@ app.get('/getSchBalance/:address', async function (req, res) {
   res.json({'message': result})
 })
 
+app.get('/razor/circulating', async function (req, res) {
+  // result = await api.getEpoch()
+  result = await api.getCirculatingSupply()
+  res.json(result)
+})
+
 app.get('/getStake/:address', async function (req, res) {
   // result = await api.getEpoch()
   let id = Number(await api.getStakerId(req.params.address))
