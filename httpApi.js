@@ -4,6 +4,8 @@ let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 var config = require('./config.json')
 
+const TOTAL_SUPPLY = 1000000000
+
 let infuraKey = config.infuraKey
 let provider = config.provider
 let networkid = config.networkid
@@ -54,7 +56,7 @@ let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][n
     gas: 5000000,
   gasPrice: 2000000000})
 
-let simpleTokenBuild = require('./build/contracts/SchellingCoin.json')
+let simpleTokenBuild = require('./build/contracts/Razor.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
@@ -708,6 +710,16 @@ async function getSchBalance (address) {
   return String(await simpleToken.methods.balanceOf(address).call())
 }
 
+async function getRazorBalance (address) {
+  return String(await simpleToken.methods.balanceOf(address).call())
+}
+
+async function getCirculatingSupply() {
+  const addresses = fs.readFileSync('.lockedTokenAddresses').toString().trim().split("\n")
+  const lockedValue = addresses.reduce((a, b) => a + (await getRazorBalance(b)), 0)
+  return (TOTAL_SUPPLY - lockedValue)
+}
+
 async function getEthBalance (address) {
   return String(await web3.eth.getBalance(address))
 }
@@ -758,5 +770,6 @@ module.exports = {
   getPoolChanges: getPoolChanges,
   getStakerEvents: getStakerEvents,
   getEthBalance: getEthBalance,
-  getSchBalance: getSchBalance
+  getSchBalance: getSchBalance,
+  getCirculatingSupply: getCirculatingSupply
 }
