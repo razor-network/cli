@@ -1,70 +1,26 @@
 /* global: console */
-
-let Web3 = require('web3')
 let rp = require('request-promise')
 let program = require('commander')
 let fs = require('fs')
-let sleep = require('util').promisify(setTimeout)
 let api = require('./api')
 let axios = require('axios')
 let _ = require('lodash')
-var colors = require('colors')
 
-// let provider = 'ws://localhost:8545/'
-
-// const infuraKey = fs.readFileSync('.infura').toString().trim()
 var config = require('./config.json')
 
-let infuraKey = config.infuraKey
 let provider = config.provider
-let networkid = config.networkid
-let numBlocks = config.numBlocks
-// let provider = 'ws://localhost:8546'
-// let provider = 'wss://rinkeby.infura.io/ws/v3/' + infuraKey
-// let provider = 'ws://35.188.201.171:8546'
 
 console.log('provider', provider)
-// let networkid = '420' // testnet
-// let networkid = '4' // rinkeby
-let web3 = new Web3(provider, null, {})
 
-// let keys = require('./keys.json')
+let web3 = require('./web3')
 
-// let priceEth
-// let priceBtc
 let lastCommit = -1
 let lastReveal = -1
 let lastProposal = -1
 let lastElection = -1
 let lastVerification = -1
 let data = []
-//
-// let cmcRequestOptions = {
-//   method: 'GET',
-//   uri: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
-//   qs: {
-//     'symbol': 'ETH'
-//   },
-//   headers: {
-//     'X-CMC_PRO_API_KEY': keys['cmc']
-//   },
-//   json: true,
-//   gzip: true
-// }
-//
-// let geminiRequestOptions = {
-//   method: 'GET',
-//   uri: 'https://api.gemini.com/v1/pubticker/ethusd',
-//   json: true,
-//   gzip: true
-// }
-//
-// let geminiBtcRequestOptions = {
-//   method: 'GET',
-//   uri: 'https://api.gemini.com/v1/pubticker/btcusd',
-//   json: true,
-//   gzip: true
-// }
+
 console.log('web3 version', web3.version)
 
 program
@@ -196,137 +152,21 @@ program
 
 program.parse(process.argv)
 
-// async function getEthPrice (priceApi) {
-//   if (priceApi === 0) {
-//     return rp(cmcRequestOptions).then(response => {
-//       let prr = response.data.ETH.quote.USD.price
-//       if (!prr) return getEthPrice(1)
-//       prr = Math.floor(Number(prr) * 100)
-//       console.log('CM price', prr)
-//       return prr
-//     }).catch((err) => {
-//       console.log('API call error:', err.message)
-//       console.log('Trying API 1')
-//       return getEthPrice(1)
-//     })
-//   } else if (priceApi === 1) {
-//     return rp(geminiRequestOptions).then(response => {
-//       let prr = response.last
-//       if (!prr) return getEthPrice(2)
-//       prr = Math.floor(Number(prr) * 100)
-//       console.log('Gemini price', prr)
-//       return prr
-//     }).catch((err) => {
-//       console.log('API call error:', err.message)
-//       console.log('Trying API 2')
-//       return getEthPrice(2)
-//     })
-//   } else {
-//     try {
-//       let prr = await kraken.api('Ticker', { pair: 'XETHZUSD' })
-//       prr = prr.result.XETHZUSD.c
-//       if (!prr) return getEthPrice(0)
-//       prr = Math.floor(Number(prr[0]) * 100)
-//       console.log('Kraken Price', prr)
-//       return prr
-//     } catch (e) {
-//       console.log('Trying API 0')
-//       return getEthPrice(0)
-//     }
-//   }
-// }
-//
-// async function getBtcPrice (priceApi) {
-//   if (priceApi === 0) {
-//     return rp(cmcRequestOptions).then(response => {
-//       let prr = response.data.BTC.quote.USD.price
-//       if (!prr) return getBtcPrice(1)
-//       prr = Math.floor(Number(prr) * 100)
-//       console.log('CM btc price', prr)
-//       return prr
-//     }).catch((err) => {
-//       console.log('API call error:', err.message)
-//       console.log('Trying API 1')
-//       return getBtcPrice(1)
-//     })
-//   } else if (priceApi === 1) {
-//     return rp(geminiBtcRequestOptions).then(response => {
-//       let prr = response.last
-//       if (!prr) return getBtcPrice(2)
-//       prr = Math.floor(Number(prr) * 100)
-//       console.log('Gemini btc price', prr)
-//       return prr
-//     }).catch((err) => {
-//       console.log('API call error:', err.message)
-//       console.log('Trying API 2')
-//       return getBtcPrice(2)
-//     })
-//   } else {
-//     try {
-//       let prr = await kraken.api('Ticker', { pair: 'XXBTZUSD' })
-//       prr = prr.result.XXBTZUSD.c
-//       if (!prr) return getBtcPrice(0)
-//       prr = Math.floor(Number(prr[0]) * 100)
-//       console.log('Kraken btc Price', prr)
-//       return prr
-//     } catch (e) {
-//       console.log('Trying API 0')
-//       return getBtcPrice(0)
-//     }
-//   }
-// }
-
 let isWatchingEvents = false
 
 async function main (account) {
   web3.eth.subscribe('newBlockHeaders', async function (error, result) {
     if (!error) {
-      // console.log(result)
       return
     }
     console.error(error)
   })
     .on('data', function (blockHeader) {
-      // console.log('block', blockHeader)
-
       handleBlock(blockHeader, account)
     })
     .on('error', console.error)
   console.log('subscribed')
   isWatchingEvents = true
-}
-
-web3.currentProvider.on('error', () => {
-  console.log('error')
-
-  isWatchingEvents = false
-  restartWatchEvents()
-})
-web3.currentProvider.on('end', () => {
-  console.log('ended')
-
-  isWatchingEvents = false
-  restartWatchEvents()
-})
-web3.currentProvider.on('close', () => {
-  console.log('closed')
-
-  isWatchingEvents = false
-  restartWatchEvents()
-})
-web3.currentProvider.on('connect', async function () {
-  console.log('connected')
-})
-
-function restartWatchEvents () {
-  if (isWatchingEvents) return
-
-  if (web3.currentProvider.connected) {
-    watchEvents()
-  } else {
-    console.log('Delay restartWatchEvents')
-    setTimeout(restartWatchEvents.bind(this), 60 * 1000)
-  }
 }
 
 async function handleBlock (blockHeader, account) {
@@ -410,9 +250,7 @@ async function handleBlock (blockHeader, account) {
         let numProposedBlocks = Number(await api.getNumProposedBlocks(epoch))
         if (numProposedBlocks > 5) numProposedBlocks = 5
         for (let i = 0; i < numProposedBlocks; i++) {
-          // let blockMedians = await api.getProposedBlockMedians(epoch, i)
           let proposedBlock = await api.getProposedBlock(epoch, i)
-          // console.log('proposedBlock', proposedBlock)
 
           let medians = proposedBlock[1].map(Number)
           let lowerCutoffs = proposedBlock[2].map(Number)
