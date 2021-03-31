@@ -16,7 +16,7 @@ const fs = require('fs')
 
 async function main() {
     copy()
-    setInterval(() => copy(), 300000)
+    setInterval(() => copy(), 120000)
 }
 const privateKey = fs.readFileSync('.bridgeKey').toString().trim()
 meterify.eth.accounts.wallet.add(privateKey)
@@ -31,7 +31,7 @@ async function setResult(i) {
 
     var rawTx = {
         from: meterify.eth.accounts.wallet[0].address,
-        to: "0x0873B12aDbF2eAeDFD684E38ec22DF17C58017AD",
+        to: "0xB69Ac16c2Ef7A1A1260846dA035c5365322e9533",
         gas: 80000,
         data: dataTx
     }
@@ -48,7 +48,7 @@ async function setJob(i) {
 
     var rawTx = {
         from: meterify.eth.accounts.wallet[0].address,
-        to: "0x0873B12aDbF2eAeDFD684E38ec22DF17C58017AD",
+        to: "0xB69Ac16c2Ef7A1A1260846dA035c5365322e9533",
         gas: 2000000,
         data: dataTx
     }

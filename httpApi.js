@@ -3,6 +3,9 @@ let { randomHex } = require('web3-utils')
 let fs = require('fs')
 let sleep = require('util').promisify(setTimeout)
 var config = require('./config.json')
+let axios = require('axios')
+
+const TOTAL_SUPPLY = 1000000000
 
 let infuraKey = config.infuraKey
 let provider = config.provider
@@ -54,12 +57,16 @@ let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][n
     gas: 5000000,
   gasPrice: 2000000000})
 
-let simpleTokenBuild = require('./build/contracts/SchellingCoin.json')
+
+const tokenAddress = fs.readFileSync('.tokenAddress').toString().trim()
+let simpleTokenBuild = require('./build/contracts/Razor.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
-let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
+let simpleToken = new web3.eth.Contract(simpleTokenAbi, tokenAddress,
   {transactionConfirmationBlocks: 1,
     gas: 500000,
   gasPrice: 2000000000})
+
+
 
 async function login (address, password) {
   await web3.eth.accounts.wallet.create(0, randomHex(32))
@@ -708,6 +715,27 @@ async function getSchBalance (address) {
   return String(await simpleToken.methods.balanceOf(address).call())
 }
 
+async function getRazorBalance (address) {
+  const etherscanKey = fs.readFileSync('.etherscan').toString().trim()
+  const tokenAddress = fs.readFileSync('.tokenAddress').toString().trim()
+  const url = `https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${address}&tag=latest&apikey=${etherscanKey}`
+  try {
+    response = await axios.get(url, {timeout: 60000})
+    return response.data.result/1000000000000000000
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+async function getCirculatingSupply() {
+  const addresses = fs.readFileSync('.lockedTokenAddresses').toString().trim().split("\n")
+  let lockedValue = 0
+  for(let i=0; i<addresses.length; i++) {
+    lockedValue = lockedValue + await getRazorBalance(addresses[i])
+  }
+  return (TOTAL_SUPPLY - lockedValue)
+}
+
 async function getEthBalance (address) {
   return String(await web3.eth.getBalance(address))
 }
@@ -758,5 +786,6 @@ module.exports = {
   getPoolChanges: getPoolChanges,
   getStakerEvents: getStakerEvents,
   getEthBalance: getEthBalance,
-  getSchBalance: getSchBalance
+  getSchBalance: getSchBalance,
+  getCirculatingSupply: getCirculatingSupply
 }
