@@ -8,7 +8,7 @@ let axios = require('axios')
 const TOTAL_SUPPLY = 1000000000
 
 let infuraKey = config.infuraKey
-let provider = config.provider
+let provider = config.httpProvider
 let networkid = config.networkid
 let numBlocks = config.numBlocks
 // let provider = 'http://35.188.201.171:8545'
