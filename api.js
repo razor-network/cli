@@ -6,7 +6,7 @@ const BN = require('bn.js')
 var config = require('./config.json')
 
 let infuraKey = config.infuraKey
-let provider = config.provider
+let provider = config.httpProvider
 let networkid = config.networkid
 let numBlocks = config.numBlocks
 // const infuraKey = fs.readFileSync('.infura').toString().trim()
