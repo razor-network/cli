@@ -129,15 +129,15 @@
     "absolutePath": "/Users/skanda/Projects/contracts/contracts/Delegator.sol",
     "exportedSymbols": {
       "Delegator": [
-        4062
+        4123
       ]
     },
-    "id": 4063,
+    "id": 4124,
     "license": null,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3994,
+        "id": 4055,
         "literals": [
           "solidity",
           "0.6",
@@ -147,7 +147,7 @@
         "src": "0:23:17"
       },
       {
-        "id": 3995,
+        "id": 4056,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -158,10 +158,10 @@
       {
         "absolutePath": "/Users/skanda/Projects/contracts/contracts/Core/IJobManager.sol",
         "file": "./Core/IJobManager.sol",
-        "id": 3996,
+        "id": 4057,
         "nodeType": "ImportDirective",
-        "scope": 4063,
-        "sourceUnit": 1482,
+        "scope": 4124,
+        "sourceUnit": 1470,
         "src": "59:32:17",
         "symbolAliases": [],
         "unitAlias": ""
@@ -173,9 +173,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 4062,
+        "id": 4123,
         "linearizedBaseContracts": [
-          4062
+          4123
         ],
         "name": "Delegator",
         "nodeType": "ContractDefinition",
@@ -183,12 +183,12 @@
           {
             "constant": false,
             "functionSelector": "c89e4361",
-            "id": 3998,
+            "id": 4059,
             "mutability": "mutable",
             "name": "delegate",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 4062,
+            "scope": 4123,
             "src": "119:23:17",
             "stateVariable": true,
             "storageLocation": "default",
@@ -197,7 +197,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 3997,
+              "id": 4058,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "119:7:17",
@@ -213,12 +213,12 @@
           {
             "constant": false,
             "functionSelector": "8da5cb5b",
-            "id": 4002,
+            "id": 4063,
             "mutability": "mutable",
             "name": "owner",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 4062,
+            "scope": 4123,
             "src": "148:33:17",
             "stateVariable": true,
             "storageLocation": "default",
@@ -227,7 +227,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 3999,
+              "id": 4060,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "148:7:17",
@@ -241,7 +241,7 @@
               "argumentTypes": null,
               "expression": {
                 "argumentTypes": null,
-                "id": 4000,
+                "id": 4061,
                 "name": "msg",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
@@ -252,7 +252,7 @@
                   "typeString": "msg"
                 }
               },
-              "id": 4001,
+              "id": 4062,
               "isConstant": false,
               "isLValue": false,
               "isPure": false,
@@ -271,28 +271,28 @@
           {
             "constant": false,
             "functionSelector": "3df395a3",
-            "id": 4004,
+            "id": 4065,
             "mutability": "mutable",
             "name": "jobManager",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 4062,
+            "scope": 4123,
             "src": "187:29:17",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IJobManager_$1481",
+              "typeIdentifier": "t_contract$_IJobManager_$1469",
               "typeString": "contract IJobManager"
             },
             "typeName": {
               "contractScope": null,
-              "id": 4003,
+              "id": 4064,
               "name": "IJobManager",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1481,
+              "referencedDeclaration": 1469,
               "src": "187:11:17",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IJobManager_$1481",
+                "typeIdentifier": "t_contract$_IJobManager_$1469",
                 "typeString": "contract IJobManager"
               }
             },
@@ -301,7 +301,7 @@
           },
           {
             "body": {
-              "id": 4026,
+              "id": 4087,
               "nodeType": "Block",
               "src": "479:150:17",
               "statements": [
@@ -315,7 +315,7 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 4013,
+                        "id": 4074,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -324,7 +324,7 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 4010,
+                            "id": 4071,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -335,7 +335,7 @@
                               "typeString": "msg"
                             }
                           },
-                          "id": 4011,
+                          "id": 4072,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -353,11 +353,11 @@
                         "operator": "==",
                         "rightExpression": {
                           "argumentTypes": null,
-                          "id": 4012,
+                          "id": 4073,
                           "name": "owner",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4002,
+                          "referencedDeclaration": 4063,
                           "src": "515:5:17",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -378,7 +378,7 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 4009,
+                      "id": 4070,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -392,7 +392,7 @@
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 4014,
+                    "id": 4075,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -407,25 +407,25 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 4015,
+                  "id": 4076,
                   "nodeType": "ExpressionStatement",
                   "src": "493:28:17"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 4018,
+                    "id": 4079,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 4016,
+                      "id": 4077,
                       "name": "delegate",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3998,
+                      "referencedDeclaration": 4059,
                       "src": "535:8:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -436,11 +436,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 4017,
+                      "id": 4078,
                       "name": "newDelegateAddress",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4006,
+                      "referencedDeclaration": 4067,
                       "src": "546:18:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -453,28 +453,28 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 4019,
+                  "id": 4080,
                   "nodeType": "ExpressionStatement",
                   "src": "535:29:17"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 4024,
+                    "id": 4085,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 4020,
+                      "id": 4081,
                       "name": "jobManager",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4004,
+                      "referencedDeclaration": 4065,
                       "src": "578:10:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IJobManager_$1481",
+                        "typeIdentifier": "t_contract$_IJobManager_$1469",
                         "typeString": "contract IJobManager"
                       }
                     },
@@ -485,11 +485,11 @@
                       "arguments": [
                         {
                           "argumentTypes": null,
-                          "id": 4022,
+                          "id": 4083,
                           "name": "newDelegateAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4006,
+                          "referencedDeclaration": 4067,
                           "src": "603:18:17",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -504,18 +504,18 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 4021,
+                        "id": 4082,
                         "name": "IJobManager",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1481,
+                        "referencedDeclaration": 1469,
                         "src": "591:11:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IJobManager_$1481_$",
+                          "typeIdentifier": "t_type$_t_contract$_IJobManager_$1469_$",
                           "typeString": "type(contract IJobManager)"
                         }
                       },
-                      "id": 4023,
+                      "id": 4084,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -526,17 +526,17 @@
                       "src": "591:31:17",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IJobManager_$1481",
+                        "typeIdentifier": "t_contract$_IJobManager_$1469",
                         "typeString": "contract IJobManager"
                       }
                     },
                     "src": "578:44:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IJobManager_$1481",
+                      "typeIdentifier": "t_contract$_IJobManager_$1469",
                       "typeString": "contract IJobManager"
                     }
                   },
-                  "id": 4025,
+                  "id": 4086,
                   "nodeType": "ExpressionStatement",
                   "src": "578:44:17"
                 }
@@ -544,7 +544,7 @@
             },
             "documentation": null,
             "functionSelector": "2da4e75c",
-            "id": 4027,
+            "id": 4088,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -552,17 +552,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 4007,
+              "id": 4068,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4006,
+                  "id": 4067,
                   "mutability": "mutable",
                   "name": "newDelegateAddress",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4027,
+                  "scope": 4088,
                   "src": "444:26:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -571,7 +571,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 4005,
+                    "id": 4066,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "444:7:17",
@@ -588,12 +588,12 @@
               "src": "443:28:17"
             },
             "returnParameters": {
-              "id": 4008,
+              "id": 4069,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "479:0:17"
             },
-            "scope": 4062,
+            "scope": 4123,
             "src": "419:210:17",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -601,7 +601,7 @@
           },
           {
             "body": {
-              "id": 4039,
+              "id": 4100,
               "nodeType": "Block",
               "src": "695:48:17",
               "statements": [
@@ -611,11 +611,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 4036,
+                        "id": 4097,
                         "name": "id",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4029,
+                        "referencedDeclaration": 4090,
                         "src": "733:2:17",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -632,32 +632,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 4034,
+                        "id": 4095,
                         "name": "jobManager",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4004,
+                        "referencedDeclaration": 4065,
                         "src": "712:10:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IJobManager_$1481",
+                          "typeIdentifier": "t_contract$_IJobManager_$1469",
                           "typeString": "contract IJobManager"
                         }
                       },
-                      "id": 4035,
+                      "id": 4096,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "getResult",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1465,
+                      "referencedDeclaration": 1453,
                       "src": "712:20:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_uint256_$returns$_t_uint256_$",
                         "typeString": "function (uint256) view external returns (uint256)"
                       }
                     },
-                    "id": 4037,
+                    "id": 4098,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -672,8 +672,8 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 4033,
-                  "id": 4038,
+                  "functionReturnParameters": 4094,
+                  "id": 4099,
                   "nodeType": "Return",
                   "src": "705:31:17"
                 }
@@ -681,7 +681,7 @@
             },
             "documentation": null,
             "functionSelector": "995e4339",
-            "id": 4040,
+            "id": 4101,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -689,17 +689,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 4030,
+              "id": 4091,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4029,
+                  "id": 4090,
                   "mutability": "mutable",
                   "name": "id",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4040,
+                  "scope": 4101,
                   "src": "654:10:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -708,7 +708,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 4028,
+                    "id": 4089,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "654:7:17",
@@ -724,17 +724,17 @@
               "src": "653:12:17"
             },
             "returnParameters": {
-              "id": 4033,
+              "id": 4094,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4032,
+                  "id": 4093,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4040,
+                  "scope": 4101,
                   "src": "686:7:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -743,7 +743,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 4031,
+                    "id": 4092,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "686:7:17",
@@ -758,7 +758,7 @@
               ],
               "src": "685:9:17"
             },
-            "scope": 4062,
+            "scope": 4123,
             "src": "635:108:17",
             "stateMutability": "view",
             "virtual": false,
@@ -766,7 +766,7 @@
           },
           {
             "body": {
-              "id": 4060,
+              "id": 4121,
               "nodeType": "Block",
               "src": "891:49:17",
               "statements": [
@@ -776,11 +776,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 4057,
+                        "id": 4118,
                         "name": "id",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4042,
+                        "referencedDeclaration": 4103,
                         "src": "930:2:17",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -797,32 +797,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 4055,
+                        "id": 4116,
                         "name": "jobManager",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4004,
+                        "referencedDeclaration": 4065,
                         "src": "912:10:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IJobManager_$1481",
+                          "typeIdentifier": "t_contract$_IJobManager_$1469",
                           "typeString": "contract IJobManager"
                         }
                       },
-                      "id": 4056,
+                      "id": 4117,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "getJob",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1480,
+                      "referencedDeclaration": 1468,
                       "src": "912:17:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_uint256_$returns$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_bool_$_t_uint256_$",
                         "typeString": "function (uint256) view external returns (string memory,string memory,string memory,bool,uint256)"
                       }
                     },
-                    "id": 4058,
+                    "id": 4119,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -837,8 +837,8 @@
                       "typeString": "tuple(string memory,string memory,string memory,bool,uint256)"
                     }
                   },
-                  "functionReturnParameters": 4054,
-                  "id": 4059,
+                  "functionReturnParameters": 4115,
+                  "id": 4120,
                   "nodeType": "Return",
                   "src": "905:28:17"
                 }
@@ -846,7 +846,7 @@
             },
             "documentation": null,
             "functionSelector": "bf22c457",
-            "id": 4061,
+            "id": 4122,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -854,17 +854,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 4043,
+              "id": 4104,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4042,
+                  "id": 4103,
                   "mutability": "mutable",
                   "name": "id",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4061,
+                  "scope": 4122,
                   "src": "765:10:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -873,7 +873,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 4041,
+                    "id": 4102,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "765:7:17",
@@ -889,17 +889,17 @@
               "src": "764:12:17"
             },
             "returnParameters": {
-              "id": 4054,
+              "id": 4115,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4045,
+                  "id": 4106,
                   "mutability": "mutable",
                   "name": "url",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4061,
+                  "scope": 4122,
                   "src": "799:17:17",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -908,7 +908,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 4044,
+                    "id": 4105,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "799:6:17",
@@ -922,12 +922,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 4047,
+                  "id": 4108,
                   "mutability": "mutable",
                   "name": "selector",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4061,
+                  "scope": 4122,
                   "src": "818:22:17",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -936,7 +936,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 4046,
+                    "id": 4107,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "818:6:17",
@@ -950,12 +950,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 4049,
+                  "id": 4110,
                   "mutability": "mutable",
                   "name": "name",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4061,
+                  "scope": 4122,
                   "src": "842:18:17",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -964,7 +964,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 4048,
+                    "id": 4109,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "842:6:17",
@@ -978,12 +978,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 4051,
+                  "id": 4112,
                   "mutability": "mutable",
                   "name": "repeat",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4061,
+                  "scope": 4122,
                   "src": "862:11:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -992,7 +992,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 4050,
+                    "id": 4111,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "862:4:17",
@@ -1006,12 +1006,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 4053,
+                  "id": 4114,
                   "mutability": "mutable",
                   "name": "result",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4061,
+                  "scope": 4122,
                   "src": "875:14:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1020,7 +1020,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 4052,
+                    "id": 4113,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "875:7:17",
@@ -1035,940 +1035,1022 @@
               ],
               "src": "798:92:17"
             },
-            "scope": 4062,
+            "scope": 4123,
             "src": "749:191:17",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 4063,
+        "scope": 4124,
         "src": "94:2825:17"
       }
     ],
     "src": "0:2920:17"
   },
   "legacyAST": {
-    "absolutePath": "/Users/skanda/Projects/contracts/contracts/Delegator.sol",
-    "exportedSymbols": {
-      "Delegator": [
-        4062
-      ]
+    "attributes": {
+      "absolutePath": "/Users/skanda/Projects/contracts/contracts/Delegator.sol",
+      "exportedSymbols": {
+        "Delegator": [
+          4123
+        ]
+      },
+      "license": null
     },
-    "id": 4063,
-    "license": null,
-    "nodeType": "SourceUnit",
-    "nodes": [
+    "children": [
       {
-        "id": 3994,
-        "literals": [
-          "solidity",
-          "0.6",
-          ".11"
-        ],
-        "nodeType": "PragmaDirective",
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.6",
+            ".11"
+          ]
+        },
+        "id": 4055,
+        "name": "PragmaDirective",
         "src": "0:23:17"
       },
       {
-        "id": 3995,
-        "literals": [
-          "experimental",
-          "ABIEncoderV2"
-        ],
-        "nodeType": "PragmaDirective",
+        "attributes": {
+          "literals": [
+            "experimental",
+            "ABIEncoderV2"
+          ]
+        },
+        "id": 4056,
+        "name": "PragmaDirective",
         "src": "24:33:17"
       },
       {
-        "absolutePath": "/Users/skanda/Projects/contracts/contracts/Core/IJobManager.sol",
-        "file": "./Core/IJobManager.sol",
-        "id": 3996,
-        "nodeType": "ImportDirective",
-        "scope": 4063,
-        "sourceUnit": 1482,
-        "src": "59:32:17",
-        "symbolAliases": [],
-        "unitAlias": ""
+        "attributes": {
+          "SourceUnit": 1470,
+          "absolutePath": "/Users/skanda/Projects/contracts/contracts/Core/IJobManager.sol",
+          "file": "./Core/IJobManager.sol",
+          "scope": 4124,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 4057,
+        "name": "ImportDirective",
+        "src": "59:32:17"
       },
       {
-        "abstract": false,
-        "baseContracts": [],
-        "contractDependencies": [],
-        "contractKind": "contract",
-        "documentation": null,
-        "fullyImplemented": true,
-        "id": 4062,
-        "linearizedBaseContracts": [
-          4062
-        ],
-        "name": "Delegator",
-        "nodeType": "ContractDefinition",
-        "nodes": [
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            4123
+          ],
+          "name": "Delegator",
+          "scope": 4124
+        },
+        "children": [
           {
-            "constant": false,
-            "functionSelector": "c89e4361",
-            "id": 3998,
-            "mutability": "mutable",
-            "name": "delegate",
-            "nodeType": "VariableDeclaration",
-            "overrides": null,
-            "scope": 4062,
-            "src": "119:23:17",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_address",
-              "typeString": "address"
+            "attributes": {
+              "constant": false,
+              "functionSelector": "c89e4361",
+              "mutability": "mutable",
+              "name": "delegate",
+              "overrides": null,
+              "scope": 4123,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
             },
-            "typeName": {
-              "id": 3997,
-              "name": "address",
-              "nodeType": "ElementaryTypeName",
-              "src": "119:7:17",
-              "stateMutability": "nonpayable",
-              "typeDescriptions": {
-                "typeIdentifier": "t_address",
-                "typeString": "address"
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 4058,
+                "name": "ElementaryTypeName",
+                "src": "119:7:17"
               }
-            },
-            "value": null,
-            "visibility": "public"
+            ],
+            "id": 4059,
+            "name": "VariableDeclaration",
+            "src": "119:23:17"
           },
           {
-            "constant": false,
-            "functionSelector": "8da5cb5b",
-            "id": 4002,
-            "mutability": "mutable",
-            "name": "owner",
-            "nodeType": "VariableDeclaration",
-            "overrides": null,
-            "scope": 4062,
-            "src": "148:33:17",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_address",
-              "typeString": "address"
+            "attributes": {
+              "constant": false,
+              "functionSelector": "8da5cb5b",
+              "mutability": "mutable",
+              "name": "owner",
+              "overrides": null,
+              "scope": 4123,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "visibility": "public"
             },
-            "typeName": {
-              "id": 3999,
-              "name": "address",
-              "nodeType": "ElementaryTypeName",
-              "src": "148:7:17",
-              "stateMutability": "nonpayable",
-              "typeDescriptions": {
-                "typeIdentifier": "t_address",
-                "typeString": "address"
-              }
-            },
-            "value": {
-              "argumentTypes": null,
-              "expression": {
-                "argumentTypes": null,
-                "id": 4000,
-                "name": "msg",
-                "nodeType": "Identifier",
-                "overloadedDeclarations": [],
-                "referencedDeclaration": -15,
-                "src": "171:3:17",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_magic_message",
-                  "typeString": "msg"
-                }
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 4060,
+                "name": "ElementaryTypeName",
+                "src": "148:7:17"
               },
-              "id": 4001,
-              "isConstant": false,
-              "isLValue": false,
-              "isPure": false,
-              "lValueRequested": false,
-              "memberName": "sender",
-              "nodeType": "MemberAccess",
-              "referencedDeclaration": null,
-              "src": "171:10:17",
-              "typeDescriptions": {
-                "typeIdentifier": "t_address_payable",
-                "typeString": "address payable"
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": false,
+                  "lValueRequested": false,
+                  "member_name": "sender",
+                  "referencedDeclaration": null,
+                  "type": "address payable"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": -15,
+                      "type": "msg",
+                      "value": "msg"
+                    },
+                    "id": 4061,
+                    "name": "Identifier",
+                    "src": "171:3:17"
+                  }
+                ],
+                "id": 4062,
+                "name": "MemberAccess",
+                "src": "171:10:17"
               }
-            },
-            "visibility": "public"
+            ],
+            "id": 4063,
+            "name": "VariableDeclaration",
+            "src": "148:33:17"
           },
           {
-            "constant": false,
-            "functionSelector": "3df395a3",
-            "id": 4004,
-            "mutability": "mutable",
-            "name": "jobManager",
-            "nodeType": "VariableDeclaration",
-            "overrides": null,
-            "scope": 4062,
-            "src": "187:29:17",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IJobManager_$1481",
-              "typeString": "contract IJobManager"
+            "attributes": {
+              "constant": false,
+              "functionSelector": "3df395a3",
+              "mutability": "mutable",
+              "name": "jobManager",
+              "overrides": null,
+              "scope": 4123,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract IJobManager",
+              "value": null,
+              "visibility": "public"
             },
-            "typeName": {
-              "contractScope": null,
-              "id": 4003,
-              "name": "IJobManager",
-              "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1481,
-              "src": "187:11:17",
-              "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IJobManager_$1481",
-                "typeString": "contract IJobManager"
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "IJobManager",
+                  "referencedDeclaration": 1469,
+                  "type": "contract IJobManager"
+                },
+                "id": 4064,
+                "name": "UserDefinedTypeName",
+                "src": "187:11:17"
               }
-            },
-            "value": null,
-            "visibility": "public"
+            ],
+            "id": 4065,
+            "name": "VariableDeclaration",
+            "src": "187:29:17"
           },
           {
-            "body": {
-              "id": 4026,
-              "nodeType": "Block",
-              "src": "479:150:17",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "arguments": [
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "2da4e75c",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "upgradeDelegate",
+              "overrides": null,
+              "scope": 4123,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "newDelegateAddress",
+                      "overrides": null,
+                      "scope": 4088,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
                       {
-                        "argumentTypes": null,
-                        "commonType": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
                         },
-                        "id": 4013,
-                        "isConstant": false,
-                        "isLValue": false,
-                        "isPure": false,
-                        "lValueRequested": false,
-                        "leftExpression": {
+                        "id": 4066,
+                        "name": "ElementaryTypeName",
+                        "src": "444:7:17"
+                      }
+                    ],
+                    "id": 4067,
+                    "name": "VariableDeclaration",
+                    "src": "444:26:17"
+                  }
+                ],
+                "id": 4068,
+                "name": "ParameterList",
+                "src": "443:28:17"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 4069,
+                "name": "ParameterList",
+                "src": "479:0:17"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
                           "argumentTypes": null,
-                          "expression": {
-                            "argumentTypes": null,
-                            "id": 4010,
-                            "name": "msg",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": -15,
-                            "src": "501:3:17",
-                            "typeDescriptions": {
-                              "typeIdentifier": "t_magic_message",
-                              "typeString": "msg"
-                            }
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                -18,
+                                -18
+                              ],
+                              "referencedDeclaration": -18,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 4070,
+                            "name": "Identifier",
+                            "src": "493:7:17"
                           },
-                          "id": 4011,
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "sender",
+                                  "referencedDeclaration": null,
+                                  "type": "address payable"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": -15,
+                                      "type": "msg",
+                                      "value": "msg"
+                                    },
+                                    "id": 4071,
+                                    "name": "Identifier",
+                                    "src": "501:3:17"
+                                  }
+                                ],
+                                "id": 4072,
+                                "name": "MemberAccess",
+                                "src": "501:10:17"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 4063,
+                                  "type": "address",
+                                  "value": "owner"
+                                },
+                                "id": 4073,
+                                "name": "Identifier",
+                                "src": "515:5:17"
+                              }
+                            ],
+                            "id": 4074,
+                            "name": "BinaryOperation",
+                            "src": "501:19:17"
+                          }
+                        ],
+                        "id": 4075,
+                        "name": "FunctionCall",
+                        "src": "493:28:17"
+                      }
+                    ],
+                    "id": 4076,
+                    "name": "ExpressionStatement",
+                    "src": "493:28:17"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberName": "sender",
-                          "nodeType": "MemberAccess",
-                          "referencedDeclaration": null,
-                          "src": "501:10:17",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_address_payable",
-                            "typeString": "address payable"
-                          }
+                          "operator": "=",
+                          "type": "address"
                         },
-                        "nodeType": "BinaryOperation",
-                        "operator": "==",
-                        "rightExpression": {
-                          "argumentTypes": null,
-                          "id": 4012,
-                          "name": "owner",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 4002,
-                          "src": "515:5:17",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
-                          }
-                        },
-                        "src": "501:19:17",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_bool",
-                          "typeString": "bool"
-                        }
-                      }
-                    ],
-                    "expression": {
-                      "argumentTypes": [
-                        {
-                          "typeIdentifier": "t_bool",
-                          "typeString": "bool"
-                        }
-                      ],
-                      "id": 4009,
-                      "name": "require",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
-                      "referencedDeclaration": -18,
-                      "src": "493:7:17",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
-                        "typeString": "function (bool) pure"
-                      }
-                    },
-                    "id": 4014,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "493:28:17",
-                    "tryCall": false,
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$__$",
-                      "typeString": "tuple()"
-                    }
-                  },
-                  "id": 4015,
-                  "nodeType": "ExpressionStatement",
-                  "src": "493:28:17"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 4018,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 4016,
-                      "name": "delegate",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 3998,
-                      "src": "535:8:17",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "id": 4017,
-                      "name": "newDelegateAddress",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 4006,
-                      "src": "546:18:17",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "src": "535:29:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "id": 4019,
-                  "nodeType": "ExpressionStatement",
-                  "src": "535:29:17"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 4024,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 4020,
-                      "name": "jobManager",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 4004,
-                      "src": "578:10:17",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IJobManager_$1481",
-                        "typeString": "contract IJobManager"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "arguments": [
-                        {
-                          "argumentTypes": null,
-                          "id": 4022,
-                          "name": "newDelegateAddress",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 4006,
-                          "src": "603:18:17",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
-                          }
-                        }
-                      ],
-                      "expression": {
-                        "argumentTypes": [
+                        "children": [
                           {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4059,
+                              "type": "address",
+                              "value": "delegate"
+                            },
+                            "id": 4077,
+                            "name": "Identifier",
+                            "src": "535:8:17"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4067,
+                              "type": "address",
+                              "value": "newDelegateAddress"
+                            },
+                            "id": 4078,
+                            "name": "Identifier",
+                            "src": "546:18:17"
                           }
                         ],
-                        "id": 4021,
-                        "name": "IJobManager",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 1481,
-                        "src": "591:11:17",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IJobManager_$1481_$",
-                          "typeString": "type(contract IJobManager)"
-                        }
-                      },
-                      "id": 4023,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": false,
-                      "kind": "typeConversion",
-                      "lValueRequested": false,
-                      "names": [],
-                      "nodeType": "FunctionCall",
-                      "src": "591:31:17",
-                      "tryCall": false,
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IJobManager_$1481",
-                        "typeString": "contract IJobManager"
-                      }
-                    },
-                    "src": "578:44:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IJobManager_$1481",
-                      "typeString": "contract IJobManager"
-                    }
-                  },
-                  "id": 4025,
-                  "nodeType": "ExpressionStatement",
-                  "src": "578:44:17"
-                }
-              ]
-            },
-            "documentation": null,
-            "functionSelector": "2da4e75c",
-            "id": 4027,
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [],
-            "name": "upgradeDelegate",
-            "nodeType": "FunctionDefinition",
-            "overrides": null,
-            "parameters": {
-              "id": 4007,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 4006,
-                  "mutability": "mutable",
-                  "name": "newDelegateAddress",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 4027,
-                  "src": "444:26:17",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 4005,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "444:7:17",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "443:28:17"
-            },
-            "returnParameters": {
-              "id": 4008,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "479:0:17"
-            },
-            "scope": 4062,
-            "src": "419:210:17",
-            "stateMutability": "nonpayable",
-            "virtual": false,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 4039,
-              "nodeType": "Block",
-              "src": "695:48:17",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "arguments": [
-                      {
-                        "argumentTypes": null,
-                        "id": 4036,
-                        "name": "id",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 4029,
-                        "src": "733:2:17",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
-                        }
+                        "id": 4079,
+                        "name": "Assignment",
+                        "src": "535:29:17"
                       }
                     ],
-                    "expression": {
-                      "argumentTypes": [
-                        {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
-                        }
-                      ],
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 4034,
-                        "name": "jobManager",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 4004,
-                        "src": "712:10:17",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IJobManager_$1481",
-                          "typeString": "contract IJobManager"
-                        }
-                      },
-                      "id": 4035,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "getResult",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1465,
-                      "src": "712:20:17",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_function_external_view$_t_uint256_$returns$_t_uint256_$",
-                        "typeString": "function (uint256) view external returns (uint256)"
-                      }
-                    },
-                    "id": 4037,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "712:24:17",
-                    "tryCall": false,
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
+                    "id": 4080,
+                    "name": "ExpressionStatement",
+                    "src": "535:29:17"
                   },
-                  "functionReturnParameters": 4033,
-                  "id": 4038,
-                  "nodeType": "Return",
-                  "src": "705:31:17"
-                }
-              ]
-            },
-            "documentation": null,
-            "functionSelector": "995e4339",
-            "id": 4040,
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getResult",
-            "nodeType": "FunctionDefinition",
-            "overrides": null,
-            "parameters": {
-              "id": 4030,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 4029,
-                  "mutability": "mutable",
-                  "name": "id",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 4040,
-                  "src": "654:10:17",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 4028,
-                    "name": "uint256",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "654:7:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "653:12:17"
-            },
-            "returnParameters": {
-              "id": 4033,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 4032,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 4040,
-                  "src": "686:7:17",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 4031,
-                    "name": "uint256",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "686:7:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "685:9:17"
-            },
-            "scope": 4062,
-            "src": "635:108:17",
-            "stateMutability": "view",
-            "virtual": false,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 4060,
-              "nodeType": "Block",
-              "src": "891:49:17",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "arguments": [
+                  {
+                    "children": [
                       {
-                        "argumentTypes": null,
-                        "id": 4057,
-                        "name": "id",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 4042,
-                        "src": "930:2:17",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
-                        }
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract IJobManager"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4065,
+                              "type": "contract IJobManager",
+                              "value": "jobManager"
+                            },
+                            "id": 4081,
+                            "name": "Identifier",
+                            "src": "578:10:17"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "contract IJobManager",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1469,
+                                  "type": "type(contract IJobManager)",
+                                  "value": "IJobManager"
+                                },
+                                "id": 4082,
+                                "name": "Identifier",
+                                "src": "591:11:17"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 4067,
+                                  "type": "address",
+                                  "value": "newDelegateAddress"
+                                },
+                                "id": 4083,
+                                "name": "Identifier",
+                                "src": "603:18:17"
+                              }
+                            ],
+                            "id": 4084,
+                            "name": "FunctionCall",
+                            "src": "591:31:17"
+                          }
+                        ],
+                        "id": 4085,
+                        "name": "Assignment",
+                        "src": "578:44:17"
                       }
                     ],
-                    "expression": {
-                      "argumentTypes": [
-                        {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
-                        }
-                      ],
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 4055,
-                        "name": "jobManager",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 4004,
-                        "src": "912:10:17",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IJobManager_$1481",
-                          "typeString": "contract IJobManager"
-                        }
-                      },
-                      "id": 4056,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "getJob",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1480,
-                      "src": "912:17:17",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_function_external_view$_t_uint256_$returns$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_bool_$_t_uint256_$",
-                        "typeString": "function (uint256) view external returns (string memory,string memory,string memory,bool,uint256)"
-                      }
+                    "id": 4086,
+                    "name": "ExpressionStatement",
+                    "src": "578:44:17"
+                  }
+                ],
+                "id": 4087,
+                "name": "Block",
+                "src": "479:150:17"
+              }
+            ],
+            "id": 4088,
+            "name": "FunctionDefinition",
+            "src": "419:210:17"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "995e4339",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getResult",
+              "overrides": null,
+              "scope": 4123,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "id",
+                      "overrides": null,
+                      "scope": 4101,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
                     },
-                    "id": 4058,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "912:21:17",
-                    "tryCall": false,
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_bool_$_t_uint256_$",
-                      "typeString": "tuple(string memory,string memory,string memory,bool,uint256)"
-                    }
-                  },
-                  "functionReturnParameters": 4054,
-                  "id": 4059,
-                  "nodeType": "Return",
-                  "src": "905:28:17"
-                }
-              ]
-            },
-            "documentation": null,
-            "functionSelector": "bf22c457",
-            "id": 4061,
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getJob",
-            "nodeType": "FunctionDefinition",
-            "overrides": null,
-            "parameters": {
-              "id": 4043,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 4042,
-                  "mutability": "mutable",
-                  "name": "id",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 4061,
-                  "src": "765:10:17",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 4041,
-                    "name": "uint256",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "765:7:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 4089,
+                        "name": "ElementaryTypeName",
+                        "src": "654:7:17"
+                      }
+                    ],
+                    "id": 4090,
+                    "name": "VariableDeclaration",
+                    "src": "654:10:17"
+                  }
+                ],
+                "id": 4091,
+                "name": "ParameterList",
+                "src": "653:12:17"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "",
+                      "overrides": null,
+                      "scope": 4101,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 4092,
+                        "name": "ElementaryTypeName",
+                        "src": "686:7:17"
+                      }
+                    ],
+                    "id": 4093,
+                    "name": "VariableDeclaration",
+                    "src": "686:7:17"
+                  }
+                ],
+                "id": 4094,
+                "name": "ParameterList",
+                "src": "685:9:17"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 4094
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "uint256",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "getResult",
+                              "referencedDeclaration": 1453,
+                              "type": "function (uint256) view external returns (uint256)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 4065,
+                                  "type": "contract IJobManager",
+                                  "value": "jobManager"
+                                },
+                                "id": 4095,
+                                "name": "Identifier",
+                                "src": "712:10:17"
+                              }
+                            ],
+                            "id": 4096,
+                            "name": "MemberAccess",
+                            "src": "712:20:17"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4090,
+                              "type": "uint256",
+                              "value": "id"
+                            },
+                            "id": 4097,
+                            "name": "Identifier",
+                            "src": "733:2:17"
+                          }
+                        ],
+                        "id": 4098,
+                        "name": "FunctionCall",
+                        "src": "712:24:17"
+                      }
+                    ],
+                    "id": 4099,
+                    "name": "Return",
+                    "src": "705:31:17"
+                  }
+                ],
+                "id": 4100,
+                "name": "Block",
+                "src": "695:48:17"
+              }
+            ],
+            "id": 4101,
+            "name": "FunctionDefinition",
+            "src": "635:108:17"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "bf22c457",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
               ],
-              "src": "764:12:17"
+              "name": "getJob",
+              "overrides": null,
+              "scope": 4123,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "external"
             },
-            "returnParameters": {
-              "id": 4054,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 4045,
-                  "mutability": "mutable",
-                  "name": "url",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 4061,
-                  "src": "799:17:17",
-                  "stateVariable": false,
-                  "storageLocation": "memory",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_string_memory_ptr",
-                    "typeString": "string"
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "id",
+                      "overrides": null,
+                      "scope": 4122,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 4102,
+                        "name": "ElementaryTypeName",
+                        "src": "765:7:17"
+                      }
+                    ],
+                    "id": 4103,
+                    "name": "VariableDeclaration",
+                    "src": "765:10:17"
+                  }
+                ],
+                "id": 4104,
+                "name": "ParameterList",
+                "src": "764:12:17"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "url",
+                      "overrides": null,
+                      "scope": 4122,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "string",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 4105,
+                        "name": "ElementaryTypeName",
+                        "src": "799:6:17"
+                      }
+                    ],
+                    "id": 4106,
+                    "name": "VariableDeclaration",
+                    "src": "799:17:17"
                   },
-                  "typeName": {
-                    "id": 4044,
-                    "name": "string",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "799:6:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_string_storage_ptr",
-                      "typeString": "string"
-                    }
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "selector",
+                      "overrides": null,
+                      "scope": 4122,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "string",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 4107,
+                        "name": "ElementaryTypeName",
+                        "src": "818:6:17"
+                      }
+                    ],
+                    "id": 4108,
+                    "name": "VariableDeclaration",
+                    "src": "818:22:17"
                   },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 4047,
-                  "mutability": "mutable",
-                  "name": "selector",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 4061,
-                  "src": "818:22:17",
-                  "stateVariable": false,
-                  "storageLocation": "memory",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_string_memory_ptr",
-                    "typeString": "string"
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "name",
+                      "overrides": null,
+                      "scope": 4122,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "string",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 4109,
+                        "name": "ElementaryTypeName",
+                        "src": "842:6:17"
+                      }
+                    ],
+                    "id": 4110,
+                    "name": "VariableDeclaration",
+                    "src": "842:18:17"
                   },
-                  "typeName": {
-                    "id": 4046,
-                    "name": "string",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "818:6:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_string_storage_ptr",
-                      "typeString": "string"
-                    }
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "repeat",
+                      "overrides": null,
+                      "scope": 4122,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 4111,
+                        "name": "ElementaryTypeName",
+                        "src": "862:4:17"
+                      }
+                    ],
+                    "id": 4112,
+                    "name": "VariableDeclaration",
+                    "src": "862:11:17"
                   },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 4049,
-                  "mutability": "mutable",
-                  "name": "name",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 4061,
-                  "src": "842:18:17",
-                  "stateVariable": false,
-                  "storageLocation": "memory",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_string_memory_ptr",
-                    "typeString": "string"
-                  },
-                  "typeName": {
-                    "id": 4048,
-                    "name": "string",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "842:6:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_string_storage_ptr",
-                      "typeString": "string"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 4051,
-                  "mutability": "mutable",
-                  "name": "repeat",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 4061,
-                  "src": "862:11:17",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 4050,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "862:4:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 4053,
-                  "mutability": "mutable",
-                  "name": "result",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 4061,
-                  "src": "875:14:17",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 4052,
-                    "name": "uint256",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "875:7:17",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "798:92:17"
-            },
-            "scope": 4062,
-            "src": "749:191:17",
-            "stateMutability": "view",
-            "virtual": false,
-            "visibility": "external"
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "result",
+                      "overrides": null,
+                      "scope": 4122,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 4113,
+                        "name": "ElementaryTypeName",
+                        "src": "875:7:17"
+                      }
+                    ],
+                    "id": 4114,
+                    "name": "VariableDeclaration",
+                    "src": "875:14:17"
+                  }
+                ],
+                "id": 4115,
+                "name": "ParameterList",
+                "src": "798:92:17"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 4115
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "tuple(string memory,string memory,string memory,bool,uint256)",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "getJob",
+                              "referencedDeclaration": 1468,
+                              "type": "function (uint256) view external returns (string memory,string memory,string memory,bool,uint256)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 4065,
+                                  "type": "contract IJobManager",
+                                  "value": "jobManager"
+                                },
+                                "id": 4116,
+                                "name": "Identifier",
+                                "src": "912:10:17"
+                              }
+                            ],
+                            "id": 4117,
+                            "name": "MemberAccess",
+                            "src": "912:17:17"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4103,
+                              "type": "uint256",
+                              "value": "id"
+                            },
+                            "id": 4118,
+                            "name": "Identifier",
+                            "src": "930:2:17"
+                          }
+                        ],
+                        "id": 4119,
+                        "name": "FunctionCall",
+                        "src": "912:21:17"
+                      }
+                    ],
+                    "id": 4120,
+                    "name": "Return",
+                    "src": "905:28:17"
+                  }
+                ],
+                "id": 4121,
+                "name": "Block",
+                "src": "891:49:17"
+              }
+            ],
+            "id": 4122,
+            "name": "FunctionDefinition",
+            "src": "749:191:17"
           }
         ],
-        "scope": 4063,
+        "id": 4123,
+        "name": "ContractDefinition",
         "src": "94:2825:17"
       }
     ],
+    "id": 4124,
+    "name": "SourceUnit",
     "src": "0:2920:17"
   },
   "compiler": {
@@ -1979,8 +2061,8 @@
     "5": {
       "events": {},
       "links": {},
-      "address": "0x272529AABfa5C5A890c59Dc5939BBC9e679d5B21",
-      "transactionHash": "0xe23edc75b4c4be4351012eaaf299b0d2633b513309f1fcc7aa28cc6a35eb8dd8"
+      "address": "0xe5c98A8e2E5dEc7734743365Ec3BF7aAa319Ec60",
+      "transactionHash": "0xca0ea4cd9657a1023327ff8a50cf0111ff71141dd6533ba5e0696db2f5418353"
     },
     "420": {
       "events": {},
@@ -1989,8 +2071,8 @@
       "transactionHash": "0x02b4f299e12df8d406240925b4ada93fcd2ad3c30dccbe7c1a4e18e9d2787651"
     }
   },
-  "schemaVersion": "3.3.2",
-  "updatedAt": "2021-01-12T13:54:24.338Z",
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2021-04-04T21:18:47.187Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

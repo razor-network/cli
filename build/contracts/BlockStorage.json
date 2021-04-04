@@ -136,15 +136,15 @@
     "absolutePath": "/Users/skanda/Projects/contracts/contracts/Core/BlockStorage.sol",
     "exportedSymbols": {
       "BlockStorage": [
-        1325
+        1306
       ]
     },
-    "id": 1326,
+    "id": 1307,
     "license": null,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1307,
+        "id": 1288,
         "literals": [
           "solidity",
           "0.6",
@@ -154,7 +154,7 @@
         "src": "0:23:3"
       },
       {
-        "id": 1308,
+        "id": 1289,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -165,10 +165,10 @@
       {
         "absolutePath": "/Users/skanda/Projects/contracts/contracts/lib/Structs.sol",
         "file": "../lib/Structs.sol",
-        "id": 1309,
+        "id": 1290,
         "nodeType": "ImportDirective",
-        "scope": 1326,
-        "sourceUnit": 4689,
+        "scope": 1307,
+        "sourceUnit": 4759,
         "src": "59:28:3",
         "symbolAliases": [],
         "unitAlias": ""
@@ -180,9 +180,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1325,
+        "id": 1306,
         "linearizedBaseContracts": [
-          1325
+          1306
         ],
         "name": "BlockStorage",
         "nodeType": "ContractDefinition",
@@ -190,23 +190,23 @@
           {
             "constant": false,
             "functionSelector": "828496d6",
-            "id": 1315,
+            "id": 1296,
             "mutability": "mutable",
             "name": "disputes",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1325,
+            "scope": 1306,
             "src": "157:73:3",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$4666_storage_$_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$4736_storage_$_$",
               "typeString": "mapping(uint256 => mapping(address => struct Structs.Dispute))"
             },
             "typeName": {
-              "id": 1314,
+              "id": 1295,
               "keyType": {
-                "id": 1310,
+                "id": 1291,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "166:7:3",
@@ -218,13 +218,13 @@
               "nodeType": "Mapping",
               "src": "157:57:3",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$4666_storage_$_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$4736_storage_$_$",
                 "typeString": "mapping(uint256 => mapping(address => struct Structs.Dispute))"
               },
               "valueType": {
-                "id": 1313,
+                "id": 1294,
                 "keyType": {
-                  "id": 1311,
+                  "id": 1292,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "186:7:3",
@@ -236,18 +236,18 @@
                 "nodeType": "Mapping",
                 "src": "177:36:3",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Dispute_$4666_storage_$",
+                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Dispute_$4736_storage_$",
                   "typeString": "mapping(address => struct Structs.Dispute)"
                 },
                 "valueType": {
                   "contractScope": null,
-                  "id": 1312,
+                  "id": 1293,
                   "name": "Structs.Dispute",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 4666,
+                  "referencedDeclaration": 4736,
                   "src": "197:15:3",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Dispute_$4666_storage_ptr",
+                    "typeIdentifier": "t_struct$_Dispute_$4736_storage_ptr",
                     "typeString": "struct Structs.Dispute"
                   }
                 }
@@ -259,23 +259,23 @@
           {
             "constant": false,
             "functionSelector": "92b48411",
-            "id": 1320,
+            "id": 1301,
             "mutability": "mutable",
             "name": "proposedBlocks",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1325,
+            "scope": 1306,
             "src": "370:58:3",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$4653_storage_$dyn_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$4723_storage_$dyn_storage_$",
               "typeString": "mapping(uint256 => struct Structs.Block[])"
             },
             "typeName": {
-              "id": 1319,
+              "id": 1300,
               "keyType": {
-                "id": 1316,
+                "id": 1297,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "379:7:3",
@@ -287,28 +287,28 @@
               "nodeType": "Mapping",
               "src": "370:36:3",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$4653_storage_$dyn_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$4723_storage_$dyn_storage_$",
                 "typeString": "mapping(uint256 => struct Structs.Block[])"
               },
               "valueType": {
                 "baseType": {
                   "contractScope": null,
-                  "id": 1317,
+                  "id": 1298,
                   "name": "Structs.Block",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 4653,
+                  "referencedDeclaration": 4723,
                   "src": "390:13:3",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Block_$4653_storage_ptr",
+                    "typeIdentifier": "t_struct$_Block_$4723_storage_ptr",
                     "typeString": "struct Structs.Block"
                   }
                 },
-                "id": 1318,
+                "id": 1299,
                 "length": null,
                 "nodeType": "ArrayTypeName",
                 "src": "390:15:3",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_Block_$4653_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_Block_$4723_storage_$dyn_storage_ptr",
                   "typeString": "struct Structs.Block[]"
                 }
               }
@@ -319,23 +319,23 @@
           {
             "constant": false,
             "functionSelector": "f25b3f99",
-            "id": 1324,
+            "id": 1305,
             "mutability": "mutable",
             "name": "blocks",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1325,
+            "scope": 1306,
             "src": "434:48:3",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$4653_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$4723_storage_$",
               "typeString": "mapping(uint256 => struct Structs.Block)"
             },
             "typeName": {
-              "id": 1323,
+              "id": 1304,
               "keyType": {
-                "id": 1321,
+                "id": 1302,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "443:7:3",
@@ -347,18 +347,18 @@
               "nodeType": "Mapping",
               "src": "434:34:3",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$4653_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$4723_storage_$",
                 "typeString": "mapping(uint256 => struct Structs.Block)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 1322,
+                "id": 1303,
                 "name": "Structs.Block",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 4653,
+                "referencedDeclaration": 4723,
                 "src": "454:13:3",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Block_$4653_storage_ptr",
+                  "typeIdentifier": "t_struct$_Block_$4723_storage_ptr",
                   "typeString": "struct Structs.Block"
                 }
               }
@@ -367,251 +367,268 @@
             "visibility": "public"
           }
         ],
-        "scope": 1326,
+        "scope": 1307,
         "src": "90:530:3"
       }
     ],
     "src": "0:621:3"
   },
   "legacyAST": {
-    "absolutePath": "/Users/skanda/Projects/contracts/contracts/Core/BlockStorage.sol",
-    "exportedSymbols": {
-      "BlockStorage": [
-        1325
-      ]
+    "attributes": {
+      "absolutePath": "/Users/skanda/Projects/contracts/contracts/Core/BlockStorage.sol",
+      "exportedSymbols": {
+        "BlockStorage": [
+          1306
+        ]
+      },
+      "license": null
     },
-    "id": 1326,
-    "license": null,
-    "nodeType": "SourceUnit",
-    "nodes": [
+    "children": [
       {
-        "id": 1307,
-        "literals": [
-          "solidity",
-          "0.6",
-          ".11"
-        ],
-        "nodeType": "PragmaDirective",
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.6",
+            ".11"
+          ]
+        },
+        "id": 1288,
+        "name": "PragmaDirective",
         "src": "0:23:3"
       },
       {
-        "id": 1308,
-        "literals": [
-          "experimental",
-          "ABIEncoderV2"
-        ],
-        "nodeType": "PragmaDirective",
+        "attributes": {
+          "literals": [
+            "experimental",
+            "ABIEncoderV2"
+          ]
+        },
+        "id": 1289,
+        "name": "PragmaDirective",
         "src": "24:33:3"
       },
       {
-        "absolutePath": "/Users/skanda/Projects/contracts/contracts/lib/Structs.sol",
-        "file": "../lib/Structs.sol",
-        "id": 1309,
-        "nodeType": "ImportDirective",
-        "scope": 1326,
-        "sourceUnit": 4689,
-        "src": "59:28:3",
-        "symbolAliases": [],
-        "unitAlias": ""
+        "attributes": {
+          "SourceUnit": 4759,
+          "absolutePath": "/Users/skanda/Projects/contracts/contracts/lib/Structs.sol",
+          "file": "../lib/Structs.sol",
+          "scope": 1307,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1290,
+        "name": "ImportDirective",
+        "src": "59:28:3"
       },
       {
-        "abstract": false,
-        "baseContracts": [],
-        "contractDependencies": [],
-        "contractKind": "contract",
-        "documentation": null,
-        "fullyImplemented": true,
-        "id": 1325,
-        "linearizedBaseContracts": [
-          1325
-        ],
-        "name": "BlockStorage",
-        "nodeType": "ContractDefinition",
-        "nodes": [
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            1306
+          ],
+          "name": "BlockStorage",
+          "scope": 1307
+        },
+        "children": [
           {
-            "constant": false,
-            "functionSelector": "828496d6",
-            "id": 1315,
-            "mutability": "mutable",
-            "name": "disputes",
-            "nodeType": "VariableDeclaration",
-            "overrides": null,
-            "scope": 1325,
-            "src": "157:73:3",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$4666_storage_$_$",
-              "typeString": "mapping(uint256 => mapping(address => struct Structs.Dispute))"
+            "attributes": {
+              "constant": false,
+              "functionSelector": "828496d6",
+              "mutability": "mutable",
+              "name": "disputes",
+              "overrides": null,
+              "scope": 1306,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(uint256 => mapping(address => struct Structs.Dispute))",
+              "value": null,
+              "visibility": "public"
             },
-            "typeName": {
-              "id": 1314,
-              "keyType": {
-                "id": 1310,
-                "name": "uint256",
-                "nodeType": "ElementaryTypeName",
-                "src": "166:7:3",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_uint256",
-                  "typeString": "uint256"
-                }
-              },
-              "nodeType": "Mapping",
-              "src": "157:57:3",
-              "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_struct$_Dispute_$4666_storage_$_$",
-                "typeString": "mapping(uint256 => mapping(address => struct Structs.Dispute))"
-              },
-              "valueType": {
-                "id": 1313,
-                "keyType": {
-                  "id": 1311,
-                  "name": "address",
-                  "nodeType": "ElementaryTypeName",
-                  "src": "186:7:3",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  }
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(uint256 => mapping(address => struct Structs.Dispute))"
                 },
-                "nodeType": "Mapping",
-                "src": "177:36:3",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Dispute_$4666_storage_$",
-                  "typeString": "mapping(address => struct Structs.Dispute)"
-                },
-                "valueType": {
-                  "contractScope": null,
-                  "id": 1312,
-                  "name": "Structs.Dispute",
-                  "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 4666,
-                  "src": "197:15:3",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Dispute_$4666_storage_ptr",
-                    "typeString": "struct Structs.Dispute"
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 1291,
+                    "name": "ElementaryTypeName",
+                    "src": "166:7:3"
+                  },
+                  {
+                    "attributes": {
+                      "type": "mapping(address => struct Structs.Dispute)"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1292,
+                        "name": "ElementaryTypeName",
+                        "src": "186:7:3"
+                      },
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "Structs.Dispute",
+                          "referencedDeclaration": 4736,
+                          "type": "struct Structs.Dispute"
+                        },
+                        "id": 1293,
+                        "name": "UserDefinedTypeName",
+                        "src": "197:15:3"
+                      }
+                    ],
+                    "id": 1294,
+                    "name": "Mapping",
+                    "src": "177:36:3"
                   }
-                }
+                ],
+                "id": 1295,
+                "name": "Mapping",
+                "src": "157:57:3"
               }
-            },
-            "value": null,
-            "visibility": "public"
+            ],
+            "id": 1296,
+            "name": "VariableDeclaration",
+            "src": "157:73:3"
           },
           {
-            "constant": false,
-            "functionSelector": "92b48411",
-            "id": 1320,
-            "mutability": "mutable",
-            "name": "proposedBlocks",
-            "nodeType": "VariableDeclaration",
-            "overrides": null,
-            "scope": 1325,
-            "src": "370:58:3",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$4653_storage_$dyn_storage_$",
-              "typeString": "mapping(uint256 => struct Structs.Block[])"
+            "attributes": {
+              "constant": false,
+              "functionSelector": "92b48411",
+              "mutability": "mutable",
+              "name": "proposedBlocks",
+              "overrides": null,
+              "scope": 1306,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(uint256 => struct Structs.Block[])",
+              "value": null,
+              "visibility": "public"
             },
-            "typeName": {
-              "id": 1319,
-              "keyType": {
-                "id": 1316,
-                "name": "uint256",
-                "nodeType": "ElementaryTypeName",
-                "src": "379:7:3",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_uint256",
-                  "typeString": "uint256"
-                }
-              },
-              "nodeType": "Mapping",
-              "src": "370:36:3",
-              "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Block_$4653_storage_$dyn_storage_$",
-                "typeString": "mapping(uint256 => struct Structs.Block[])"
-              },
-              "valueType": {
-                "baseType": {
-                  "contractScope": null,
-                  "id": 1317,
-                  "name": "Structs.Block",
-                  "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 4653,
-                  "src": "390:13:3",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Block_$4653_storage_ptr",
-                    "typeString": "struct Structs.Block"
-                  }
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(uint256 => struct Structs.Block[])"
                 },
-                "id": 1318,
-                "length": null,
-                "nodeType": "ArrayTypeName",
-                "src": "390:15:3",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_Block_$4653_storage_$dyn_storage_ptr",
-                  "typeString": "struct Structs.Block[]"
-                }
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 1297,
+                    "name": "ElementaryTypeName",
+                    "src": "379:7:3"
+                  },
+                  {
+                    "attributes": {
+                      "length": null,
+                      "type": "struct Structs.Block[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "Structs.Block",
+                          "referencedDeclaration": 4723,
+                          "type": "struct Structs.Block"
+                        },
+                        "id": 1298,
+                        "name": "UserDefinedTypeName",
+                        "src": "390:13:3"
+                      }
+                    ],
+                    "id": 1299,
+                    "name": "ArrayTypeName",
+                    "src": "390:15:3"
+                  }
+                ],
+                "id": 1300,
+                "name": "Mapping",
+                "src": "370:36:3"
               }
-            },
-            "value": null,
-            "visibility": "public"
+            ],
+            "id": 1301,
+            "name": "VariableDeclaration",
+            "src": "370:58:3"
           },
           {
-            "constant": false,
-            "functionSelector": "f25b3f99",
-            "id": 1324,
-            "mutability": "mutable",
-            "name": "blocks",
-            "nodeType": "VariableDeclaration",
-            "overrides": null,
-            "scope": 1325,
-            "src": "434:48:3",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$4653_storage_$",
-              "typeString": "mapping(uint256 => struct Structs.Block)"
+            "attributes": {
+              "constant": false,
+              "functionSelector": "f25b3f99",
+              "mutability": "mutable",
+              "name": "blocks",
+              "overrides": null,
+              "scope": 1306,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(uint256 => struct Structs.Block)",
+              "value": null,
+              "visibility": "public"
             },
-            "typeName": {
-              "id": 1323,
-              "keyType": {
-                "id": 1321,
-                "name": "uint256",
-                "nodeType": "ElementaryTypeName",
-                "src": "443:7:3",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_uint256",
-                  "typeString": "uint256"
-                }
-              },
-              "nodeType": "Mapping",
-              "src": "434:34:3",
-              "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Block_$4653_storage_$",
-                "typeString": "mapping(uint256 => struct Structs.Block)"
-              },
-              "valueType": {
-                "contractScope": null,
-                "id": 1322,
-                "name": "Structs.Block",
-                "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 4653,
-                "src": "454:13:3",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Block_$4653_storage_ptr",
-                  "typeString": "struct Structs.Block"
-                }
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(uint256 => struct Structs.Block)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 1302,
+                    "name": "ElementaryTypeName",
+                    "src": "443:7:3"
+                  },
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "Structs.Block",
+                      "referencedDeclaration": 4723,
+                      "type": "struct Structs.Block"
+                    },
+                    "id": 1303,
+                    "name": "UserDefinedTypeName",
+                    "src": "454:13:3"
+                  }
+                ],
+                "id": 1304,
+                "name": "Mapping",
+                "src": "434:34:3"
               }
-            },
-            "value": null,
-            "visibility": "public"
+            ],
+            "id": 1305,
+            "name": "VariableDeclaration",
+            "src": "434:48:3"
           }
         ],
-        "scope": 1326,
+        "id": 1306,
+        "name": "ContractDefinition",
         "src": "90:530:3"
       }
     ],
+    "id": 1307,
+    "name": "SourceUnit",
     "src": "0:621:3"
   },
   "compiler": {
@@ -619,8 +636,8 @@
     "version": "0.6.11+commit.5ef660b1.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.3.2",
-  "updatedAt": "2021-01-12T12:25:56.880Z",
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2021-04-04T21:06:03.437Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
