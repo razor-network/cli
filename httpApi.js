@@ -11,6 +11,7 @@ let infuraKey = config.infuraKey
 let provider = config.httpProvider
 let networkid = config.networkid
 let numBlocks = config.numBlocks
+let gethHttpProvider = config.geth.httpProvider
 // let provider = 'http://35.188.201.171:8545'
 
 // let provider = 'https://rinkeby.infura.io/v3/' + infuraKey
@@ -18,6 +19,7 @@ let numBlocks = config.numBlocks
 // let networkid = '420' // testnet
 // let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
+let web3Geth = new Web3(gethHttpProvider, null, {})
 
 let merkle = require('@razor-network/merkle')
 let stakeManagerBuild = require('./build/contracts/StakeManager.json')
@@ -57,6 +59,29 @@ let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][n
     gas: 5000000,
   gasPrice: 2000000000})
 
+// Geth
+let gethStateManager = new web3Geth.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
+  {transactionConfirmationBlocks: 1,
+    gas: 5000000,
+  gasPrice: 2000000000}) 
+let gethStakeManager = new web3Geth.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
+  {transactionConfirmationBlocks: 1,
+    gas: 5000000,
+  gasPrice: 2000000000})
+let gethJobManager = new web3Geth.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
+  {transactionConfirmationBlocks: 1,
+    gas: 5000000,
+  gasPrice: 2000000000})
+let gethVoteManager = new web3Geth.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
+  {transactionConfirmationBlocks: 1,
+    gas: 5000000,
+  gasPrice: 2000000000})
+let gethBlockManager = new web3Geth.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
+  {transactionConfirmationBlocks: 1,
+    gas: 5000000,
+  gasPrice: 2000000000})
+
+const isInfura = (provider) => provider === 'infura'
 
 const tokenAddress = fs.readFileSync('.tokenAddress').toString().trim()
 let simpleTokenBuild = require('./build/contracts/Razor.json')
@@ -101,13 +126,14 @@ async function getActiveJobs () {
   return jobs
 }
 
-async function getJobs () {
-  let numJobs = Number(await jobManager.methods.numJobs().call())
+async function getJobs (provider) {
+  let manager = isInfura(provider) ? jobManager : gethJobManager
+
+  let numJobs = Number(await manager.methods.numJobs().call())
   let job
-  let jobs = []
-  // let epoch = Number(await stateManager.methods.getEpoch().call())
+  let jobs = []  // let epoch = Number(await stateManager.methods.getEpoch().call())
   for (let i = 1; i <= numJobs; i++) {
-    job = await jobManager.methods.getJob(i).call()
+    job = await manager.methods.getJob(i).call()
     job.id = i
     jobs.push(job)
   }
@@ -144,10 +170,17 @@ async function getStakers () {
   return res
 }
 
-async function getJobValues (jobId) {
-  let blockNumber = await web3.eth.getBlockNumber()
+async function getJobValues (jobId, provider) {
+  let web3Provider = web3Geth
+  let manager = gethJobManager
+  if (isInfura(provider)) {
+    web3Provider = web3
+    manager = jobManager
+  }
 
-  let fulfills = await jobManager.getPastEvents('JobReported', {
+  let blockNumber = await web3Provider.eth.getBlockNumber()
+
+  let fulfills = await manager.getPastEvents('JobReported', {
     fromBlock: Math.max(0, Number(blockNumber) - 1000),
     toBlock: 'latest'
   })
@@ -159,16 +192,26 @@ async function getJobValues (jobId) {
   return values
 }
 
-async function getVotesLastEpoch (jobId) {
-  let blockNumber = await web3.eth.getBlockNumber()
-  let epoch = Number(await getEpoch()) - 1
-  let numStakers = Number(await stakeManager.methods.getNumStakers().call())
+async function getVotesLastEpoch (jobId, provider) {
+  let web3Provider = web3Geth
+  let providerStakeManager = gethStakeManager
+  let providerVoteManager = gethVoteManager
+  if (isInfura(provider)) {
+    web3Provider = web3
+    providerStakeManager = stakeManager
+    providerVoteManager = voteManager
+  }
+  
+  let blockNumber = await web3Provider.eth.getBlockNumber()
+  let epoch = Number(await getEpoch(provider)) - 1
+  let numStakers = Number(await providerStakeManager.methods.getNumStakers().call())
   let vote
   let votes = []
   let staker
+
   for (let i = 1; i <= numStakers; i++) {
-    vote = await voteManager.methods.getVote(epoch, i, jobId - 1).call()
-    staker = (await stakeManager.methods.getStaker(i).call())
+    vote = await providerVoteManager.methods.getVote(epoch, i, jobId - 1).call()
+    staker = (await providerStakeManager.methods.getStaker(i).call())
     // console.log(staker)
     if (Number(vote.value) > 0) {
       votes.push({staker: staker._address, id: staker.id, value: Number(vote.value), weight: vote.weight})
@@ -177,10 +220,19 @@ async function getVotesLastEpoch (jobId) {
   return votes
 }
 
-async function getVotingEvents (jobId) {
-  let blockNumber = await web3.eth.getBlockNumber()
+async function getVotingEvents (jobId, provider) {
+  let web3Provider = web3Geth
+  let providerStakeManager = gethStakeManager
+  let providerVoteManager = gethVoteManager
+  if (isInfura(provider)) {
+    web3Provider = web3
+    providerStakeManager = stakeManager
+    providerVoteManager = voteManager
+  }
+ 
+  let blockNumber = await web3Provider.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
-  let events = await voteManager.getPastEvents('allEvents', {
+  let events = await providerVoteManager.getPastEvents('allEvents', {
     fromBlock: Math.max(0, Number(blockNumber) - 1000),
     toBlock: 'latest'
   })
@@ -190,7 +242,7 @@ async function getVotingEvents (jobId) {
   let staker
   let timestamp
   for (let i = 0; i < events.length; i++) {
-    staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    staker = (await providerStakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
     timestamp = events[i].returnValues.timestamp
     if (events[i].event === 'Committed') {
       value = events[i].returnValues.commitment
@@ -208,10 +260,17 @@ async function getVotingEvents (jobId) {
   return res
 }
 
-async function getStakingEvents () {
-  let blockNumber = await web3.eth.getBlockNumber()
+async function getStakingEvents (provider) {
+  let web3Provider = web3Geth
+  let manager = gethStakeManager
+  if (isInfura(provider)) {
+    web3Provider = web3
+    manager = stakeManager
+  }
+
+  let blockNumber = await web3Provider.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
-  let events = await stakeManager.getPastEvents('allEvents', {
+  let events = await manager.getPastEvents('allEvents', {
     fromBlock: Math.max(0, Number(blockNumber) - 1000),
     // fromBlock: 0,
     toBlock: 'latest'
@@ -229,7 +288,7 @@ async function getStakingEvents () {
   for (let i = 0; i < events.length; i++) {
     if (events[i].event === 'WriterAdded' || events[i].event === 'StakeGettingRewardChange') continue
     if (events[i].returnValues.stakerId !== undefined) {
-      staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+      staker = (await manager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
     }
     let data = events[i].returnValues
     if (events[i].event === 'StakeChange') {
@@ -335,10 +394,19 @@ async function getPoolChanges () {
   return res
 }
 
-async function getBlockEvents () {
-  let blockNumber = await web3.eth.getBlockNumber()
-  // let epoch = Number(await getEpoch()) - 1
-  let events = await blockManager.getPastEvents('allEvents', {
+async function getBlockEvents (provider) {
+  let web3Provider = web3Geth
+  let providerBlockManager = gethBlockManager
+  let providerStakeManager = gethStakeManager
+  if (isInfura(provider)) {
+    web3Provider = web3
+    providerBlockManager = blockManager
+    providerStakeManager = stakeManager
+  }
+
+  let blockNumber = await web3Provider.eth.getBlockNumber()
+  let epoch = Number(await getEpoch(provider)) - 1
+  let events = await providerBlockManager.getPastEvents('allEvents', {
     fromBlock: Math.max(0, Number(blockNumber) - 1000),
     toBlock: 'latest'
   })
@@ -359,7 +427,7 @@ async function getBlockEvents () {
   for (let i = 0; i < events.length; i++) {
     if (events[i].event === 'WriterAdded' || events[i].event === 'DebugUint256') continue
     // console.log(events[i])
-    staker = (await stakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
+    staker = (await providerStakeManager.methods.getStaker(events[i].returnValues.stakerId).call())[1]
     let data = events[i].returnValues
     if (events[i].event === 'Proposed') {
       res.push({epoch: data.epoch,
@@ -388,10 +456,17 @@ async function getBlockEvents () {
   return res
 }
 
-async function getJobEvents () {
-  let blockNumber = await web3.eth.getBlockNumber()
+async function getJobEvents (provider) {
+  let web3Provider = web3Geth
+  let manager = gethJobManager
+  if (isInfura(provider)) {
+    web3Provider = web3
+    manager = jobManager
+  }
+
+  let blockNumber = await web3Provider.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
-  let events = await jobManager.getPastEvents('allEvents', {
+  let events = await manager.getPastEvents('allEvents', {
     fromBlock: Math.max(0, Number(blockNumber) - 1000),
     toBlock: 'latest'
   })
@@ -559,8 +634,9 @@ async function dispute (account) {
 async function getState () {
   return Number(await stateManager.methods.getState().call())
 }
-async function getEpoch () {
-  return Number(await stateManager.methods.getEpoch().call())
+async function getEpoch (provider) {
+  let manager = isInfura(provider) ? stateManager : gethStateManager
+  return Number(await manager.methods.getEpoch().call())
 }
 
 async function getStakerId (address) {

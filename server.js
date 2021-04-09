@@ -21,7 +21,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/job/:jobId', async function (req, res) {
-  result = await api.getJobValues(req.params.jobId)
+  const { provider } = req.query
+  result = await api.getJobValues(req.params.jobId, provider)
   // console.log('wut', result)
   res2 = {}
   for (let i = 0; i < result.length; i++) {
@@ -41,7 +42,8 @@ app.get('/activeJobs/', async function (req, res) {
   res.json({'message': result})
 })
 app.get('/jobs/', async function (req, res) {
-  result = await api.getJobs()
+  const { provider } = req.query
+  result = await api.getJobs(provider)
   res.json({'message': result})
 })
 
@@ -61,35 +63,41 @@ app.post('/job/', async function (req, res) {
 })
 
 app.get('/votes/:jobId/', async function (req, res) {
-  result = await api.getVotesLastEpoch(req.params.jobId)
+  const { provider } = req.query
+  result = await api.getVotesLastEpoch(req.params.jobId, provider)
   res.json({'message': result})
 })
 
 app.get('/voteEvents/:jobId/', async function (req, res) {
-  result = await api.getVotingEvents(req.params.jobId)
+  const { provider } = req.query
+  result = await api.getVotingEvents(req.params.jobId, provider)
   // console.log(result)
   res.json({'message': result})
 })
 
 app.get('/voteEvents/', async function (req, res) {
-  result = await api.getVotingEvents()
+  const { provider } = req.query
+  result = await api.getVotingEvents(null, provider)
   // console.log(result)
   res.json({'message': result})
 })
 
 app.get('/jobEvents/', async function (req, res) {
-  result = await api.getJobEvents()
+  const { provider } = req.query
+  result = await api.getJobEvents(provider)
   // console.log(result)
   res.json({'message': result})
 })
 app.get('/blockEvents/', async function (req, res) {
-  result = await api.getBlockEvents()
+  const { provider } = req.query
+  result = await api.getBlockEvents(provider)
   // console.log(result)
   res.json({'message': result})
 })
 
 app.get('/stakingEvents/', async function (req, res) {
-  result = await api.getStakingEvents()
+  const { provider } = req.query
+  result = await api.getStakingEvents(provider)
   // console.log(result)
   res.json({'message': result})
 })
@@ -101,7 +109,8 @@ app.get('/stakingEvents/', async function (req, res) {
 // })
 
 app.get('/epoch/', async function (req, res) {
-  result = await api.getEpoch()
+  const { provider } = req.query
+  result  = await api.getEpoch(provider)
   res.json({'message': result})
 })
 app.get('/poolChanges/', async function (req, res) {
