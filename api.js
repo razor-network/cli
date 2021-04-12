@@ -33,36 +33,36 @@ let simpleTokenAbi = simpleTokenBuild['abi']
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 
 async function login (address, password) {
   await web3.eth.accounts.wallet.create(0, randomHex(32))
