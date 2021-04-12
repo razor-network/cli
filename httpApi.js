@@ -33,53 +33,53 @@ let randomBuild = require('./build/contracts/Random.json')
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 
 // Infura
 let infuraStateManager = new web3Infura.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000}) 
+  gasPrice: 10000000000}) 
 let infuraStakeManager = new web3Infura.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let infuraJobManager = new web3Infura.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let infuraVoteManager = new web3Infura.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 let infuraBlockManager = new web3Infura.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 
 const isInfura = (provider) => provider === 'infura'
 
@@ -89,7 +89,7 @@ let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, tokenAddress,
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
-  gasPrice: 6000000000})
+  gasPrice: 10000000000})
 
 
 
