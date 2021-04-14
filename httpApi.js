@@ -8,10 +8,10 @@ let axios = require('axios')
 const TOTAL_SUPPLY = 1000000000
 
 let infuraKey = config.infuraKey
-let provider = config.httpProvider
+let provider = config.geth.httpProvider
 let networkid = config.networkid
 let numBlocks = config.numBlocks
-let gethHttpProvider = config.geth.httpProvider
+let infuraHttpProvider = config.infura.httpProvider
 // let provider = 'http://35.188.201.171:8545'
 
 // let provider = 'https://rinkeby.infura.io/v3/' + infuraKey
@@ -19,7 +19,7 @@ let gethHttpProvider = config.geth.httpProvider
 // let networkid = '420' // testnet
 // let networkid = '4' // rinkeby
 let web3 = new Web3(provider, null, {})
-let web3Geth = new Web3(gethHttpProvider, null, {})
+let web3Infura = new Web3(infuraHttpProvider, null, {})
 
 let merkle = require('@razor-network/merkle')
 let stakeManagerBuild = require('./build/contracts/StakeManager.json')
@@ -32,54 +32,54 @@ let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
 let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
+    gas: 8000000,
+  gasPrice: 10000000000})
 let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
+    gas: 8000000,
+  gasPrice: 10000000000})
 let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
+    gas: 8000000,
+  gasPrice: 10000000000})
 let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
+    gas: 8000000,
+  gasPrice: 10000000000})
 let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
+    gas: 8000000,
+  gasPrice: 10000000000})
 let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
+    gas: 8000000,
+  gasPrice: 10000000000})
 let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
+    gas: 8000000,
+  gasPrice: 10000000000})
 
-// Geth
-let gethStateManager = new web3Geth.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
+// Infura
+let infuraStateManager = new web3Infura.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000}) 
-let gethStakeManager = new web3Geth.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
+    gas: 8000000,
+  gasPrice: 10000000000}) 
+let infuraStakeManager = new web3Infura.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
-let gethJobManager = new web3Geth.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
+    gas: 8000000,
+  gasPrice: 10000000000})
+let infuraJobManager = new web3Infura.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
-let gethVoteManager = new web3Geth.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
+    gas: 8000000,
+  gasPrice: 10000000000})
+let infuraVoteManager = new web3Infura.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
-let gethBlockManager = new web3Geth.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
+    gas: 8000000,
+  gasPrice: 10000000000})
+let infuraBlockManager = new web3Infura.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
   {transactionConfirmationBlocks: 1,
-    gas: 5000000,
-  gasPrice: 4000000000})
+    gas: 8000000,
+  gasPrice: 10000000000})
 
 const isInfura = (provider) => provider === 'infura'
 
@@ -88,8 +88,8 @@ let simpleTokenBuild = require('./build/contracts/Razor.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 let simpleToken = new web3.eth.Contract(simpleTokenAbi, tokenAddress,
   {transactionConfirmationBlocks: 1,
-    gas: 500000,
-  gasPrice: 4000000000})
+    gas: 8000000,
+  gasPrice: 10000000000})
 
 
 
@@ -127,7 +127,7 @@ async function getActiveJobs () {
 }
 
 async function getJobs (provider) {
-  let manager = isInfura(provider) ? jobManager : gethJobManager
+  let manager = isInfura(provider) ? infuraJobManager : jobManager
 
   let numJobs = Number(await manager.methods.numJobs().call())
   let job
@@ -171,11 +171,11 @@ async function getStakers () {
 }
 
 async function getJobValues (jobId, provider) {
-  let web3Provider = web3Geth
-  let manager = gethJobManager
+  let web3Provider = web3
+  let manager = jobManager
   if (isInfura(provider)) {
-    web3Provider = web3
-    manager = jobManager
+    web3Provider = web3Infura
+    manager = infuraJobManager
   }
 
   let blockNumber = await web3Provider.eth.getBlockNumber()
@@ -193,13 +193,13 @@ async function getJobValues (jobId, provider) {
 }
 
 async function getVotesLastEpoch (jobId, provider) {
-  let web3Provider = web3Geth
-  let providerStakeManager = gethStakeManager
-  let providerVoteManager = gethVoteManager
+  let web3Provider = web3
+  let providerStakeManager = stakeManager
+  let providerVoteManager = voteManager
   if (isInfura(provider)) {
-    web3Provider = web3
-    providerStakeManager = stakeManager
-    providerVoteManager = voteManager
+    web3Provider = web3Infura
+    providerStakeManager = infuraStakeManager
+    providerVoteManager = infuraVoteManager
   }
   
   let blockNumber = await web3Provider.eth.getBlockNumber()
@@ -221,13 +221,13 @@ async function getVotesLastEpoch (jobId, provider) {
 }
 
 async function getVotingEvents (jobId, provider) {
-  let web3Provider = web3Geth
-  let providerStakeManager = gethStakeManager
-  let providerVoteManager = gethVoteManager
+  let web3Provider = web3
+  let providerStakeManager = stakeManager
+  let providerVoteManager = voteManager
   if (isInfura(provider)) {
-    web3Provider = web3
-    providerStakeManager = stakeManager
-    providerVoteManager = voteManager
+    web3Provider = web3Infura
+    providerStakeManager = infuraStakeManager
+    providerVoteManager = infuraVoteManager
   }
  
   let blockNumber = await web3Provider.eth.getBlockNumber()
@@ -261,11 +261,11 @@ async function getVotingEvents (jobId, provider) {
 }
 
 async function getStakingEvents (provider) {
-  let web3Provider = web3Geth
-  let manager = gethStakeManager
+  let web3Provider = web3
+  let manager = stakeManager
   if (isInfura(provider)) {
-    web3Provider = web3
-    manager = stakeManager
+    web3Provider = web3Infura
+    manager = infuraStakeManager
   }
 
   let blockNumber = await web3Provider.eth.getBlockNumber()
@@ -395,13 +395,13 @@ async function getPoolChanges () {
 }
 
 async function getBlockEvents (provider) {
-  let web3Provider = web3Geth
-  let providerBlockManager = gethBlockManager
-  let providerStakeManager = gethStakeManager
+  let web3Provider = web3
+  let providerBlockManager = blockManager
+  let providerStakeManager = stakeManager
   if (isInfura(provider)) {
-    web3Provider = web3
-    providerBlockManager = blockManager
-    providerStakeManager = stakeManager
+    web3Provider = web3Infura
+    providerBlockManager = infuraBlockManager
+    providerStakeManager = infuraStakeManager
   }
 
   let blockNumber = await web3Provider.eth.getBlockNumber()
@@ -457,11 +457,11 @@ async function getBlockEvents (provider) {
 }
 
 async function getJobEvents (provider) {
-  let web3Provider = web3Geth
-  let manager = gethJobManager
+  let web3Provider = web3
+  let manager = jobManager
   if (isInfura(provider)) {
-    web3Provider = web3
-    manager = jobManager
+    web3Provider = web3Infura
+    manager = infuraJobManager
   }
 
   let blockNumber = await web3Provider.eth.getBlockNumber()
@@ -635,7 +635,7 @@ async function getState () {
   return Number(await stateManager.methods.getState().call())
 }
 async function getEpoch (provider) {
-  let manager = isInfura(provider) ? stateManager : gethStateManager
+  let manager = isInfura(provider) ? infuraStateManager : stateManager
   return Number(await manager.methods.getEpoch().call())
 }
 
