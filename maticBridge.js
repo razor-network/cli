@@ -31,7 +31,7 @@ async function setResult(i) {
 
     var rawTx = {
         from: web3.eth.accounts.wallet[0].address,
-        to: 0x2D50A444774EB4876e8e021E27125D0Aa91A7C7F,
+        to: 0xBeB35335472FE13375a653e3eB27853a9Df319c0,
         gas: 80000,
         data: dataTx
     }
@@ -51,7 +51,7 @@ async function setJob(i) {
 
     var rawTx = {
         from: web3.eth.accounts.wallet[0].address,
-        to: 0x2D50A444774EB4876e8e021E27125D0Aa91A7C7F,
+        to: 0xBeB35335472FE13375a653e3eB27853a9Df319c0,
         gas: 2000000,
         data: dataTx
     }

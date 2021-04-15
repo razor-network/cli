@@ -31,8 +31,7 @@ let delegatorBuild = require('./build/contracts/Delegator.json')
 let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
 let simpleTokenBuild = require('./build/contracts/Razor.json')
-
-const tokenAddress = fs.readFileSync('.tokenAddress').toString().trim()
+let addresses = require('./build/contracts/addresses.json')
 
 
 const getProviderURL = (provider = "geth") => {
@@ -61,35 +60,35 @@ const options = {
 // Provider wrapper
 const getStakeManager = (provider) => {
   const web3 = getWeb3Instance(provider);
-  return new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address, options)
+  return new web3.eth.Contract(stakeManagerBuild['abi'], addresses["StakeManager"], options)
 }
 const getStateManager = (provider) => {
   const web3 = getWeb3Instance(provider);
-  return new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address, options)
+  return new web3.eth.Contract(stateManagerBuild['abi'], addresses["StateManager"], options)
 }
 const getBlockManager = (provider) => {
   const web3 = getWeb3Instance(provider);
-  return new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address, options)
+  return new web3.eth.Contract(blockManagerBuild['abi'], addresses["BlockManager"], options)
 }
 const getVoteManager = (provider) => {
   const web3 = getWeb3Instance(provider);
-  return new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address, options)
+  return new web3.eth.Contract(voteManagerBuild['abi'], addresses["VoteManager"], options)
 }
 const getJobManager = (provider) => {
   const web3 = getWeb3Instance(provider);
-  return new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address, options)
+  return new web3.eth.Contract(jobManagerBuild['abi'], addresses["JobManager"], options)
 }
 const getConstants = (provider) => {
   const web3 = getWeb3Instance(provider);
-  return new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address, options)
+  return new web3.eth.Contract(constantsBuild['abi'], addresses["Constants"], options)
 }
 const getRandom = (provider) => {
   const web3 = getWeb3Instance(provider);
-  return new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address, options)
+  return new web3.eth.Contract(randomBuild['abi'], addresses["Random"], options)
 }
 const getSimpleToken = (provider) => {
   const web3 = getWeb3Instance(provider);
-  return new web3.eth.Contract(simpleTokenBuild['abi'], tokenAddress, options)
+  return new web3.eth.Contract(simpleTokenBuild['abi'], addresses["SchellingCoin"], options)
 }
 
 async function login (address, password) {
