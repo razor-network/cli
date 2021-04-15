@@ -30,53 +30,56 @@ let jobManagerBuild = require('./build/contracts/JobManager.json')
 let delegatorBuild = require('./build/contracts/Delegator.json')
 let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
-let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
+let addresses = require('./build/contracts/addresses.json')
+
+
+let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], addresses["StakeManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
+let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], addresses["StateManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
+let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], addresses["BlockManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
+let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], addresses["VoteManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
+let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], addresses["JobManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address,
+let constants = new web3.eth.Contract(constantsBuild['abi'], addresses["Constants"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
+let random = new web3.eth.Contract(randomBuild['abi'], addresses["Random"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
 
 // Infura
-let infuraStateManager = new web3Infura.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
+let infuraStateManager = new web3Infura.eth.Contract(stateManagerBuild['abi'], addresses["StateManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000}) 
-let infuraStakeManager = new web3Infura.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
+let infuraStakeManager = new web3Infura.eth.Contract(stakeManagerBuild['abi'], addresses["StakeManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let infuraJobManager = new web3Infura.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
+let infuraJobManager = new web3Infura.eth.Contract(jobManagerBuild['abi'], addresses["JobManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let infuraVoteManager = new web3Infura.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
+let infuraVoteManager = new web3Infura.eth.Contract(voteManagerBuild['abi'], addresses["VoteManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let infuraBlockManager = new web3Infura.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
+let infuraBlockManager = new web3Infura.eth.Contract(blockManagerBuild['abi'], addresses["BlockManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
