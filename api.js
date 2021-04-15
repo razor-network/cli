@@ -26,40 +26,41 @@ let voteManagerBuild = require('./build/contracts/VoteManager.json')
 let jobManagerBuild = require('./build/contracts/JobManager.json')
 let constantsBuild = require('./build/contracts/Constants.json')
 let randomBuild = require('./build/contracts/Random.json')
+let addresses = require('./build/contracts/addresses.json')
 
 let simpleTokenBuild = require('./build/contracts/SchellingCoin.json')
 let simpleTokenAbi = simpleTokenBuild['abi']
 // let numBlocks = 10
-let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], stakeManagerBuild['networks'][networkid].address,
+let stakeManager = new web3.eth.Contract(stakeManagerBuild['abi'], addresses["StakeManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], stateManagerBuild['networks'][networkid].address,
+let stateManager = new web3.eth.Contract(stateManagerBuild['abi'], addresses["StateManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], blockManagerBuild['networks'][networkid].address,
+let blockManager = new web3.eth.Contract(blockManagerBuild['abi'], addresses["BlockManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], voteManagerBuild['networks'][networkid].address,
+let voteManager = new web3.eth.Contract(voteManagerBuild['abi'], addresses["VoteManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], jobManagerBuild['networks'][networkid].address,
+let jobManager = new web3.eth.Contract(jobManagerBuild['abi'], addresses["JobManager"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let constants = new web3.eth.Contract(constantsBuild['abi'], constantsBuild['networks'][networkid].address,
+let constants = new web3.eth.Contract(constantsBuild['abi'], addresses["Constants"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
-let random = new web3.eth.Contract(randomBuild['abi'], randomBuild['networks'][networkid].address,
+let random = new web3.eth.Contract(randomBuild['abi'], addresses["Random"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
 
-let simpleToken = new web3.eth.Contract(simpleTokenAbi, simpleTokenBuild['networks'][networkid].address,
+let simpleToken = new web3.eth.Contract(simpleTokenAbi, addresses["SchellingCoin"],
   {transactionConfirmationBlocks: 1,
     gas: 8000000,
   gasPrice: 10000000000})
