@@ -45,7 +45,7 @@ const getProviderURL = (provider = "geth") => {
   }
 }
 
-const getWeb3Instance = (provider = "geth") => {
+const getWeb3Instance = async (provider = "geth") => {
   const providerURL = getProviderURL(provider);
   return web3 = new Web3(providerURL, null, {});
 }
@@ -58,41 +58,41 @@ const options = {
 
 
 // Provider wrapper
-const getStakeManager = (provider) => {
-  const web3 = getWeb3Instance(provider);
+const getStakeManager = async (provider) => {
+  const web3 = await getWeb3Instance(provider);
   return new web3.eth.Contract(stakeManagerBuild['abi'], addresses["StakeManager"], options)
 }
-const getStateManager = (provider) => {
-  const web3 = getWeb3Instance(provider);
+const getStateManager = async (provider) => {
+  const web3 = await getWeb3Instance(provider);
   return new web3.eth.Contract(stateManagerBuild['abi'], addresses["StateManager"], options)
 }
-const getBlockManager = (provider) => {
-  const web3 = getWeb3Instance(provider);
+const getBlockManager = async (provider) => {
+  const web3 = await getWeb3Instance(provider);
   return new web3.eth.Contract(blockManagerBuild['abi'], addresses["BlockManager"], options)
 }
-const getVoteManager = (provider) => {
-  const web3 = getWeb3Instance(provider);
+const getVoteManager = async (provider) => {
+  const web3 = await getWeb3Instance(provider);
   return new web3.eth.Contract(voteManagerBuild['abi'], addresses["VoteManager"], options)
 }
-const getJobManager = (provider) => {
-  const web3 = getWeb3Instance(provider);
+const getJobManager = async (provider) => {
+  const web3 = await getWeb3Instance(provider);
   return new web3.eth.Contract(jobManagerBuild['abi'], addresses["JobManager"], options)
 }
-const getConstants = (provider) => {
-  const web3 = getWeb3Instance(provider);
+const getConstants = async (provider) => {
+  const web3 = await getWeb3Instance(provider);
   return new web3.eth.Contract(constantsBuild['abi'], addresses["Constants"], options)
 }
-const getRandom = (provider) => {
-  const web3 = getWeb3Instance(provider);
+const getRandom = async (provider) => {
+  const web3 = await getWeb3Instance(provider);
   return new web3.eth.Contract(randomBuild['abi'], addresses["Random"], options)
 }
-const getSimpleToken = (provider) => {
-  const web3 = getWeb3Instance(provider);
+const getSimpleToken = async (provider) => {
+  const web3 = await getWeb3Instance(provider);
   return new web3.eth.Contract(simpleTokenBuild['abi'], addresses["SchellingCoin"], options)
 }
 
 async function login (address, password) {
-  let web3 = getWeb3Instance()
+  let web3 = await getWeb3Instance()
 
   await web3.eth.accounts.wallet.create(0, randomHex(32))
   let rawdata = await fs.readFileSync('keys/' + address + '.json')
@@ -107,8 +107,8 @@ async function login (address, password) {
 }
 
 async function createJob (url, selector, repeat, eth, account) {
-  let web3 = getWeb3Instance()
-  let jobManager = getJobManager()
+  let web3 = await getWeb3Instance()
+  let jobManager = await getJobManager()
 
   let nonce = await web3.eth.getTransactionCount(account, 'pending')
 
@@ -116,8 +116,8 @@ async function createJob (url, selector, repeat, eth, account) {
 }
 
 async function getActiveJobs () {
-  let jobManager = getJobManager()
-  let stateManager = getStateManager()
+  let jobManager = await getJobManager()
+  let stateManager = await getStateManager()
 
   let numJobs = Number(await jobManager.methods.numJobs().call())
   let job
@@ -133,7 +133,7 @@ async function getActiveJobs () {
 }
 
 async function getJobs (provider) {
-  let jobManager = getJobManager(provider)
+  let jobManager = await getJobManager(provider)
 
   let numJobs = Number(await jobManager.methods.numJobs().call())
   let job
@@ -147,27 +147,27 @@ async function getJobs (provider) {
   return jobs
 }
 async function getNumJobs () {
-  let jobManager = getJobManager()
+  let jobManager = await getJobManager()
 
   let numJobs = Number(await jobManager.methods.numJobs().call())
   return numJobs
 }
 async function getResult (id) {
-  let jobManager = getJobManager()
+  let jobManager = await getJobManager()
 
   let result = Number(await jobManager.methods.getResult(id).call())
   return result
 }
 
 async function getJob (id) {
-  let jobManager = getJobManager()
+  let jobManager = await getJobManager()
 
   let result = await jobManager.methods.getJob(id).call()
   return result
 }
 
 async function getStakers () {
-  let stakeManager = getStakeManager()
+  let stakeManager = await getStakeManager()
 
   let numStakers = Number(await stakeManager.methods.getNumStakers().call())
   let res = []
@@ -184,8 +184,8 @@ async function getStakers () {
 }
 
 async function getJobValues (jobId, provider) {
-  let jobManager = getJobManager(provider)
-  let web3 = getWeb3Instance(provider)
+  let jobManager = await getJobManager(provider)
+  let web3 = await getWeb3Instance(provider)
 
   let blockNumber = await web3.eth.getBlockNumber()
 
@@ -202,9 +202,9 @@ async function getJobValues (jobId, provider) {
 }
 
 async function getVotesLastEpoch (jobId, provider) {
-  let web3 = getWeb3Instance(provider)
-  let stakeManager = getStakeManager(provider)
-  let voteManager = getVoteManager(provider)
+  let web3 = await getWeb3Instance(provider)
+  let stakeManager = await getStakeManager(provider)
+  let voteManager = await getVoteManager(provider)
 
   let blockNumber = await web3.eth.getBlockNumber()
   let epoch = Number(await getEpoch(provider)) - 1
@@ -225,9 +225,9 @@ async function getVotesLastEpoch (jobId, provider) {
 }
 
 async function getVotingEvents (jobId, provider) {
-  let web3 = getWeb3Instance(provider)
-  let stakeManager = getStakeManager(provider)
-  let voteManager = getVoteManager(provider)
+  let web3 = await getWeb3Instance(provider)
+  let stakeManager = await getStakeManager(provider)
+  let voteManager = await getVoteManager(provider)
  
   let blockNumber = await web3.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
@@ -260,8 +260,8 @@ async function getVotingEvents (jobId, provider) {
 }
 
 async function getStakingEvents (provider) {
-  let web3 = getWeb3Instance(provider)
-  let stakeManager = getStakeManager(provider)
+  let web3 = await getWeb3Instance(provider)
+  let stakeManager = await getStakeManager(provider)
 
   let blockNumber = await web3.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
@@ -307,8 +307,8 @@ async function getStakingEvents (provider) {
 }
 
 async function getStakerEvents (_address) {
-  let web3 = getWeb3Instance()
-  let stakeManager = getStakeManager()
+  let web3 = await getWeb3Instance()
+  let stakeManager = await getStakeManager()
 
   let blockNumber = await web3.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
@@ -362,8 +362,8 @@ async function getStakerEvents (_address) {
 }
 
 async function getPoolChanges () {
-  let web3 = getWeb3Instance()
-  let stakeManager = getStakeManager()
+  let web3 = await getWeb3Instance()
+  let stakeManager = await getStakeManager()
   
   let blockNumber = await web3.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
@@ -396,9 +396,9 @@ async function getPoolChanges () {
 }
 
 async function getBlockEvents (provider) {
-  let web3 = getWeb3Instance(provider)
-  let blockManager = getBlockManager(provider)
-  let stakeManager = getStakeManager(provider)
+  let web3 = await getWeb3Instance(provider)
+  let blockManager = await getBlockManager(provider)
+  let stakeManager = await getStakeManager(provider)
 
   let blockNumber = await web3.eth.getBlockNumber()
   let epoch = Number(await getEpoch(provider)) - 1
@@ -453,8 +453,8 @@ async function getBlockEvents (provider) {
 }
 
 async function getJobEvents (provider) {
-  let web3 = getWeb3Instance(provider)
-  let jobManager = getJobManager(provider)
+  let web3 = await getWeb3Instance(provider)
+  let jobManager = await getJobManager(provider)
 
   let blockNumber = await web3.eth.getBlockNumber()
   // let epoch = Number(await getEpoch()) - 1
@@ -487,10 +487,10 @@ async function getJobEvents (provider) {
 }
 
 async function commit (votes, secret, account) {
-  let web3 = getWeb3Instance()
-  let stateManager = getStateManager()
-  let stakeManager = getStakeManager()
-  let voteManager = getVoteManager()
+  let web3 = await getWeb3Instance()
+  let stateManager = await getStateManager()
+  let stakeManager = await getStakeManager()
+  let voteManager = await getVoteManager()
   
   if (Number(await stateManager.methods.getState().call()) != 0) {
     throw ('Not commit state')
@@ -514,10 +514,10 @@ async function commit (votes, secret, account) {
 }
 
 async function reveal (votes, secret, commitAccount, account) {
-  let web3 = getWeb3Instance()
-  let stateManager = getStateManager()
-  let stakeManager = getStakeManager()
-  let voteManager = getVoteManager()
+  let web3 = await getWeb3Instance()
+  let stateManager = await getStateManager()
+  let stakeManager = await getStakeManager()
+  let voteManager = await getVoteManager()
 
   if (Number(await stateManager.methods.getState().call()) != 1) {
     throw new Error('Not reveal state')
@@ -554,18 +554,18 @@ async function reveal (votes, secret, commitAccount, account) {
 }
 
 async function getBlock (epoch) {
-  let blockManager = getBlockManager()
+  let blockManager = await getBlockManager()
 
   let block = await blockManager.methods.blocks(epoch).call()
   return (block)
 }
 
 async function propose (account) {
-  let web3 = getWeb3Instance()
-  let stateManager = getStateManager()
-  let stakeManager = getStakeManager()
-  let blockManager = getBlockManager()
-  let random = getRandom()
+  let web3 = await getWeb3Instance()
+  let stateManager = await getStateManager()
+  let stakeManager = await getStakeManager()
+  let blockManager = await getBlockManager()
+  let random = await getRandom()
 
   if (Number(await stateManager.methods.getState().call()) != 2) {
     throw ('Not propose state')
@@ -626,9 +626,9 @@ async function propose (account) {
 
 // automatically calculate alternative block and submit
 async function dispute (account) {
-  let web3 = getWeb3Instance()
-  let stateManager = getStateManager()
-  let blockManager = getBlockManager()
+  let web3 = await getWeb3Instance()
+  let stateManager = await getStateManager()
+  let blockManager = await getBlockManager()
 
   let epoch = Number(await stateManager.methods.getEpoch().call())
   let res = await getSortedVotes()
@@ -646,26 +646,26 @@ async function dispute (account) {
 }
 
 async function getState () {
-  let stateManager = getStateManager()
+  let stateManager = await getStateManager()
   return Number(await stateManager.methods.getState().call())
 }
 async function getEpoch (provider) {
-  let stateManager = getStateManager(provider)
+  let stateManager = await getStateManager(provider)
   return Number(await stateManager.methods.getEpoch().call())
 }
 
 async function getStakerId (address) {
-  let stakeManager = getStakeManager()
+  let stakeManager = await getStakeManager()
   return Number(await stakeManager.methods.stakerIds(address).call())
 }
 
 async function getMinStake () {
-  let constants = getConstants()
+  let constants = await getConstants()
   return Number((await constants.methods.minStake().call()))
 }
 
 async function getStaker (stakerId) {
-  let stakeManager = getStakeManager()
+  let stakeManager = await getStakeManager()
   return (await stakeManager.methods.stakers(stakerId).call())
 }
 
@@ -686,7 +686,7 @@ async function getBiggestStakeAndId (stakeManager) {
 }
 
 async function prng (seed, max, blockHashes) {
-  let web3 = getWeb3Instance()
+  let web3 = await getWeb3Instance()
 
   let hashh = await prngHash(seed, blockHashes)
   let sum = web3.utils.toBN(hashh)
@@ -696,7 +696,7 @@ async function prng (seed, max, blockHashes) {
 
 // pseudo random hash generator based on block hashes.
 async function prngHash (seed, blockHashes) {
-  let web3 = getWeb3Instance()
+  let web3 = await getWeb3Instance()
   // let sum = blockHashes(numBlocks)
   let sum = await web3.utils.soliditySha3(blockHashes, seed)
   // console.log('prngHash', sum)
@@ -715,7 +715,7 @@ async function getIteration (random, biggestStake, stake, stakerId, numStakers, 
 }
 
 async function isElectedProposer (random, iteration, biggestStake, stake, stakerId, numStakers, blockHashes) {
-  let web3 = getWeb3Instance()
+  let web3 = await getWeb3Instance()
   // rand = 0 -> totalStake-1
   // add +1 since prng returns 0 to max-1 and staker start from 1
   let seed = await web3.utils.soliditySha3(iteration)
@@ -730,8 +730,8 @@ async function isElectedProposer (random, iteration, biggestStake, stake, staker
 }
 
 async function makeBlock () {
-  let stateManager = getStateManager()
-  let voteManager = getVoteManager()
+  let stateManager = await getStateManager()
+  let voteManager = await getVoteManager()
 
   let medians = []
   let jobs = await getActiveJobs()
@@ -760,9 +760,9 @@ async function makeBlock () {
 }
 
 async function getSortedVotes (assetId) {
-  let stateManager = getStateManager()
-  let stakeManager = getStakeManager()
-  let voteManager = getVoteManager()
+  let stateManager = await getStateManager()
+  let stakeManager = await getStakeManager()
+  let voteManager = await getVoteManager()
   let epoch = Number(await stateManager.methods.getEpoch().call())
 
   let numStakers = Number(await stakeManager.methods.numStakers().call())
@@ -802,25 +802,25 @@ async function getBiggestStakerId (stakeManager) {
 }
 
 async function getStake (stakerId) {
-  let stakeManager = getStakeManager()
+  let stakeManager = await getStakeManager()
   return String((await stakeManager.methods.stakers(stakerId).call()).stake)
 }
 
 async function getProposedBlockMedians (epoch, proposedBlock) {
-  let blockManager = getBlockManager()
+  let blockManager = await getBlockManager()
   return (await blockManager.methods.getProposedBlockMedians(epoch, proposedBlock).call())
 }
 async function getProposedBlock (epoch, proposedBlock) {
-  let blockManager = getBlockManager()
+  let blockManager = await getBlockManager()
   return (await blockManager.methods.getProposedBlock(epoch, proposedBlock).call())
 }
 async function getNumProposedBlocks (epoch) {
-  let blockManager = getBlockManager()
+  let blockManager = await getBlockManager()
   return (await blockManager.methods.getNumProposedBlocks(epoch).call())
 }
 
 async function getSchBalance (address) {
-  let simpleToken = getSimpleToken()
+  let simpleToken = await getSimpleToken()
   return String(await simpleToken.methods.balanceOf(address).call())
 }
 
@@ -846,12 +846,12 @@ async function getCirculatingSupply() {
 }
 
 async function getEthBalance (address) {
-  let web3 = getWeb3Instance()
+  let web3 = await getWeb3Instance()
   return String(await web3.eth.getBalance(address))
 }
 
 async function sign (input, account) {
-  let web3 = getWeb3Instance()
+  let web3 = await getWeb3Instance()
   return await web3.eth.sign(input, account)
 }
 module.exports = {
