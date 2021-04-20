@@ -15,14 +15,19 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
 
+// middleware for parsing provider form req query
+const providerMiddleware = (req, res, next) => {
+  req.provider = req.query.provider
+  next()
+}
+
 // define a simple route
 app.get('/', (req, res) => {
   res.json({'message': 'Welcome'})
 })
 
-app.get('/job/:jobId', async function (req, res) {
-  const { provider } = req.query
-  result = await api.getJobValues(req.params.jobId, provider)
+app.get('/job/:jobId', providerMiddleware, async function (req, res) {
+  result = await api.getJobValues(req.params.jobId, req.provider)
   // console.log('wut', result)
   res2 = {}
   for (let i = 0; i < result.length; i++) {
@@ -41,9 +46,8 @@ app.get('/activeJobs/', async function (req, res) {
   result = await api.getActiveJobs()
   res.json({'message': result})
 })
-app.get('/jobs/', async function (req, res) {
-  const { provider } = req.query
-  result = await api.getJobs(provider)
+app.get('/jobs/', providerMiddleware, async function (req, res) {
+  result = await api.getJobs(req.provider)
   res.json({'message': result})
 })
 
@@ -62,42 +66,36 @@ app.post('/job/', async function (req, res) {
   res.json({'message': result})
 })
 
-app.get('/votes/:jobId/', async function (req, res) {
-  const { provider } = req.query
-  result = await api.getVotesLastEpoch(req.params.jobId, provider)
+app.get('/votes/:jobId/', providerMiddleware, async function (req, res) {
+  result = await api.getVotesLastEpoch(req.params.jobId, req.provider)
   res.json({'message': result})
 })
 
-app.get('/voteEvents/:jobId/', async function (req, res) {
-  const { provider } = req.query
-  result = await api.getVotingEvents(req.params.jobId, provider)
+app.get('/voteEvents/:jobId/', providerMiddleware, async function (req, res) {
+  result = await api.getVotingEvents(req.params.jobId, req.provider)
   // console.log(result)
   res.json({'message': result})
 })
 
-app.get('/voteEvents/', async function (req, res) {
-  const { provider } = req.query
-  result = await api.getVotingEvents(null, provider)
+app.get('/voteEvents/', providerMiddleware, async function (req, res) {
+  result = await api.getVotingEvents(null, req.provider)
   // console.log(result)
   res.json({'message': result})
 })
 
-app.get('/jobEvents/', async function (req, res) {
-  const { provider } = req.query
-  result = await api.getJobEvents(provider)
+app.get('/jobEvents/', providerMiddleware, async function (req, res) {
+  result = await api.getJobEvents(req.provider)
   // console.log(result)
   res.json({'message': result})
 })
-app.get('/blockEvents/', async function (req, res) {
-  const { provider } = req.query
-  result = await api.getBlockEvents(provider)
+app.get('/blockEvents/', providerMiddleware, async function (req, res) {
+  result = await api.getBlockEvents(req.provider)
   // console.log(result)
   res.json({'message': result})
 })
 
-app.get('/stakingEvents/', async function (req, res) {
-  const { provider } = req.query
-  result = await api.getStakingEvents(provider)
+app.get('/stakingEvents/', providerMiddleware, async function (req, res) {
+  result = await api.getStakingEvents(req.provider)
   // console.log(result)
   res.json({'message': result})
 })
@@ -108,9 +106,8 @@ app.get('/stakingEvents/', async function (req, res) {
 //   res.json({'message': result})
 // })
 
-app.get('/epoch/', async function (req, res) {
-  const { provider } = req.query
-  result  = await api.getEpoch(provider)
+app.get('/epoch/', providerMiddleware, async function (req, res) {
+  result  = await api.getEpoch(req.provider)
   res.json({'message': result})
 })
 app.get('/poolChanges/', async function (req, res) {
