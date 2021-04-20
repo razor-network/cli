@@ -53,7 +53,7 @@ const getWeb3Instance = async (provider = "geth") => {
 const options = {
   transactionConfirmationBlocks: 1,
   gas: 8000000,
-  gasPrice: 10000000000
+  gasPrice: 20000000000
 }
 
 
