@@ -13,6 +13,7 @@ let networkid = config.networkid
 let numBlocks = config.numBlocks
 let gethProvider = config.geth.httpProvider
 let infuraHttpProvider = config.infura.httpProvider
+const poktHttpProvider = config.pokt.httpProvider
 // let provider = 'http://35.188.201.171:8545'
 
 // let provider = 'https://rinkeby.infura.io/v3/' + infuraKey
@@ -40,6 +41,8 @@ const getProviderURL = (provider = "geth") => {
       return gethProvider;
     case "infura":
       return infuraHttpProvider;
+    case "pokt":
+      return poktHttpProvider;
     default:
       return gethProvider;
   }
