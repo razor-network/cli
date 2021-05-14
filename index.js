@@ -177,9 +177,9 @@ async function handleBlock (blockHeader, account) {
 
     let balance = Number(await api.getStake(yourId)) / 1e18
     let ethBalance = Number(await web3.eth.getBalance(account)) / 1e18
-    console.log('🔲 Block'.red, String(blockHeader.number).red, '⌛ Epoch'.yellow, String(epoch).yellow, '⏱️  State'.green, String(state).green, '📒', String(account).blue, '👤 Staker ID'.brightBlue
-      , String(yourId).brightBlue
-      , '💰Stake'.cyan, String(balance).cyan, 'Ξ'.magenta, String(ethBalance).magenta)
+    console.log('🔲 Block', String(blockHeader.number), '⌛ Epoch', String(epoch), '⏱️  State', String(state), '📒', String(account), '👤 Staker ID'
+      , String(yourId)
+      , '💰Stake', String(balance), 'Ξ', String(ethBalance))
     if (balance < (await api.getMinStake()) / 1e18) throw new Error('Stake is below minimum required. Cannot vote.')
 
     if (state === 0) {
