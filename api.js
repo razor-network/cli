@@ -19,49 +19,49 @@ let numBlocks = config.numBlocks;
 let web3 = new Web3(provider, null, {});
 
 let merkle = require("@razor-network/merkle");
-let stakeManagerBuild = require("./build/contracts/StakeManager.json");
-let stateManagerBuild = require("./build/contracts/StateManager.json");
-let blockManagerBuild = require("./build/contracts/BlockManager.json");
-let voteManagerBuild = require("./build/contracts/VoteManager.json");
-let jobManagerBuild = require("./build/contracts/JobManager.json");
-let constantsBuild = require("./build/contracts/Constants.json");
-let randomBuild = require("./build/contracts/Random.json");
-let addresses = require("./build/contracts/addresses.json");
+let stakeManagerAbi = require("@razor-network/contracts/abi/StakeManager.json");
+let stateManagerAbi = require("@razor-network/contracts/abi/StateManager.json");
+let blockManagerAbi = require("@razor-network/contracts/abi/BlockManager.json");
+let voteManagerAbi = require("@razor-network/contracts/abi/VoteManager.json");
+let jobManagerAbi = require("@razor-network/contracts/abi/JobManager.json");
+let constantsAbi = require("@razor-network/contracts/abi/Constants.json");
+let randomAbi = require("@razor-network/contracts/abi/Random.json");
+let addresses = require("./addresses.json");
 
-let simpleTokenBuild = require("./build/contracts/SchellingCoin.json");
-let simpleTokenAbi = simpleTokenBuild["abi"];
+let simpleTokenAbi = require("@razor-network/contracts/abi/SchellingCoin.json");
+// let simpleTokenAbi = simpleTokenBuild["abi"];
 // let numBlocks = 10
 let stakeManager = new web3.eth.Contract(
-  stakeManagerBuild["abi"],
+  stakeManagerAbi,
   addresses["StakeManager"],
   { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
 );
 let stateManager = new web3.eth.Contract(
-  stateManagerBuild["abi"],
+  stateManagerAbi,
   addresses["StateManager"],
   { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
 );
 let blockManager = new web3.eth.Contract(
-  blockManagerBuild["abi"],
+  blockManagerAbi,
   addresses["BlockManager"],
   { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
 );
 let voteManager = new web3.eth.Contract(
-  voteManagerBuild["abi"],
+  voteManagerAbi,
   addresses["VoteManager"],
   { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
 );
 let jobManager = new web3.eth.Contract(
-  jobManagerBuild["abi"],
+  jobManagerAbi,
   addresses["JobManager"],
   { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
 );
 let constants = new web3.eth.Contract(
-  constantsBuild["abi"],
+  constantsAbi,
   addresses["Constants"],
   { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
 );
-let random = new web3.eth.Contract(randomBuild["abi"], addresses["Random"], {
+let random = new web3.eth.Contract(randomAbi, addresses["Random"], {
   transactionConfirmationBlocks: 1,
   gas: 8000000,
   gasPrice: 300000000000,

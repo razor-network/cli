@@ -23,16 +23,16 @@ const poktHttpProvider = config.pokt.httpProvider
 // let web3 = new Web3(provider, null, {})
 
 let merkle = require('@razor-network/merkle')
-let stakeManagerBuild = require('./build/contracts/StakeManager.json')
-let stateManagerBuild = require('./build/contracts/StateManager.json')
-let blockManagerBuild = require('./build/contracts/BlockManager.json')
-let voteManagerBuild = require('./build/contracts/VoteManager.json')
-let jobManagerBuild = require('./build/contracts/JobManager.json')
-let delegatorBuild = require('./build/contracts/Delegator.json')
-let constantsBuild = require('./build/contracts/Constants.json')
-let randomBuild = require('./build/contracts/Random.json')
-let simpleTokenBuild = require('./build/contracts/Razor.json')
-let addresses = require('./build/contracts/addresses.json')
+let stakeManagerAbi = require('@razor-network/contracts/abi/StakeManager.json')
+let stateManagerAbi = require('@razor-network/contracts/abi/StateManager.json')
+let blockManagerAbi = require('@razor-network/contracts/abi/BlockManager.json')
+let voteManagerAbi = require('@razor-network/contracts/abi/VoteManager.json')
+let jobManagerAbi = require('@razor-network/contracts/abi/JobManager.json')
+let delegatorAbi = require('@razor-network/contracts/abi/Delegator.json')
+let constantsAbi = require('@razor-network/contracts/abi/Constants.json')
+let randomAbi = require('@razor-network/contracts/abi/Random.json')
+let simpleTokenAbi = require('@razor-network/contracts/abi/SchellingCoin.json')
+let addresses = require('./addresses.json')
 
 
 const getProviderURL = (provider = "geth") => {
@@ -63,35 +63,35 @@ const options = {
 // Provider wrapper
 const getStakeManager = async (provider) => {
   const web3 = await getWeb3Instance(provider);
-  return new web3.eth.Contract(stakeManagerBuild['abi'], addresses["StakeManager"], options)
+  return new web3.eth.Contract(stakeManagerAbi, addresses["StakeManager"], options)
 }
 const getStateManager = async (provider) => {
   const web3 = await getWeb3Instance(provider);
-  return new web3.eth.Contract(stateManagerBuild['abi'], addresses["StateManager"], options)
+  return new web3.eth.Contract(stateManagerAbi, addresses["StateManager"], options)
 }
 const getBlockManager = async (provider) => {
   const web3 = await getWeb3Instance(provider);
-  return new web3.eth.Contract(blockManagerBuild['abi'], addresses["BlockManager"], options)
+  return new web3.eth.Contract(blockManagerAbi, addresses["BlockManager"], options)
 }
 const getVoteManager = async (provider) => {
   const web3 = await getWeb3Instance(provider);
-  return new web3.eth.Contract(voteManagerBuild['abi'], addresses["VoteManager"], options)
+  return new web3.eth.Contract(voteManagerAbi, addresses["VoteManager"], options)
 }
 const getJobManager = async (provider) => {
   const web3 = await getWeb3Instance(provider);
-  return new web3.eth.Contract(jobManagerBuild['abi'], addresses["JobManager"], options)
+  return new web3.eth.Contract(jobManagerAbi, addresses["JobManager"], options)
 }
 const getConstants = async (provider) => {
   const web3 = await getWeb3Instance(provider);
-  return new web3.eth.Contract(constantsBuild['abi'], addresses["Constants"], options)
+  return new web3.eth.Contract(constantsAbi, addresses["Constants"], options)
 }
 const getRandom = async (provider) => {
   const web3 = await getWeb3Instance(provider);
-  return new web3.eth.Contract(randomBuild['abi'], addresses["Random"], options)
+  return new web3.eth.Contract(randomAbi, addresses["Random"], options)
 }
 const getSimpleToken = async (provider) => {
   const web3 = await getWeb3Instance(provider);
-  return new web3.eth.Contract(simpleTokenBuild['abi'], addresses["SchellingCoin"], options)
+  return new web3.eth.Contract(simpleTokenAbi, addresses["SchellingCoin"], options)
 }
 
 async function login (address, password) {
