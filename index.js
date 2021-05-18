@@ -20,6 +20,7 @@ let lastProposal = -1
 let lastElection = -1
 let lastVerification = -1
 let data = []
+let prevBlockNumber = undefined
 
 console.log('web3 version', web3.version)
 
@@ -155,16 +156,18 @@ program.parse(process.argv)
 let isWatchingEvents = false
 
 async function main (account) {
-  web3.eth.subscribe('newBlockHeaders', async function (error, result) {
-    if (!error) {
-      return
+  setInterval(async () => {
+    try {
+      const blockNumber = await web3.eth.getBlockNumber();
+      if (prevBlockNumber !== blockNumber) {
+        prevBlockNumber = blockNumber
+        handleBlock({ number: blockNumber }, account);
+      }
+    } catch (error) {
+      console.error(error);
     }
-    console.error(error)
-  })
-    .on('data', function (blockHeader) {
-      handleBlock(blockHeader, account)
-    })
-    .on('error', console.error)
+  }, 1000)
+  
   console.log('subscribed')
   isWatchingEvents = true
 }
