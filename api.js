@@ -464,7 +464,7 @@ async function getState() {
 async function getDelayedState() {
   let blockNumber = await web3.eth.getBlockNumber();
   // its too late to make the tx
-  if (blockNumber % 10 > 7 || blockNumber % 10 < 1) return -1;
+  if (blockNumber % 10 > 4 || blockNumber % 10 < 1) return -1;
   let state = Math.floor(blockNumber / 10);
 
   state = state % 4;
