@@ -34,43 +34,43 @@ let simpleTokenAbi = simpleTokenBuild["abi"];
 let stakeManager = new web3.eth.Contract(
   stakeManagerBuild["abi"],
   addresses["StakeManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 3500000000000 }
 );
 let stateManager = new web3.eth.Contract(
   stateManagerBuild["abi"],
   addresses["StateManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 3500000000000 }
 );
 let blockManager = new web3.eth.Contract(
   blockManagerBuild["abi"],
   addresses["BlockManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 3500000000000 }
 );
 let voteManager = new web3.eth.Contract(
   voteManagerBuild["abi"],
   addresses["VoteManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 3500000000000 }
 );
 let jobManager = new web3.eth.Contract(
   jobManagerBuild["abi"],
   addresses["JobManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 3500000000000 }
 );
 let constants = new web3.eth.Contract(
   constantsBuild["abi"],
   addresses["Constants"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 3500000000000 }
 );
 let random = new web3.eth.Contract(randomBuild["abi"], addresses["Random"], {
   transactionConfirmationBlocks: 1,
   gas: 8000000,
-  gasPrice: 300000000000,
+  gasPrice: 3500000000000,
 });
 
 let simpleToken = new web3.eth.Contract(
   simpleTokenAbi,
   addresses["SchellingCoin"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 3500000000000 }
 );
 
 async function login(address, password) {
@@ -464,7 +464,7 @@ async function getState() {
 async function getDelayedState() {
   let blockNumber = await web3.eth.getBlockNumber();
   // its too late to make the tx
-  if (blockNumber % 10 > 7 || blockNumber % 10 < 1) return -1;
+  if (blockNumber % 10 > 4 || blockNumber % 10 < 1) return -1;
   let state = Math.floor(blockNumber / 10);
 
   state = state % 4;
