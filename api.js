@@ -30,47 +30,52 @@ let addresses = require("./build/contracts/addresses.json");
 
 let simpleTokenBuild = require("./build/contracts/SchellingCoin.json");
 let simpleTokenAbi = simpleTokenBuild["abi"];
+
+const options = {
+  transactionConfirmationBlocks: 1,
+  gasPrice: 2000000000,
+};
 // let numBlocks = 10
 let stakeManager = new web3.eth.Contract(
   stakeManagerBuild["abi"],
   addresses["StakeManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 350000000000 }
+  options
 );
 let stateManager = new web3.eth.Contract(
   stateManagerBuild["abi"],
   addresses["StateManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 350000000000 }
+  options
 );
 let blockManager = new web3.eth.Contract(
   blockManagerBuild["abi"],
   addresses["BlockManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 350000000000 }
+  options
 );
 let voteManager = new web3.eth.Contract(
   voteManagerBuild["abi"],
   addresses["VoteManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 350000000000 }
+  options
 );
 let jobManager = new web3.eth.Contract(
   jobManagerBuild["abi"],
   addresses["JobManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 350000000000 }
+  options
 );
 let constants = new web3.eth.Contract(
   constantsBuild["abi"],
   addresses["Constants"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 350000000000 }
+  options
 );
-let random = new web3.eth.Contract(randomBuild["abi"], addresses["Random"], {
-  transactionConfirmationBlocks: 1,
-  gas: 8000000,
-  gasPrice: 350000000000,
-});
+let random = new web3.eth.Contract(
+  randomBuild["abi"],
+  addresses["Random"],
+  options
+);
 
 let simpleToken = new web3.eth.Contract(
   simpleTokenAbi,
   addresses["SchellingCoin"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 350000000000 }
+  options
 );
 
 async function login(address, password) {
