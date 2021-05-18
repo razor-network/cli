@@ -33,6 +33,7 @@ let simpleTokenAbi = simpleTokenBuild["abi"];
 
 const options = {
   transactionConfirmationBlocks: 1,
+  gas: 1000000,
   gasPrice: 2000000000,
 };
 // let numBlocks = 10
