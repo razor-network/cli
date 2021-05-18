@@ -469,7 +469,7 @@ async function getDelayedState() {
 
   state = state % 4;
 
-  // console.log('delayed state', state)
+  console.log("delayed state", state);
   return state;
 }
 async function getEpoch() {
