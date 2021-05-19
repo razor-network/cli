@@ -30,47 +30,53 @@ let addresses = require("./addresses.json");
 
 let simpleTokenAbi = require("@razor-network/contracts/abi/SchellingCoin.json");
 // let simpleTokenAbi = simpleTokenBuild["abi"];
+
+const options = {
+  transactionConfirmationBlocks: 1,
+  gas: 1000000,
+  gasPrice: 2000000000,
+};
 // let numBlocks = 10
 let stakeManager = new web3.eth.Contract(
   stakeManagerAbi,
   addresses["StakeManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  options
 );
 let stateManager = new web3.eth.Contract(
   stateManagerAbi,
   addresses["StateManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  options
 );
 let blockManager = new web3.eth.Contract(
   blockManagerAbi,
   addresses["BlockManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  options
 );
 let voteManager = new web3.eth.Contract(
   voteManagerAbi,
   addresses["VoteManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  options
 );
 let jobManager = new web3.eth.Contract(
   jobManagerAbi,
   addresses["JobManager"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  options
 );
 let constants = new web3.eth.Contract(
   constantsAbi,
   addresses["Constants"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  options
 );
-let random = new web3.eth.Contract(randomAbi, addresses["Random"], {
-  transactionConfirmationBlocks: 1,
-  gas: 8000000,
-  gasPrice: 300000000000,
-});
+let random = new web3.eth.Contract(
+  randomAbi, 
+  addresses["Random"], 
+  options
+);
 
 let simpleToken = new web3.eth.Contract(
   simpleTokenAbi,
   addresses["SchellingCoin"],
-  { transactionConfirmationBlocks: 1, gas: 8000000, gasPrice: 300000000000 }
+  options
 );
 
 async function login(address, password) {
@@ -464,7 +470,7 @@ async function getState() {
 async function getDelayedState() {
   let blockNumber = await web3.eth.getBlockNumber();
   // its too late to make the tx
-  if (blockNumber % 10 > 7 || blockNumber % 10 < 1) return -1;
+  if (blockNumber % 10 > 4 || blockNumber % 10 < 1) return -1;
   let state = Math.floor(blockNumber / 10);
 
   state = state % 4;
