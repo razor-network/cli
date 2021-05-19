@@ -34,7 +34,7 @@ let simpleTokenAbi = require("@razor-network/contracts/abi/SchellingCoin.json");
 const options = {
   transactionConfirmationBlocks: 1,
   gas: 1000000,
-  gasPrice: 2000000000,
+  gasPrice: 20000000000,
 };
 // let numBlocks = 10
 let stakeManager = new web3.eth.Contract(
@@ -67,11 +67,7 @@ let constants = new web3.eth.Contract(
   addresses["Constants"],
   options
 );
-let random = new web3.eth.Contract(
-  randomAbi, 
-  addresses["Random"], 
-  options
-);
+let random = new web3.eth.Contract(randomAbi, addresses["Random"], options);
 
 let simpleToken = new web3.eth.Contract(
   simpleTokenAbi,
