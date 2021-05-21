@@ -34,7 +34,7 @@ let simpleTokenAbi = require("@razor-network/contracts/abi/SchellingCoin.json");
 const options = {
   transactionConfirmationBlocks: 1,
   gas: 1000000,
-  gasPrice: 20000000000,
+  gasPrice: 200000000000,
 };
 // let numBlocks = 10
 let stakeManager = new web3.eth.Contract(
