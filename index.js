@@ -12,7 +12,8 @@ let provider = config.provider;
 
 console.log("provider", provider);
 
-let web3 = require("web3");
+let Web3 = require("web3");
+let web3 = new Web3(provider, null, {});
 
 let lastCommit = -1;
 let lastReveal = -1;
