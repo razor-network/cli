@@ -116,7 +116,8 @@ async function approve(to, amount, from) {
 
   // console.log(gas)
   console.log("checking allowance... from, to", from, to);
-  let allowance = await simpleToken.methods.allowance(from, to).call();
+  const allowanceGas = await simpleToken.methods.allowance(from, to).estimateGas({ from });
+  let allowance = await simpleToken.methods.allowance(from, to).call({ gas: allowanceGas });
   console.log("allowance", Number(allowance));
   if (Number(allowance) >= amount) {
     console.log("sufficient allowance. No need to increase");
@@ -134,8 +135,9 @@ async function stake(amount, account) {
   let epoch;
   let state;
   console.log("account", account);
+  let balanceGas = await simpleToken.methods.balanceOf(account).estimateGas({ from: account });
   let balance =
-    Number(await simpleToken.methods.balanceOf(account).call()) / 1e18;
+    Number(await simpleToken.methods.balanceOf(account).call({ gas: balanceGas })) / 1e18;
   console.log("schell balance", balance, "schells");
   if (balance < amount) throw new Error("Not enough schells to stake");
   let ethBalance = Number(await web3.eth.getBalance(account)) / 1e18;
@@ -157,7 +159,8 @@ async function stake(amount, account) {
       throw new Error("Approval failed");
   }
   while (true) {
-    epoch = Number(await stateManager.methods.getEpoch().call());
+    let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
+    epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
     // state = Number(await getDelayedState())
     state = await getDelayedState();
     console.log("epoch", epoch);
@@ -181,10 +184,12 @@ async function stake(amount, account) {
 }
 
 async function unstake(account) {
-  let epoch = Number(await stateManager.methods.getEpoch().call());
+  let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
+  let epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
   console.log("epoch", epoch);
   console.log("account", account);
-  let balance = Number(await simpleToken.methods.balanceOf(account).call());
+  let balanceGas = await simpleToken.methods.balanceOf(account).estimateGas({ from: account });
+  let balance = Number(await simpleToken.methods.balanceOf(account).call({ gas: balanceGas }));
   console.log("balance", balance);
   if (balance === 0) throw new Error("balance is 0");
   let nonce = await web3.eth.getTransactionCount(account, "pending");
@@ -197,10 +202,12 @@ async function unstake(account) {
 }
 
 async function withdraw(account) {
-  let epoch = Number(await stateManager.methods.getEpoch().call());
+  let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
+  let epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
   console.log("epoch", epoch);
   console.log("account", account);
-  let balance = Number(await simpleToken.methods.balanceOf(account).call());
+  let balanceGas = await simpleToken.methods.balanceOf(account).estimateGas({ from: account });
+  let balance = Number(await simpleToken.methods.balanceOf(account).call({ gas: balanceGas }));
   console.log("balance", balance);
   if (balance === 0) throw new Error("balance is 0");
   let nonce = await web3.eth.getTransactionCount(account, "pending");
@@ -271,10 +278,13 @@ async function commit(votes, secret, account) {
   let tree = merkle("keccak256").sync(votes);
   // console.log(tree.root())
   let root = tree.root();
-
-  let stakerId = Number(await stakeManager.methods.stakerIds(account).call());
-  let epoch = Number(await stateManager.methods.getEpoch().call());
-  if ((await voteManager.methods.commitments(epoch, stakerId).call()) != 0) {
+  
+  let stakerIdGas = await stakeManager.methods.stakerIds(account).estimateGas({ from: account });
+  let stakerId = Number(await stakeManager.methods.stakerIds(account).call({ gas: stakerIdGas }));
+  let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
+  let epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
+  let voteGas = await voteManager.methods.commitments(epoch, stakerId).estimateGas({ from: account });
+  if ((await voteManager.methods.commitments(epoch, stakerId).call({ gas: voteGas })) != 0) {
     throw "Already Committed";
   }
   let commitment = web3.utils.soliditySha3(epoch, root, secret);
@@ -298,13 +308,17 @@ async function reveal(votes, secret, commitAccount, account) {
   if (Number(await getDelayedState()) != 1) {
     throw new Error("Not reveal state");
   }
-  let stakerId = Number(await stakeManager.methods.stakerIds(account).call());
-  let epoch = Number(await stateManager.methods.getEpoch().call());
+  let stakerIdGas = await stakeManager.methods.stakerIds(account).estimateGas({ from: account });
+  let stakerId = Number(await stakeManager.methods.stakerIds(account).call({ gas: stakerIdGas }));
+  let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
+  let epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
   console.log("stakerId", stakerId);
-  if ((await voteManager.methods.commitments(epoch, stakerId).call()) === 0) {
+  let voteGas = await voteManager.methods.commitments(epoch, stakerId).estimateGas({ from: account });
+  if ((await voteManager.methods.commitments(epoch, stakerId).call({ gas: voteGas })) === 0) {
     throw new Error("Did not commit");
   }
-  let revealed = await voteManager.methods.votes(epoch, stakerId, 0).call();
+  let revealedGas = await voteManager.methods.votes(epoch, stakerId, 0).estimateGas({ from: account });
+  let revealed = await voteManager.methods.votes(epoch, stakerId, 0).call({ gas: revealedGas });
   // console.log('revealed', revealed)
   let voted = revealed.vote;
   // console.log('voted', voted)
@@ -321,7 +335,7 @@ async function reveal(votes, secret, commitAccount, account) {
   // console.log('epoch', epoch)
   console.log(
     "revealing vote for epoch",
-    Number(await stateManager.methods.getEpoch().call()),
+    Number(await stateManager.methods.getEpoch().call({ gas: epochGas })),
     "votes",
     votes,
     "root",
@@ -353,8 +367,10 @@ async function propose(account) {
   if (Number(await getDelayedState()) != 2) {
     throw "Not propose state";
   }
-  let stakerId = Number(await stakeManager.methods.stakerIds(account).call());
-  let epoch = Number(await stateManager.methods.getEpoch().call());
+  let stakerIdGas = await stakeManager.methods.stakerIds(account).estimateGas({ from: account });
+  let stakerId = Number(await stakeManager.methods.stakerIds(account).call({ gas: stakerIdGas }));
+  let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
+  let epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
   // console.log('epoch', epoch)
   // let getBlock = await blockManager.methods.proposedBlocks(epoch).call()
   // if (getBlock) {
@@ -367,8 +383,10 @@ async function propose(account) {
   // let numStakers = Number(await blockManager.methods.numStakers().call())
   // console.log('numStakers', numStakers)
 
-  let staker = await stakeManager.methods.getStaker(stakerId).call();
-  let numStakers = await stakeManager.methods.getNumStakers().call();
+  let stakerGas = await stakeManager.methods.getStaker(stakerId).estimateGas({ from: account });
+  let staker = await stakeManager.methods.getStaker(stakerId).call({ gas: stakerGas });
+  let numStakersGas = await stakeManager.methods.getNumStakers().estimateGas({ from: account });
+  let numStakers = await stakeManager.methods.getNumStakers().call({ gas: numStakersGas });
   let stake = Number(staker.stake);
   console.log("stake", stake);
 
@@ -376,7 +394,8 @@ async function propose(account) {
   console.log("biggestStake", biggestStake);
   let biggestStakerId = (await getBiggestStakeAndId(stakeManager))[1];
   console.log("biggestStakerId", biggestStakerId);
-  let blockHashes = await random.methods.blockHashes(numBlocks).call();
+  let blockHashesGas = await random.methods.blockHashes(numBlocks).estimateGas({ from: account });
+  let blockHashes = await random.methods.blockHashes(numBlocks).call({ gas: blockHashesGas });
   console.log(
     " biggestStake, stake, stakerId, numStakers, blockHashes",
     biggestStake,
@@ -441,7 +460,8 @@ async function propose(account) {
 
 // automatically calculate alternative block and submit
 async function dispute(account) {
-  let epoch = Number(await stateManager.methods.getEpoch().call());
+  let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
+  let epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
   let res = await getSortedVotes();
   let sortedVotes = res[0];
   let iter = Math.ceil(sortedVotes.length / 1000);
