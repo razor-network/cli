@@ -33,8 +33,8 @@ let simpleTokenAbi = require("@razor-network/contracts/abi/SchellingCoin.json");
 
 const options = {
   transactionConfirmationBlocks: 1,
-  gas: 1000000,
-  gasPrice: 200000000000,
+  // gas: 1000000,
+  gasPrice: 70000000000,
 };
 // let numBlocks = 10
 let stakeManager = new web3.eth.Contract(
@@ -99,9 +99,10 @@ async function transfer(to, amount, from) {
   // console.log(gas)
   let amountBN = String(new BN(amount).mul(new BN(10).pow(new BN("18"))));
   // amountBN = String(amountBN)
+  const gasEstimate = await simpleToken.methods.transfer.estimateGas({ from })
   let res = await simpleToken.methods
     .transfer(to, amountBN)
-    .send({ from: from, nonce: nonce });
+    .send({ from: from, nonce: nonce, gas: gasEstimate });
   console.log(res);
 }
 
@@ -124,9 +125,11 @@ async function approve(to, amount, from) {
     return;
   } else {
     console.log("Sending approve transaction...");
+    const gasEstimate = await simpleToken.methods.approve(to, amount).estimateGas()
     return simpleToken.methods.approve(to, amount).send({
       from: from,
       nonce: nonce,
+      gas: gasEstimate
     });
   }
 }
@@ -175,9 +178,11 @@ async function stake(amount, account) {
   console.log("Sending stake transaction...");
   let nonce = await web3.eth.getTransactionCount(account, "pending");
 
+  let gasEstimate = await stakeManager.methods.stake(epoch, amountBN).estimateGas({ from: account })
   let tx2 = await stakeManager.methods.stake(epoch, amountBN).send({
     from: account,
     nonce: String(nonce),
+    gas: gasEstimate
   });
   console.log(tx2.events);
   return tx2.events.Staked.event === "Staked";
@@ -194,9 +199,10 @@ async function unstake(account) {
   if (balance === 0) throw new Error("balance is 0");
   let nonce = await web3.eth.getTransactionCount(account, "pending");
 
+  let gasEstimate = await stakeManager.methods.unstake(epoch).estimateGas({ from: account })
   let tx = await stakeManager.methods
     .unstake(epoch)
-    .send({ from: account, nonce: String(nonce) });
+    .send({ from: account, nonce: String(nonce), gas: gasEstimate });
   console.log(tx.events);
   return tx.events.Unstaked.event === "Unstaked";
 }
@@ -212,9 +218,10 @@ async function withdraw(account) {
   if (balance === 0) throw new Error("balance is 0");
   let nonce = await web3.eth.getTransactionCount(account, "pending");
 
+  let gasEstimate = await stakeManager.methods.withdraw(epoch).estimateGas({ from: account })
   let tx = await stakeManager.methods
     .withdraw(epoch)
-    .send({ from: account, nonce: String(nonce) });
+    .send({ from: account, nonce: String(nonce), gas: gasEstimate });
   console.log(tx.events);
   return tx.events.Unstaked.event === "Unstaked";
 }
@@ -222,9 +229,10 @@ async function withdraw(account) {
 async function createJob(url, selector, name, repeat, eth, account) {
   let nonce = await web3.eth.getTransactionCount(account, "pending");
 
+  let gasEstimate = await jobManager.methods.createJob(url, selector, name, repeat).estimateGas({ from: account })
   return jobManager.methods
     .createJob(url, selector, name, repeat)
-    .send({ from: account, nonce: String(nonce), value: eth });
+    .send({ from: account, nonce: String(nonce), value: eth, gas: gasEstimate });
 }
 
 async function getActiveJobs() {
@@ -298,9 +306,10 @@ async function commit(votes, secret, account) {
     account,
     nonce
   );
+  let gasEstimate = await voteManager.methods.commit(epoch, commitment).estimateGas({ from: account })
   let tx = await voteManager.methods
     .commit(epoch, commitment)
-    .send({ from: account, nonce: nonce });
+    .send({ from: account, nonce: nonce, gas: gasEstimate });
   return tx;
 }
 
@@ -348,9 +357,10 @@ async function reveal(votes, secret, commitAccount, account) {
     commitAccount
   );
   let nonce = await web3.eth.getTransactionCount(account, "pending");
+  let gasEstimate = await voteManager.methods.reveal(epoch, root, votes, proof, secret, commitAccount).estimateGas({ from: account })
   let tx = await voteManager.methods
     .reveal(epoch, root, votes, proof, secret, commitAccount)
-    .send({ from: account, nonce: nonce });
+    .send({ from: account, nonce: nonce, gas: gasEstimate });
   // await voteManager.reveal(1, tree.root(), votes, proof,
   //         '0x727d5c9e6d18ed15ce7ac8d3cce6ec8a0e9c02481415c0823ea49d847ccb9ddd',
   //         accounts[1], { 'from': accounts[1] })
@@ -429,6 +439,16 @@ async function propose(account) {
     iteration,
     biggestStakerId
   );
+  let gasEstimate = await blockManager.methods
+    .propose(
+      epoch,
+      jobIds,
+      block[0],
+      block[1],
+      block[2],
+      iteration,
+      biggestStakerId
+    ).estimateGas({ from: account })
   let tx = await blockManager.methods
     .propose(
       epoch,
@@ -439,7 +459,7 @@ async function propose(account) {
       iteration,
       biggestStakerId
     )
-    .send({ from: account, nonce: nonce });
+    .send({ from: account, nonce: nonce, gas: gasEstimate });
   return tx;
   //
   //
@@ -467,15 +487,18 @@ async function dispute(account) {
   let iter = Math.ceil(sortedVotes.length / 1000);
   for (let i = 0; i < iter; i++) {
     console.log(epoch, sortedVotes.slice(i * 1000, i * 1000 + 1000));
+    let gasEstimate = await blockManager.methods
+    .giveSorted(epoch, sortedVotes.slice(i * 1000, i * 1000 + 1000)).estimateGas({ from: account })
     await blockManager.methods
       .giveSorted(epoch, sortedVotes.slice(i * 1000, i * 1000 + 1000))
-      .send({ from: account, nonce: String(nonce) });
+      .send({ from: account, nonce: String(nonce), gas: gasEstimate });
   }
   const nonce = await web3.eth.getTransactionCount(account, "pending");
 
+  let blockGasEstimate = await blockManager.methods.proposeAlt(epoch).estimateGas({ from: account })
   return blockManager.methods
     .proposeAlt(epoch)
-    .send({ from: account, nonce: String(nonce) });
+    .send({ from: account, nonce: String(nonce), gas: blockGasEstimate });
 }
 
 async function getState() {
