@@ -472,13 +472,13 @@ async function dispute(account) {
   let iter = Math.ceil(sortedVotes.length / 1000);
   for (let i = 0; i < iter; i++) {
     console.log(epoch, sortedVotes.slice(i * 1000, i * 1000 + 1000));
-    console.log("error2")
+    
     await blockManager.methods
       .giveSorted(epoch, sortedVotes.slice(i * 1000, i * 1000 + 1000))
       .send({ from: account, nonce: String(nonce) });
   }
   const nonce = await web3.eth.getTransactionCount(account, "pending");
-  console.log("error3")
+  
   return blockManager.methods
     .proposeAlt(epoch)
     .send({ from: account, nonce: String(nonce) });
