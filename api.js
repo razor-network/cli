@@ -5,10 +5,9 @@ let sleep = require("util").promisify(setTimeout);
 const BN = require("bn.js");
 var config = require("./config.json");
 
-let infuraKey = config.infuraKey;
-let provider = config.httpProvider;
-let networkid = config.networkid;
-let numBlocks = config.numBlocks;
+let provider = config.provider;
+let numBlocks = 10;
+let gasMultiplier = config.gasMultiplier;
 // const infuraKey = fs.readFileSync('.infura').toString().trim()
 // let provider = 'ws://localhost:8545'
 // let provider = 'ws://localhost:8546'
@@ -34,7 +33,7 @@ let simpleTokenAbi = require("@razor-network/contracts/abi/SchellingCoin.json");
 const options = {
   transactionConfirmationBlocks: 1,
   gas: 1000000,
-  gasPrice: 70000000000,
+  gasPrice: gasMultiplier * 70000000000,
 };
 // let numBlocks = 10
 let stakeManager = new web3.eth.Contract(
