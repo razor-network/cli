@@ -130,9 +130,27 @@ async function approve(to, amount, from) {
   }
 }
 
+// Returns epoch as soon as COMMIT state is encountered
+async function waitForCommitState(account, type) {
+  let epoch, state;
+  
+  while (true) {
+    let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
+    epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
+    // state = Number(await getDelayedState())
+    state = await getDelayedState();
+    console.log("epoch", epoch);
+    console.log("state", state);
+    if (state !== 0) {
+      console.log(`Can only ${type} during state 0 (commit). Retrying in 1 second...`);
+      await sleep(1000);
+    } else {
+      return epoch
+    }
+  }
+}
+
 async function stake(amount, account) {
-  let epoch;
-  let state;
   console.log("account", account);
   let balanceGas = await simpleToken.methods.balanceOf(account).estimateGas({ from: account });
   let balance =
@@ -157,20 +175,7 @@ async function stake(amount, account) {
     if (tx.events.Approval.event !== "Approval")
       throw new Error("Approval failed");
   }
-  while (true) {
-    let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
-    epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
-    // state = Number(await getDelayedState())
-    state = await getDelayedState();
-    console.log("epoch", epoch);
-    console.log("state", state);
-    if (state !== 0) {
-      console.log(
-        "Can only stake during state 0 (commit). Retrying in 1 second..."
-      );
-      await sleep(1000);
-    } else break;
-  }
+  let epoch = await waitForCommitState(account, "stake");
   console.log("Sending stake transaction...");
   let nonce = await web3.eth.getTransactionCount(account, "pending");
 
@@ -183,14 +188,13 @@ async function stake(amount, account) {
 }
 
 async function unstake(account) {
-  let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
-  let epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
-  console.log("epoch", epoch);
   console.log("account", account);
   let balanceGas = await simpleToken.methods.balanceOf(account).estimateGas({ from: account });
   let balance = Number(await simpleToken.methods.balanceOf(account).call({ gas: balanceGas }));
   console.log("balance", balance);
   if (balance === 0) throw new Error("balance is 0");
+   
+  let epoch = await waitForCommitState(account, "unstake");
   let nonce = await web3.eth.getTransactionCount(account, "pending");
 
   let tx = await stakeManager.methods
@@ -200,15 +204,15 @@ async function unstake(account) {
   return tx.events.Unstaked.event === "Unstaked";
 }
 
+
 async function withdraw(account) {
-  let epochGas = await stateManager.methods.getEpoch().estimateGas({ from: account });
-  let epoch = Number(await stateManager.methods.getEpoch().call({ gas: epochGas }));
-  console.log("epoch", epoch);
   console.log("account", account);
   let balanceGas = await simpleToken.methods.balanceOf(account).estimateGas({ from: account });
   let balance = Number(await simpleToken.methods.balanceOf(account).call({ gas: balanceGas }));
   console.log("balance", balance);
   if (balance === 0) throw new Error("balance is 0");
+
+  let epoch = await waitForCommitState(account, "withdraw");
   let nonce = await web3.eth.getTransactionCount(account, "pending");
 
   let tx = await stakeManager.methods
@@ -830,4 +834,6 @@ module.exports = {
   getActiveJobs: getActiveJobs,
   getJobValues: getJobValues,
   getJobs: getJobs,
+  unstake: unstake,
+  withdraw: withdraw,
 };
