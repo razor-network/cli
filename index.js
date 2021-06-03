@@ -185,7 +185,7 @@ async function main(account) {
     } catch (error) {
       console.error(error);
     }
-  }, 14000);
+  }, 2000);
 
   console.log("subscribed");
   isWatchingEvents = true;
