@@ -488,9 +488,14 @@ async function getState() {
 // report state delayed to avoid tx reverts
 async function getDelayedState() {
   let blockNumber = await web3.eth.getBlockNumber();
+  const stateLength = 75
+  const buffer = 20
+  const lowerLimit = (stateLength * buffer) / 100
+  const upperLimit = stateLength - (stateLength * buffer) / 100
+
   // its too late to make the tx
-  if (blockNumber % 75 > 4 || blockNumber % 75 < 1) return -1;
-  let state = Math.floor(blockNumber / 75);
+  if (blockNumber % stateLength > upperLimit || blockNumber % stateLength < lowerLimit) return -1;
+  let state = Math.floor(blockNumber / stateLength);
 
   state = state % 4;
 
