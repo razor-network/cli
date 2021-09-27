@@ -1,3 +1,6 @@
+# WARNING: DEPRECATED
+#### This repository is archived and not supported anymore. Please use our new and updated CLI: https://github.com/razor-network/razor-go
+
 ## Razor network Client
 End user client for Razor network.
 ## Installation
